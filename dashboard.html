@@ -3,79 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel do Aluno - ConectaFisio</title>
+    <title>Assistindo Aula - ConectaFisio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Nunito', sans-serif; margin: 0; background-color: #f8fafc; color: #1e293b; }
-        /* Cabeçalho */
-        header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logo { font-weight: 800; font-size: 1.2rem; color: #6366f1; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        body { margin: 0; font-family: 'Nunito', sans-serif; background-color: #1e293b; color: white; display: flex; height: 100vh; overflow: hidden; }
         
-        /* Botão Sair - Volta para a Home */
-        .btn-sair { background: #e2e8f0; color: #475569; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.2s; }
-        .btn-sair:hover { background: #cbd5e1; }
+        /* MENU LATERAL */
+        .sidebar { width: 300px; background: #0f172a; border-right: 1px solid #334155; display: flex; flex-direction: column; }
+        .sidebar-header { padding: 20px; border-bottom: 1px solid #334155; }
+        .back-btn { color: #94a3b8; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; transition: 0.2s; }
+        .back-btn:hover { color: white; }
+        
+        .module-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; }
+        .module-item { padding: 15px 20px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .module-item:hover { background: #1e293b; }
+        .module-item.active { background: #334155; border-left: 4px solid #6366f1; }
 
-        /* Parte Colorida (Hero) */
-        .hero { background: linear-gradient(120deg, #6366f1 0%, #8b5cf6 100%); color: white; padding: 60px 20px; text-align: center; }
-        .hero h1 { margin: 0; font-size: 2rem; }
+        /* ÁREA DO VÍDEO */
+        .main-content { flex: 1; display: flex; flex-direction: column; }
+        .video-container { flex: 1; background: black; display: flex; align-items: center; justify-content: center; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        .video-info { padding: 20px; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+        .btn-next { background: #6366f1; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         
-        /* Lista de Cursos */
-        .container { max-width: 800px; margin: -30px auto 0 auto; padding: 20px; }
-        
-        /* Estilo dos Cards (Links e Divs) */
-        .card { 
-            background: white; 
-            padding: 25px; 
-            margin-bottom: 20px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            display: flex; 
-            align-items: center; 
-            gap: 20px; 
-            border: 1px solid white; 
-            transition: 0.3s; 
-            
-            /* Para funcionar como link sem ficar azul/sublinhado */
-            text-decoration: none; 
-            color: inherit; 
+        @media(max-width: 768px) {
+            body { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; height: 300px; order: 2; }
+            .video-container { height: 300px; }
         }
-        
-        .card:hover { transform: translateY(-5px); border-color: #6366f1; cursor: pointer; }
-        
-        .icon-box { width: 60px; height: 60px; background: #e0e7ff; color: #6366f1; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo"><i class="fa-solid fa-layer-group"></i> ConectaFisio</div>
-        <a href="index.html" class="btn-sair">Sair</a>
-    </header>
-
-    <div class="hero">
-        <h1>Olá, Leonardo! 👋</h1>
-        <p>Bora estudar hoje?</p>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Voltar ao Painel</a>
+            <h3 style="margin:0;">Anatomia Humana</h3>
+            <p style="margin:5px 0 0 0; font-size:0.8rem; color:#94a3b8;">Módulo 1: Introdução</p>
+        </div>
+        <ul class="module-list">
+            <li class="module-item active">
+                <span>01. Introdução à Fisiologia</span>
+                <i class="fa-solid fa-circle-play" style="color:#6366f1;"></i>
+            </li>
+            <li class="module-item"><span>02. Posição Anatômica</span> <i class="fa-regular fa-circle-play"></i></li>
+            <li class="module-item"><span>03. Planos e Eixos</span> <i class="fa-regular fa-circle-play"></i></li>
+        </ul>
     </div>
 
-    <div class="container">
-        <h3>📚 Seus Cursos</h3>
-        
-        <a href="aula.html" class="card">
-            <div class="icon-box"><i class="fa-solid fa-bone"></i></div>
+    <div class="main-content">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/uBGl2BujkPQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
             <div>
-                <h4>Anatomia Humana</h4>
-                <p style="margin:0; font-size:0.9rem; color:#666;">Progresso: 75%</p>
-                <small style="color: #6366f1; font-weight: bold;">Clique para assistir</small>
+                <h2 style="margin:0; font-size:1.2rem;">Aula 01: Introdução ao Corpo Humano</h2>
+                <p style="margin:5px 0 0 0; color:#94a3b8;">Prof. Convidado</p>
             </div>
-        </a>
-
-        <div class="card">
-            <div class="icon-box"><i class="fa-solid fa-person-running"></i></div>
-            <div>
-                <h4>Fisioterapia Esportiva</h4>
-                <p style="margin:0; font-size:0.9rem; color:#666;">Progresso: 30%</p>
-            </div>
+            <button class="btn-next">Próxima Aula <i class="fa-solid fa-forward"></i></button>
         </div>
     </div>
 
