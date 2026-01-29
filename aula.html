@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistindo Aula - ConectaFisio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Nunito', sans-serif; background-color: #1e293b; color: white; display: flex; height: 100vh; overflow: hidden; }
+        
+        /* MENU LATERAL (SIDEBAR) */
+        .sidebar { width: 300px; background: #0f172a; border-right: 1px solid #334155; display: flex; flex-direction: column; }
+        .sidebar-header { padding: 20px; border-bottom: 1px solid #334155; }
+        .back-btn { color: #94a3b8; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; transition: 0.2s; }
+        .back-btn:hover { color: white; }
+        
+        .module-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; }
+        .module-item { padding: 15px 20px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .module-item:hover { background: #1e293b; }
+        .module-item.active { background: #334155; border-left: 4px solid #6366f1; }
+        .play-icon { font-size: 0.8rem; color: #6366f1; }
+
+        /* ÁREA DO VÍDEO */
+        .main-content { flex: 1; display: flex; flex-direction: column; }
+        .video-container { flex: 1; background: black; display: flex; align-items: center; justify-content: center; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* RODAPÉ DO VÍDEO */
+        .video-info { padding: 20px; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+        .btn-next { background: #6366f1; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-next:hover { background: #4f46e5; }
+        
+        /* Celular */
+        @media(max-width: 768px) {
+            body { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; height: 300px; order: 2; }
+            .video-container { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Voltar ao Painel</a>
+            <h3 style="margin:0;">Anatomia Humana</h3>
+            <p style="margin:5px 0 0 0; font-size:0.8rem; color:#94a3b8;">Módulo 1: Introdução</p>
+        </div>
+        <ul class="module-list">
+            <li class="module-item active">
+                <span>01. Conceitos Básicos</span>
+                <i class="fa-solid fa-circle-play play-icon"></i>
+            </li>
+            <li class="module-item">
+                <span>02. Posição Anatômica</span>
+                <i class="fa-regular fa-circle-play" style="color:#64748b;"></i>
+            </li>
+            <li class="module-item">
+                <span>03. Planos e Eixos</span>
+                <i class="fa-regular fa-circle-play" style="color:#64748b;"></i>
+            </li>
+            <li class="module-item">
+                <span>04. Sistema Esquelético</span>
+                <i class="fa-regular fa-circle-play" style="color:#64748b;"></i>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/S2qY4r-4GnA?si=DemoVideo" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+            <div>
+                <h2 style="margin:0; font-size:1.2rem;">Aula 01: Conceitos Básicos de Anatomia</h2>
+                <p style="margin:5px 0 0 0; color:#94a3b8;">Prof. Leonardo Teodoro</p>
+            </div>
+            <button class="btn-next">Próxima Aula <i class="fa-solid fa-forward"></i></button>
+        </div>
+    </div>
+
+</body>
+</html>
