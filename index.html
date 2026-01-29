@@ -3,38 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConectaFisio - Home</title>
+    <title>ConectaFisio360</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; font-family: 'Poppins', sans-serif; text-align: center; }
-        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; max-width: 1000px; margin: 0 auto; }
-        .logo { font-weight: bold; font-size: 1.5rem; color: #0056b3; text-decoration: none; }
+        body { margin: 0; font-family: 'Poppins', sans-serif; text-align: center; background-color: #f0f9ff; }
         
-        .hero { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 100px 20px; }
-        h1 { font-size: 3rem; color: #2c3e50; margin-bottom: 10px; }
-        p { font-size: 1.2rem; color: #666; margin-bottom: 40px; }
-        
-        /* O BOTÃO MÁGICO */
-        .btn-entrar {
+        header { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; background: white; }
+        .logo { font-weight: bold; font-size: 1.5rem; color: #0056b3; }
+        .area-aluno { text-decoration: none; color: #0056b3; font-weight: bold; }
+
+        .hero { padding: 100px 20px; }
+        h1 { font-size: 3rem; color: #1e3a8a; margin-bottom: 10px; }
+        p { font-size: 1.2rem; color: #64748b; margin-bottom: 40px; }
+
+        /* Botão Mágico que abre a porta do Quarto Roxo */
+        .btn-comecar {
             background-color: #0056b3; color: white; padding: 15px 40px;
             font-size: 1.2rem; text-decoration: none; border-radius: 50px;
             box-shadow: 0 4px 15px rgba(0,86,179,0.3); transition: 0.3s;
+            display: inline-block;
         }
-        .btn-entrar:hover { transform: scale(1.05); background-color: #004494; }
+        .btn-comecar:hover { transform: scale(1.05); background-color: #004494; }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="#" class="logo">ConectaFisio360</a>
-        <a href="dashboard.html" style="text-decoration:none; color:#0056b3; font-weight:bold;">Área do Aluno</a>
+        <div class="logo">ConectaFisio360</div>
+        <a href="dashboard.html" class="area-aluno">Área do Aluno</a>
     </header>
 
     <div class="hero">
         <h1>O Futuro da Fisioterapia</h1>
         <p>Estude, evolua e conecte-se com os melhores profissionais.</p>
         
-        <a href="dashboard.html" class="btn-entrar">Começar Agora</a>
+        <a href="dashboard.html" class="btn-comecar">Começar Agora</a>
     </div>
 
 </body>
