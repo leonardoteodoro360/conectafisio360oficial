@@ -22,8 +22,26 @@
         
         /* Lista de Cursos */
         .container { max-width: 800px; margin: -30px auto 0 auto; padding: 20px; }
-        .card { background: white; padding: 25px; margin-bottom: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 20px; border: 1px solid white; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: #6366f1; }
+        
+        /* Estilo dos Cards (Links e Divs) */
+        .card { 
+            background: white; 
+            padding: 25px; 
+            margin-bottom: 20px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            border: 1px solid white; 
+            transition: 0.3s; 
+            
+            /* Para funcionar como link sem ficar azul/sublinhado */
+            text-decoration: none; 
+            color: inherit; 
+        }
+        
+        .card:hover { transform: translateY(-5px); border-color: #6366f1; cursor: pointer; }
         
         .icon-box { width: 60px; height: 60px; background: #e0e7ff; color: #6366f1; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
     </style>
@@ -43,13 +61,14 @@
     <div class="container">
         <h3>📚 Seus Cursos</h3>
         
-        <div class="card">
+        <a href="aula.html" class="card">
             <div class="icon-box"><i class="fa-solid fa-bone"></i></div>
             <div>
                 <h4>Anatomia Humana</h4>
                 <p style="margin:0; font-size:0.9rem; color:#666;">Progresso: 75%</p>
+                <small style="color: #6366f1; font-weight: bold;">Clique para assistir</small>
             </div>
-        </div>
+        </a>
 
         <div class="card">
             <div class="icon-box"><i class="fa-solid fa-person-running"></i></div>
