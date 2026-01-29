@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Aluno - ConectaFisio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Nunito', sans-serif; margin: 0; background-color: #f8fafc; color: #1e293b; }
+        header { background: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo { font-weight: 800; font-size: 1.2rem; color: #4f46e5; text-decoration: none; }
+        .hero { background: linear-gradient(120deg, #6366f1 0%, #8b5cf6 100%); color: white; padding: 40px 20px; text-align: center; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 15px; }
+        .card:hover { transform: translateY(-3px); transition: 0.3s; cursor: pointer; border: 1px solid #6366f1; }
+        .btn-back { background: #e2e8f0; color: #475569; padding: 5px 10px; border-radius: 5px; text-decoration: none; font-size: 0.8rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo"><i class="fa-solid fa-layer-group"></i> ConectaFisio</a>
+        <a href="index.html" class="btn-back">Sair</a>
+    </header>
+
+    <div class="hero">
+        <h1>Olá, Leonardo! 👋</h1>
+        <p>Bora estudar hoje?</p>
+    </div>
+
+    <div class="container">
+        <h3>📚 Seus Cursos</h3>
+        <div class="card">
+            <i class="fa-solid fa-bone" style="font-size: 30px; color: #6366f1;"></i>
+            <div>
+                <h4>Anatomia Humana</h4>
+                <p style="margin:0; font-size:0.9rem; color:#666;">Progresso: 75%</p>
+            </div>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-person-running" style="font-size: 30px; color: #6366f1;"></i>
+            <div>
+                <h4>Fisioterapia Esportiva</h4>
+                <p style="margin:0; font-size:0.9rem; color:#666;">Progresso: 30%</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
