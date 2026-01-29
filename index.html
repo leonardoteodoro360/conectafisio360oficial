@@ -1,20 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conecta Fisio 360</title>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- ✅ POLÍTICA DE SEGURANÇA CORRIGIDA -->
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self' blob: data: gap: http://10.1.14.164:3000 http://10.1.14.164:3089 'unsafe-eval' 'unsafe-inline' https://*.googleapis.com https://*.firebaseio.com https://*.firebasestorage.app https://securetoken.googleapis.com;
+                   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.firebaseapp.com;
+                   connect-src 'self' http://10.1.14.164:3000 http://10.1.14.164:3089 ws://10.1.14.164:3000 ws://10.1.14.164:3089 https://*.googleapis.com https://securetoken.googleapis.com wss://*.firebaseio.com https://*.firebasestorage.app;
+                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+                   font-src 'self' data: https://fonts.gstatic.com;
+                   img-src 'self' data: blob: https: http:;
+                   media-src 'self' blob: data:;
+                   frame-src 'self' https:;">
+    
+    <title>ConectaFisio360 - Plataforma Completa de Fisioterapia</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f0f8ff; }
-        h1 { color: #007bff; }
-        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto; }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8fafc;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+      
+      /* Loading inicial melhorado */
+      #root:empty::before {
+        content: "🏥 ConectaFisio360";
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-size: 24px;
+        color: #2563eb;
+        font-weight: 700;
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        position: relative;
+      }
+
+      #root:empty::after {
+        content: "Carregando a plataforma completa de fisioterapia...";
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 16px;
+        color: #64748b;
+        font-weight: 400;
+        white-space: nowrap;
+      }
+
+      #root:not(:empty) {
+        min-height: 100vh;
+      }
     </style>
-</head>
-<body>
-    <div class="card">
-        <h1>Conecta Fisio 360</h1>
-        <p>Olá! Meu site está sendo construído.</p>
-        <p>Em breve, o maior ecossistema digital para fisioterapeutas.</p>
-    </div>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
