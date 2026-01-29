@@ -8,39 +8,100 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- GERAL --- */
+        /* --- CONFIGURAÇÕES GERAIS --- */
         :root {
-            --primary: #6366f1;
+            --primary: #6366f1; /* Roxo Principal */
             --primary-dark: #4f46e5;
-            --accent: #f59e0b;
+            --accent: #f59e0b; /* Laranja Detalhe */
             --bg-body: #f8fafc;
             --text-dark: #1e293b;
             --text-gray: #64748b;
         }
-        body { font-family: 'Nunito', sans-serif; margin: 0; padding: 0; background-color: var(--bg-body); color: var(--text-dark); }
-        
-        /* --- HEADER --- */
-        header { background: white; padding: 12px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); position: sticky; top: 0; z-index: 1000; }
-        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.3rem; color: var(--primary-dark); }
-        .user-area { display: flex; align-items: center; gap: 15px; }
-        .avatar { width: 40px; height: 40px; background: #e0e7ff; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; }
 
-        /* --- HERO --- */
-        .hero { background: linear-gradient(120deg, #6366f1 0%, #8b5cf6 100%); color: white; padding: 50px 20px; text-align: center; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0; padding: 0;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+        }
+
+        a { text-decoration: none; }
+
+        /* --- HEADER (MENU SUPERIOR) --- */
+        header {
+            background: white;
+            padding: 10px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        /* Logotipo Clicável */
+        .logo-area {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 800; font-size: 1.3rem; color: var(--primary-dark);
+            text-decoration: none; cursor: pointer;
+        }
+        .logo-area:hover { opacity: 0.8; }
+
+        /* Menu de Navegação (Voltou!) */
+        .nav-menu {
+            display: flex; gap: 20px;
+        }
+
+        .nav-link {
+            display: flex; align-items: center; gap: 8px;
+            color: var(--text-gray); font-weight: 700; font-size: 0.95rem;
+            padding: 8px 12px; border-radius: 8px; transition: 0.3s;
+        }
+
+        .nav-link:hover { color: var(--primary); background: #f0f9ff; }
+        .nav-link.active { color: white; background: var(--primary); }
+        
+        /* Esconder menu no celular */
+        @media (max-width: 768px) { .nav-menu { display: none; } }
+
+        /* Área do Usuário (Direita) */
+        .user-area { display: flex; align-items: center; gap: 15px; }
+        .avatar {
+            width: 40px; height: 40px; background: #e0e7ff; color: var(--primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer;
+        }
+
+        /* --- HERO BANNER (ROXO) --- */
+        .hero {
+            background: linear-gradient(120deg, #6366f1 0%, #8b5cf6 100%);
+            color: white; padding: 50px 20px; text-align: center;
+        }
         .hero h1 { margin: 0 0 10px 0; font-size: 2rem; }
         .hero p { opacity: 0.9; font-size: 1.1rem; margin-bottom: 25px; }
-        .hero-stats { display: inline-flex; gap: 30px; background: rgba(255,255,255,0.15); padding: 10px 30px; border-radius: 50px; backdrop-filter: blur(5px); }
+        .hero-stats {
+            display: inline-flex; gap: 30px; background: rgba(255,255,255,0.15);
+            padding: 10px 30px; border-radius: 50px; backdrop-filter: blur(5px);
+        }
 
-        /* --- CONTAINER --- */
+        /* --- LAYOUT DO CONTEÚDO --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top: 40px; }
-        .section-header h2 { font-size: 1.4rem; color: var(--text-dark); margin: 0; }
-        .see-all { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
 
-        /* --- CARDS DE PROGRESSO --- */
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; margin-top: 40px;
+        }
+        .section-header h2 { font-size: 1.4rem; color: var(--text-dark); margin: 0; }
+        .see-all { color: var(--primary); font-weight: 700; font-size: 0.9rem; }
+
+        /* Cards de Progresso */
         .progress-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .progress-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); display: flex; gap: 15px; border: 1px solid #f1f5f9; transition: 0.3s; cursor: pointer; }
+        .progress-card {
+            background: white; padding: 20px; border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03); display: flex; gap: 15px;
+            border: 1px solid #f1f5f9; transition: 0.3s; cursor: pointer;
+        }
         .progress-card:hover { transform: translateY(-3px); border-color: var(--primary); }
         .course-thumb-small { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; background: #cbd5e1; }
         .progress-info { flex: 1; }
@@ -49,48 +110,63 @@
         .bar-fill { height: 100%; background: var(--primary); border-radius: 10px; }
         .meta { font-size: 0.8rem; color: var(--text-gray); margin-top: 5px; display: flex; justify-content: space-between; }
 
-        /* --- CATEGORIAS --- */
+        /* Categorias */
         .categories-row { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
         .cat-item { display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 80px; cursor: pointer; }
-        .cat-icon { width: 60px; height: 60px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; }
+        .cat-icon {
+            width: 60px; height: 60px; border-radius: 50%; background: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s;
+        }
         .cat-item:hover .cat-icon { background: var(--primary); color: white; transform: scale(1.1); }
         .cat-name { font-size: 0.85rem; font-weight: 600; color: var(--text-gray); }
 
-        /* --- VITRINE GRID --- */
+        /* Vitrine de Cursos */
         .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; margin-bottom: 60px; }
-        .course-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; position: relative; cursor: pointer; }
+        .course-card {
+            background: white; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; position: relative; cursor: pointer;
+        }
         .course-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
         .course-img { width: 100%; height: 150px; object-fit: cover; }
-        .badge { position: absolute; top: 10px; left: 10px; background: var(--accent); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; }
+        .badge {
+            position: absolute; top: 10px; left: 10px;
+            background: var(--accent); color: white; padding: 4px 10px;
+            border-radius: 20px; font-size: 0.7rem; font-weight: 800;
+        }
         .card-body { padding: 15px; }
         .card-tag { color: var(--primary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
         .card-title { font-weight: 700; font-size: 1rem; margin: 5px 0; line-height: 1.4; }
         .instructor { display: flex; align-items: center; gap: 8px; margin-top: 15px; font-size: 0.85rem; color: var(--text-gray); }
         .instructor img { width: 24px; height: 24px; border-radius: 50%; background: #ddd; }
 
-        /* --- APP BANNER --- */
-        .app-banner { background: var(--text-dark); color: white; padding: 40px; border-radius: 20px; margin: 60px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
-        .app-text h3 { font-size: 1.8rem; margin: 0 0 10px 0; }
-        .app-btn { background: white; color: var(--text-dark); padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; }
-        .app-btn:hover { background: #e2e8f0; }
-
-        /* --- FOOTER (RODAPÉ) --- */
+        /* Rodapé */
         footer { background: white; border-top: 1px solid #e2e8f0; padding: 60px 0 30px 0; margin-top: 50px; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
         .footer-col h4 { color: var(--primary-dark); margin-bottom: 20px; font-size: 1.1rem; }
         .footer-col ul { list-style: none; padding: 0; }
         .footer-col ul li { margin-bottom: 12px; }
-        .footer-col ul li a { color: var(--text-gray); text-decoration: none; transition: 0.2s; }
+        .footer-col ul li a { color: var(--text-gray); transition: 0.2s; }
         .footer-col ul li a:hover { color: var(--primary); }
         .copyright { text-align: center; color: #94a3b8; font-size: 0.9rem; border-top: 1px solid #f1f5f9; padding-top: 30px; }
-
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-content">
-            <div class="logo-area"><i class="fa-solid fa-layer-group"></i> ConectaFisio</div>
+            <a href="index.html" class="logo-area">
+                <i class="fa-solid fa-layer-group"></i> ConectaFisio
+            </a>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link active"><i class="fa-solid fa-house"></i> Início</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-book-open"></i> Cursos</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-users"></i> Comunidade</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-store"></i> Loja</a>
+            </nav>
+
             <div class="user-area">
                 <i class="fa-regular fa-bell" style="font-size: 1.2rem; color: var(--text-gray); cursor: pointer;"></i>
                 <div class="avatar">L</div>
@@ -170,17 +246,6 @@
                     <div class="card-title">Marketing para Fisioterapeutas</div>
                     <div class="instructor"><img src="https://randomuser.me/api/portraits/men/85.jpg"><span>Mkt. Lucas F.</span></div>
                 </div>
-            </div>
-        </div>
-
-        <div class="app-banner">
-            <div class="app-text">
-                <h3>Estude de onde estiver</h3>
-                <p>Baixe o app ConectaFisio e leve seus estudos no bolso.</p>
-            </div>
-            <div class="app-buttons">
-                <a href="#" class="app-btn"><i class="fa-brands fa-apple"></i> App Store</a>
-                <a href="#" class="app-btn"><i class="fa-brands fa-google-play"></i> Google Play</a>
             </div>
         </div>
 
