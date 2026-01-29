@@ -8,11 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* --- CONFIGURAÇÕES GERAIS (Mantidas) --- */
         :root {
-            --primary: #6366f1; /* Roxo suave igual da imagem */
+            --primary: #6366f1;
             --primary-dark: #4f46e5;
-            --accent: #f59e0b; /* Amarelo da estrelinha */
-            --bg-body: #f0f9ff; /* Fundo azulzinho claro */
+            --accent: #f59e0b;
+            --bg-body: #f0f9ff;
             --text-dark: #1e293b;
             --text-gray: #64748b;
         }
@@ -23,9 +24,10 @@
             padding: 0;
             background-color: var(--bg-body);
             color: var(--text-dark);
+            padding-bottom: 50px;
         }
 
-        /* --- MENU SUPERIOR (NAVBAR) --- */
+        /* --- HEADER --- */
         header {
             background: white;
             padding: 10px 20px;
@@ -34,6 +36,9 @@
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo-area {
@@ -46,176 +51,95 @@
             border: 1px solid #e0e7ff;
         }
 
-        .logo-icon {
-            font-size: 24px;
-            color: var(--primary);
-        }
+        .logo-icon { font-size: 24px; color: var(--primary); }
+        .logo-text { font-weight: 800; font-size: 1.2rem; color: var(--primary-dark); }
 
-        .logo-text {
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--primary-dark);
-        }
-
-        /* Menu de ícones igual da foto */
-        .nav-icons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 10px; 
-        }
-
-        @media(min-width: 900px) {
-            .nav-icons { margin-top: 0; }
-        }
+        .nav-icons { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
+        @media(min-width: 900px) { .nav-icons { margin-top: 0; } }
 
         .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            color: var(--text-gray);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.3s;
+            display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+            border-radius: 8px; color: var(--text-gray); text-decoration: none;
+            font-weight: 600; font-size: 0.9rem; transition: 0.3s;
         }
-
-        .nav-item:hover {
-            background-color: #f1f5f9;
-            color: var(--primary);
-        }
-
+        .nav-item:hover { background-color: #f1f5f9; color: var(--primary); }
         .nav-item i { font-size: 1.1rem; }
-        
-        /* Botão Início Ativo */
-        .nav-item.active {
-            background-color: var(--primary);
-            color: white;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
-        }
+        .nav-item.active { background-color: var(--primary); color: white; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-        
-        .notification-badge {
-            position: relative;
-            margin-right: 15px;
-            cursor: pointer;
-        }
-        
-        .badge-count {
-            position: absolute;
-            top: -5px;
-            right: -8px;
-            background: #ef4444;
-            color: white;
-            font-size: 10px;
-            padding: 2px 5px;
-            border-radius: 10px;
-        }
+        .user-profile { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 700; }
+        .notification-badge { position: relative; margin-right: 15px; cursor: pointer; }
+        .badge-count { position: absolute; top: -5px; right: -8px; background: #ef4444; color: white; font-size: 10px; padding: 2px 5px; border-radius: 10px; }
 
-        /* --- HERO SECTION (CENTRO) --- */
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+        /* --- HERO --- */
+        .hero { text-align: center; padding: 60px 20px 40px 20px; max-width: 1000px; margin: 0 auto; }
+        .launch-badge { background: white; display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 50px; font-weight: 700; color: var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; font-size: 0.9rem; }
+        h1 { font-size: 3rem; line-height: 1.1; margin-bottom: 20px; color: var(--text-dark); }
+        h1 span { color: #d946ef; }
+        .subtitle { font-size: 1.2rem; color: var(--text-gray); max-width: 700px; margin: 0 auto 40px auto; }
 
-        .launch-badge {
-            background: white;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: 700;
-            color: var(--primary);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            font-size: 0.9rem;
-        }
-
-        h1 {
-            font-size: 3rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-        }
-
-        h1 span {
-            color: #d946ef; /* Rosa/Roxo vibrante */
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            max-width: 700px;
-            margin: 0 auto 50px auto;
-        }
-
-        /* --- CARDS INFERIORES --- */
+        /* --- ACTION CARDS --- */
         .action-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            padding: 0 20px 50px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px; padding: 0 20px 40px 20px; max-width: 1200px; margin: 0 auto;
         }
-
         .card {
-            background: white;
-            padding: 20px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
-            transition: transform 0.3s;
-            cursor: pointer;
-            border: 1px solid transparent;
+            background: white; padding: 20px; border-radius: 16px;
+            display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03); transition: transform 0.3s;
+            cursor: pointer; border: 1px solid transparent;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #e0e7ff;
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.1);
-        }
-
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        /* Cores específicas para cada ícone */
+        .card:hover { transform: translateY(-5px); border-color: #e0e7ff; box-shadow: 0 15px 30px rgba(99, 102, 241, 0.1); }
+        .card-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        
         .icon-study { background: #e0f2fe; color: #0284c7; }
         .icon-flash { background: #fef3c7; color: #d97706; }
         .icon-msg { background: #f3e8ff; color: #9333ea; }
         .icon-chart { background: #dcfce7; color: #16a34a; }
+        .card-text { font-weight: 700; color: var(--text-dark); font-size: 1rem; }
 
-        .card-text {
-            font-weight: 700;
-            color: var(--text-dark);
-            font-size: 1rem;
+        /* --- NOVA SEÇÃO: CURSOS (Estilo Novo) --- */
+        .section-title {
+            max-width: 1200px; margin: 0 auto 20px auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .section-title h2 { font-size: 1.5rem; color: var(--text-dark); margin: 0; }
+        .section-title a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+
+        .course-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px; padding: 0 20px 60px 20px; max-width: 1200px; margin: 0 auto;
         }
 
-        /* Responsividade */
+        .course-card {
+            background: white; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;
+            border: 1px solid #f1f5f9;
+        }
+        .course-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+
+        .course-img {
+            width: 100%; height: 160px; object-fit: cover;
+            background-color: #e2e8f0;
+        }
+        
+        .course-content { padding: 20px; }
+        
+        .tag {
+            background: #dbeafe; color: #1e40af; padding: 4px 10px;
+            border-radius: 4px; font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; display: inline-block; margin-bottom: 10px;
+        }
+
+        .course-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; color: var(--text-dark); }
+        
+        .progress-area { margin-top: 15px; }
+        .progress-bar-bg { width: 100%; height: 6px; background: #f1f5f9; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary); border-radius: 10px; }
+        .progress-text { font-size: 0.8rem; color: var(--text-gray); margin-top: 5px; display: flex; justify-content: space-between; }
+
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
-            .nav-icons { display: none; } /* Esconde menu complexo no celular por enquanto */
+            .nav-icons { display: none; }
         }
     </style>
 </head>
@@ -257,42 +181,87 @@
             <h1>O ecossistema digital<br><span>da fisioterapia</span></h1>
             
             <p class="subtitle">
-                Unindo aprendizado interativo, comunidade engajada e recursos profissionais em uma plataforma completa para fisioterapeutas e estudantes.
+                Unindo aprendizado interativo, comunidade engajada e recursos profissionais em uma plataforma completa.
             </p>
         </section>
 
         <section class="action-cards">
             <div class="card">
-                <div class="card-icon icon-study">
-                    <i class="fa-solid fa-book"></i>
-                </div>
+                <div class="card-icon icon-study"><i class="fa-solid fa-book"></i></div>
                 <div class="card-text">Continuar Estudando</div>
             </div>
-
             <div class="card">
-                <div class="card-icon icon-flash">
-                    <i class="fa-solid fa-bolt"></i>
-                </div>
+                <div class="card-icon icon-flash"><i class="fa-solid fa-bolt"></i></div>
                 <div class="card-text">Desafio do Dia</div>
             </div>
-
             <div class="card">
-                <div class="card-icon icon-msg">
-                    <i class="fa-regular fa-comments"></i>
-                </div>
+                <div class="card-icon icon-msg"><i class="fa-regular fa-comments"></i></div>
                 <div class="card-text">Novas Mensagens</div>
             </div>
-
             <div class="card">
-                <div class="card-icon icon-chart">
-                    <i class="fa-solid fa-chart-column"></i>
-                </div>
+                <div class="card-icon icon-chart"><i class="fa-solid fa-chart-column"></i></div>
                 <div class="card-text">Meu Progresso</div>
             </div>
         </section>
-    </main>
 
-</body>
-</html>
+        <div class="section-title">
+            <h2>📚 Meus Cursos em Andamento</h2>
+            <a href="#">Ver todos <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <section class="course-grid">
+            <div class="course-card">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="course-img" alt="Anatomia">
+                <div class="course-content">
+                    <span class="tag">Anatomia Humana</span>
+                    <div class="course-title">Sistema Musculoesquelético II</div>
+                    <div class="progress-area">
+                        <div class="progress-bar-bg">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Módulo 3/4</span>
+                            <span>75%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <img src="https://images.unsplash.com/photo-1579126038374-6064e9370f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="course-img" alt="Fisioterapia Desportiva">
+                <div class="course-content">
+                    <span class="tag">Esportiva</span>
+                    <div class="course-title">Reabilitação de Joelho em Atletas</div>
+                    <div class="progress-area">
+                        <div class="progress-bar-bg">
+                            <div class="progress-fill" style="width: 30%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Módulo 1/5</span>
+                            <span>30%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <img src="https://images.unsplash.com/photo-1544367563-12123d8965cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="course-img" alt="Terapia Manual">
+                <div class="course-content">
+                    <span class="tag">Terapia Manual</span>
+                    <div class="course-title">Técnicas de Liberação Miofascial</div>
+                    <div class="progress-area">
+                        <div class="progress-bar-bg">
+                            <div class="progress-fill" style="width: 10%;"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Início</span>
+                            <span>10%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
 </body>
 </html>
