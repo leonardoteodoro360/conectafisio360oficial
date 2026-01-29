@@ -1,69 +1,183 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- ✅ POLÍTICA DE SEGURANÇA CORRIGIDA -->
-    <meta http-equiv="Content-Security-Policy" 
-          content="default-src 'self' blob: data: gap: http://10.1.14.164:3000 http://10.1.14.164:3089 'unsafe-eval' 'unsafe-inline' https://*.googleapis.com https://*.firebaseio.com https://*.firebasestorage.app https://securetoken.googleapis.com;
-                   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.firebaseapp.com;
-                   connect-src 'self' http://10.1.14.164:3000 http://10.1.14.164:3089 ws://10.1.14.164:3000 ws://10.1.14.164:3089 https://*.googleapis.com https://securetoken.googleapis.com wss://*.firebaseio.com https://*.firebasestorage.app;
-                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-                   font-src 'self' data: https://fonts.gstatic.com;
-                   img-src 'self' data: blob: https: http:;
-                   media-src 'self' blob: data:;
-                   frame-src 'self' https:;">
-    
-    <title>ConectaFisio360 - Plataforma Completa de Fisioterapia</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conecta Fisio 360 - Ecossistema Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: #f8fafc;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-      }
-      
-      /* Loading inicial melhorado */
-      #root:empty::before {
-        content: "🏥 ConectaFisio360";
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        font-size: 24px;
-        color: #2563eb;
-        font-weight: 700;
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        position: relative;
-      }
+        /* --- CONFIGURAÇÕES GERAIS --- */
+        :root {
+            --primary: #0056b3; /* Azul Profissional */
+            --secondary: #00d2d3; /* Azul Turquesa Tecnológico */
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+        }
 
-      #root:empty::after {
-        content: "Carregando a plataforma completa de fisioterapia...";
-        position: absolute;
-        top: 60%;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 16px;
-        color: #64748b;
-        font-weight: 400;
-        white-space: nowrap;
-      }
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
 
-      #root:not(:empty) {
-        min-height: 100vh;
-      }
+        /* --- CABEÇALHO --- */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo span { color: var(--secondary); }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            margin-left: 20px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--secondary); }
+
+        .btn-cta {
+            background: var(--primary);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-cta:hover { background: #004494; transform: scale(1.05); }
+
+        /* --- HERO (PARTE PRINCIPAL) --- */
+        .hero {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            height: 100vh; /* Tela cheia */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            margin-top: 60px; /* Compensar o menu fixo */
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* --- SERVIÇOS (CARDS) --- */
+        .features {
+            padding: 80px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .card:hover { transform: translateY(-10px); }
+
+        .card h3 { margin-top: 0; color: var(--primary); }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
     </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">Conecta<span>Fisio360</span></a>
+            <div class="nav-links">
+                <a href="#sobre">Sobre</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#contato" class="btn-cta">Agendar Agora</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>O Futuro da Fisioterapia</h1>
+            <p>Plataforma completa para fisioterapeutas e pacientes. Agendamentos, telemedicina e cursos em um único ecossistema digital.</p>
+            <a href="#contato" class="btn-cta">Começar Agora</a>
+        </div>
+    </section>
+
+    <section class="features" id="servicos">
+        <h2>Nosso Ecossistema</h2>
+        <p>Tudo o que você precisa para evoluir sua saúde ou sua carreira.</p>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>📅 Para Pacientes</h3>
+                <p>Encontre especialistas, agende consultas presenciais ou online e acompanhe seu tratamento pelo app.</p>
+            </div>
+            <div class="card">
+                <h3>🎓 Para Estudantes</h3>
+                <p>Acesso a cursos exclusivos, materiais de anatomia 3D e mentorias com grandes profissionais.</p>
+            </div>
+            <div class="card">
+                <h3>💼 Para Profissionais</h3>
+                <p>Gestão de clínica, prontuário eletrônico e marketing para alavancar sua carreira.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Conecta Fisio 360 - Todos os direitos reservados.</p>
+    </footer>
+
+</body>
 </html>
