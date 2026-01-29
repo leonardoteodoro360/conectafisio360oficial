@@ -3,66 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistindo Aula - ConectaFisio</title>
+    <title>Painel Premium - ConectaFisio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; font-family: 'Nunito', sans-serif; background-color: #1e293b; color: white; display: flex; height: 100vh; overflow: hidden; }
+        :root { --primary: #6366f1; --dark: #1e293b; --bg: #f3f4f6; }
+        body { font-family: 'Nunito', sans-serif; margin: 0; background-color: var(--bg); color: var(--dark); }
         
-        /* MENU LATERAL */
-        .sidebar { width: 300px; background: #0f172a; border-right: 1px solid #334155; display: flex; flex-direction: column; }
-        .sidebar-header { padding: 20px; border-bottom: 1px solid #334155; }
-        .back-btn { color: #94a3b8; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; transition: 0.2s; }
-        .back-btn:hover { color: white; }
+        /* --- MENU SUPERIOR PREMIUM --- */
+        header { background: white; padding: 10px 30px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.03); position: sticky; top: 0; z-index: 100; }
         
-        .module-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; }
-        .module-item { padding: 15px 20px; border-bottom: 1px solid #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
-        .module-item:hover { background: #1e293b; }
-        .module-item.active { background: #334155; border-left: 4px solid #6366f1; }
+        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.4rem; color: var(--primary); text-decoration: none; }
+        .logo-icon { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
 
-        /* ÁREA DO VÍDEO */
-        .main-content { flex: 1; display: flex; flex-direction: column; }
-        .video-container { flex: 1; background: black; display: flex; align-items: center; justify-content: center; }
-        iframe { width: 100%; height: 100%; border: none; }
+        .main-menu { display: flex; gap: 10px; }
+        .menu-item { display: flex; align-items: center; gap: 8px; padding: 8px 15px; border-radius: 8px; text-decoration: none; color: #64748b; font-weight: 700; font-size: 0.9rem; transition: 0.2s; }
+        .menu-item:hover { background: #f1f5f9; color: var(--primary); }
+        .menu-item.active { background: #e0e7ff; color: var(--primary); }
+        .badge-new { background: #ef4444; color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 10px; margin-left: -5px; margin-top: -10px; }
 
-        .video-info { padding: 20px; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
-        .btn-next { background: #6366f1; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .user-actions { display: flex; align-items: center; gap: 20px; }
+        .icon-btn { color: #64748b; font-size: 1.2rem; cursor: pointer; position: relative; }
+        .notif-dot { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; border: 2px solid white; }
+        .avatar { width: 35px; height: 35px; background: #cbd5e1; border-radius: 50%; overflow: hidden; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        @media(max-width: 768px) {
-            body { flex-direction: column; height: auto; }
-            .sidebar { width: 100%; height: 300px; order: 2; }
-            .video-container { height: 300px; }
-        }
+        /* --- HERO --- */
+        .hero-banner { background: white; margin: 20px; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        .hero-banner h1 { font-size: 2.2rem; margin: 0 0 10px 0; color: var(--dark); }
+        .hero-banner p { color: #64748b; max-width: 600px; margin: 0 auto; }
+        
+        /* --- GRID DE CONTEÚDO --- */
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 20px 40px 20px; }
+        
+        .section-title { grid-column: 1 / -1; margin-top: 20px; font-size: 1.3rem; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* CARD DE CURSO (ESTILO APP) */
+        .course-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; border: 1px solid transparent; }
+        .course-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px rgba(99, 102, 241, 0.15); }
+        .card-img { height: 140px; background: #e2e8f0; position: relative; }
+        .play-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.2s; }
+        .course-card:hover .play-overlay { opacity: 1; }
+        
+        .card-body { padding: 15px; }
+        .tag { font-size: 0.7rem; font-weight: 800; color: var(--primary); background: #e0e7ff; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; }
+        .card-title { font-weight: 800; margin: 10px 0 5px 0; font-size: 1rem; }
+        .progress-bar { height: 6px; background: #f1f5f9; border-radius: 10px; margin-top: 15px; overflow: hidden; }
+        .fill { height: 100%; background: var(--primary); border-radius: 10px; }
+
+        @media(max-width: 900px) { .main-menu { display: none; } header { padding: 15px; } }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Voltar ao Painel</a>
-            <h3 style="margin:0;">Anatomia Humana</h3>
-            <p style="margin:5px 0 0 0; font-size:0.8rem; color:#94a3b8;">Módulo 1: Introdução</p>
+    <header>
+        <a href="index.html" class="logo-area">
+            <div class="logo-icon"><i class="fa-solid fa-globe"></i></div>
+            ConectaFisio
+        </a>
+
+        <nav class="main-menu">
+            <a href="#" class="menu-item active"><i class="fa-solid fa-house"></i> Início</a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-book-open"></i> Cursos</a>
+            <a href="modelos.html" class="menu-item">
+                <i class="fa-solid fa-cube"></i> Modelos 3D <span class="badge-new">Novo</span>
+            </a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-gamepad"></i> FisioArena</a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Comunidade</a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-store"></i> Loja</a>
+        </nav>
+
+        <div class="user-actions">
+            <div class="icon-btn"><i class="fa-regular fa-comment-dots"></i></div>
+            <div class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></div>
+            <div class="avatar"><img src="https://ui-avatars.com/api/?name=Leo+Teodoro&background=6366f1&color=fff" width="100%"></div>
         </div>
-        <ul class="module-list">
-            <li class="module-item active">
-                <span>01. Introdução à Fisiologia</span>
-                <i class="fa-solid fa-circle-play" style="color:#6366f1;"></i>
-            </li>
-            <li class="module-item"><span>02. Posição Anatômica</span> <i class="fa-regular fa-circle-play"></i></li>
-            <li class="module-item"><span>03. Planos e Eixos</span> <i class="fa-regular fa-circle-play"></i></li>
-        </ul>
+    </header>
+
+    <div class="hero-banner">
+        <h1>O ecossistema digital da fisioterapia</h1>
+        <p>Unindo aprendizado interativo, comunidade engajada e recursos profissionais em uma plataforma completa.</p>
     </div>
 
-    <div class="main-content">
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/uBGl2BujkPQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="content-grid">
+        <div class="section-title">
+            <h3>📚 Continue assistindo</h3>
         </div>
-        <div class="video-info">
-            <div>
-                <h2 style="margin:0; font-size:1.2rem;">Aula 01: Introdução ao Corpo Humano</h2>
-                <p style="margin:5px 0 0 0; color:#94a3b8;">Prof. Convidado</p>
+
+        <a href="aula.html" class="course-card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'); background-size: cover;">
+                <div class="play-overlay"><i class="fa-solid fa-play-circle" style="color:white; font-size:3rem;"></i></div>
             </div>
-            <button class="btn-next">Próxima Aula <i class="fa-solid fa-forward"></i></button>
+            <div class="card-body">
+                <span class="tag">Anatomia</span>
+                <div class="card-title">Sistema Musculoesquelético</div>
+                <div style="font-size:0.8rem; color:#64748b;">Módulo 1: Introdução</div>
+                <div class="progress-bar"><div class="fill" style="width: 75%;"></div></div>
+            </div>
+        </a>
+
+        <div class="course-card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'); background-size: cover;"></div>
+            <div class="card-body">
+                <span class="tag">Esportiva</span>
+                <div class="card-title">Prevenção de Lesões no Futebol</div>
+                <div style="font-size:0.8rem; color:#64748b;">Módulo 1: Biomecânica</div>
+                <div class="progress-bar"><div class="fill" style="width: 30%;"></div></div>
+            </div>
         </div>
     </div>
 
