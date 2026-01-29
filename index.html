@@ -3,265 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConectaFisio - Ecossistema Digital</title>
+    <title>ConectaFisio - Portal do Aluno</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CONFIGURAÇÕES GERAIS (Mantidas) --- */
+        /* --- CONFIGURAÇÕES GERAIS --- */
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
             --accent: #f59e0b;
-            --bg-body: #f0f9ff;
+            --bg-body: #f8fafc;
             --text-dark: #1e293b;
             --text-gray: #64748b;
         }
 
         body {
             font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--bg-body);
             color: var(--text-dark);
-            padding-bottom: 50px;
+            padding-bottom: 60px;
         }
 
         /* --- HEADER --- */
         header {
-            background: white;
-            padding: 10px 20px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background: white; padding: 12px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            position: sticky; top: 0; z-index: 1000;
         }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #e0e7ff 0%, #fff 100%);
-            padding: 8px 15px;
-            border-radius: 12px;
-            border: 1px solid #e0e7ff;
-        }
-
-        .logo-icon { font-size: 24px; color: var(--primary); }
-        .logo-text { font-weight: 800; font-size: 1.2rem; color: var(--primary-dark); }
-
-        .nav-icons { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
-        @media(min-width: 900px) { .nav-icons { margin-top: 0; } }
-
-        .nav-item {
-            display: flex; align-items: center; gap: 8px; padding: 8px 12px;
-            border-radius: 8px; color: var(--text-gray); text-decoration: none;
-            font-weight: 600; font-size: 0.9rem; transition: 0.3s;
-        }
-        .nav-item:hover { background-color: #f1f5f9; color: var(--primary); }
-        .nav-item i { font-size: 1.1rem; }
-        .nav-item.active { background-color: var(--primary); color: white; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); }
-
-        .user-profile { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 700; }
-        .notification-badge { position: relative; margin-right: 15px; cursor: pointer; }
-        .badge-count { position: absolute; top: -5px; right: -8px; background: #ef4444; color: white; font-size: 10px; padding: 2px 5px; border-radius: 10px; }
-
-        /* --- HERO --- */
-        .hero { text-align: center; padding: 60px 20px 40px 20px; max-width: 1000px; margin: 0 auto; }
-        .launch-badge { background: white; display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 50px; font-weight: 700; color: var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; font-size: 0.9rem; }
-        h1 { font-size: 3rem; line-height: 1.1; margin-bottom: 20px; color: var(--text-dark); }
-        h1 span { color: #d946ef; }
-        .subtitle { font-size: 1.2rem; color: var(--text-gray); max-width: 700px; margin: 0 auto 40px auto; }
-
-        /* --- ACTION CARDS --- */
-        .action-cards {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px; padding: 0 20px 40px 20px; max-width: 1200px; margin: 0 auto;
-        }
-        .card {
-            background: white; padding: 20px; border-radius: 16px;
-            display: flex; align-items: center; gap: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03); transition: transform 0.3s;
-            cursor: pointer; border: 1px solid transparent;
-        }
-        .card:hover { transform: translateY(-5px); border-color: #e0e7ff; box-shadow: 0 15px 30px rgba(99, 102, 241, 0.1); }
-        .card-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-        
-        .icon-study { background: #e0f2fe; color: #0284c7; }
-        .icon-flash { background: #fef3c7; color: #d97706; }
-        .icon-msg { background: #f3e8ff; color: #9333ea; }
-        .icon-chart { background: #dcfce7; color: #16a34a; }
-        .card-text { font-weight: 700; color: var(--text-dark); font-size: 1rem; }
-
-        /* --- NOVA SEÇÃO: CURSOS (Estilo Novo) --- */
-        .section-title {
-            max-width: 1200px; margin: 0 auto 20px auto; padding: 0 20px;
+        .header-content {
+            max-width: 1200px; margin: 0 auto;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .section-title h2 { font-size: 1.5rem; color: var(--text-dark); margin: 0; }
-        .section-title a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
-
-        .course-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px; padding: 0 20px 60px 20px; max-width: 1200px; margin: 0 auto;
+        .logo-area {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 800; font-size: 1.3rem; color: var(--primary-dark);
+        }
+        .user-area { display: flex; align-items: center; gap: 15px; }
+        .avatar {
+            width: 40px; height: 40px; background: #e0e7ff; color: var(--primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
+        /* --- HERO --- */
+        .hero {
+            background: linear-gradient(120deg, #6366f1 0%, #8b5cf6 100%);
+            color: white; padding: 40px 20px; margin-bottom: 30px;
+            text-align: center;
+        }
+        .hero h1 { margin: 0 0 10px 0; font-size: 2rem; }
+        .hero p { opacity: 0.9; font-size: 1.1rem; margin-bottom: 20px; }
+        .hero-stats {
+            display: flex; justify-content: center; gap: 30px;
+            background: rgba(255,255,255,0.15);
+            display: inline-flex; padding: 10px 30px; border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+        .stat-item i { color: #fbbf24; margin-right: 5px; }
+
+        /* --- CONTAINER PRINCIPAL --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- TÍTULOS DE SEÇÃO --- */
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; margin-top: 40px;
+        }
+        .section-header h2 { font-size: 1.4rem; color: var(--text-dark); margin: 0; }
+        .see-all { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+
+        /* --- CURSOS EM ANDAMENTO (BARRA DE PROGRESSO) --- */
+        .progress-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+        }
+        .progress-card {
+            background: white; padding: 20px; border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03); display: flex; gap: 15px;
+            border: 1px solid #f1f5f9; transition: 0.3s;
+        }
+        .progress-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+        .course-thumb-small {
+            width: 70px; height: 70px; border-radius: 10px; object-fit: cover; background: #cbd5e1;
+        }
+        .progress-info { flex: 1; }
+        .progress-info h4 { margin: 0 0 5px 0; font-size: 1rem; }
+        .bar-bg { width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; margin-top: 10px; }
+        .bar-fill { height: 100%; background: var(--primary); border-radius: 10px; }
+        .meta { font-size: 0.8rem; color: var(--text-gray); margin-top: 5px; display: flex; justify-content: space-between; }
+
+        /* --- CATEGORIAS (BOLINHAS) --- */
+        .categories-row {
+            display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px;
+        }
+        .cat-item {
+            display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 80px; cursor: pointer;
+        }
+        .cat-icon {
+            width: 60px; height: 60px; border-radius: 50%; background: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s;
+        }
+        .cat-item:hover .cat-icon { background: var(--primary); color: white; transform: scale(1.1); }
+        .cat-name { font-size: 0.85rem; font-weight: 600; color: var(--text-gray); }
+
+        /* --- VITRINE DE CURSOS (CARDS GRANDES) --- */
+        .courses-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px;
+        }
         .course-card {
             background: white; border-radius: 16px; overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;
-            border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; position: relative;
         }
         .course-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-
-        .course-img {
-            width: 100%; height: 160px; object-fit: cover;
-            background-color: #e2e8f0;
+        .course-img { width: 100%; height: 150px; object-fit: cover; }
+        .badge {
+            position: absolute; top: 10px; left: 10px;
+            background: var(--accent); color: white;
+            padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 800;
         }
-        
-        .course-content { padding: 20px; }
-        
-        .tag {
-            background: #dbeafe; color: #1e40af; padding: 4px 10px;
-            border-radius: 4px; font-size: 0.75rem; font-weight: 700;
-            text-transform: uppercase; display: inline-block; margin-bottom: 10px;
-        }
+        .card-body { padding: 15px; }
+        .card-tag { color: var(--primary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .card-title { font-weight: 700; font-size: 1rem; margin: 5px 0; line-height: 1.4; }
+        .instructor { display: flex; align-items: center; gap: 8px; margin-top: 15px; font-size: 0.85rem; color: var(--text-gray); }
+        .instructor img { width: 24px; height: 24px; border-radius: 50%; background: #ddd; }
 
-        .course-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; color: var(--text-dark); }
-        
-        .progress-area { margin-top: 15px; }
-        .progress-bar-bg { width: 100%; height: 6px; background: #f1f5f9; border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--primary); border-radius: 10px; }
-        .progress-text { font-size: 0.8rem; color: var(--text-gray); margin-top: 5px; display: flex; justify-content: space-between; }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            .nav-icons { display: none; }
-        }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-area">
-            <i class="fa-solid fa-globe logo-icon"></i>
-            <div class="logo-text">ConectaFisio</div>
-        </div>
-
-        <nav class="nav-icons">
-            <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> Início</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-book-open"></i> Cursos</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-cube"></i> Modelos 3D</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-gamepad"></i> FisioArena</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-users"></i> Comunidades</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-cart-shopping"></i> Loja</a>
-        </nav>
-
-        <div class="user-profile">
-            <div class="notification-badge">
-                <i class="fa-regular fa-bell" style="font-size: 1.2rem;"></i>
-                <span class="badge-count">2</span>
+        <div class="header-content">
+            <div class="logo-area">
+                <i class="fa-solid fa-layer-group"></i> ConectaFisio
             </div>
-            <div>
-                <span style="display:block; font-size: 0.8rem; color: #888;">Usuário</span>
-                Visitante <i class="fa-solid fa-star" style="color: gold;"></i>
+            <div class="user-area">
+                <i class="fa-regular fa-bell" style="font-size: 1.2rem; color: var(--text-gray);"></i>
+                <div class="avatar">U</div>
             </div>
         </div>
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="launch-badge">
-                <i class="fa-solid fa-star" style="color: var(--accent);"></i> Plataforma Lançamento 2026
-            </div>
+    <section class="hero">
+        <h1>Olá, Leonardo! 👋</h1>
+        <p>Você tem 2 aulas pendentes para hoje.</p>
+        <div class="hero-stats">
+            <span class="stat-item"><i class="fa-solid fa-fire"></i> 5 dias seguidos</span>
+            <span class="stat-item"><i class="fa-solid fa-trophy"></i> 1.250 pts</span>
+        </div>
+    </section>
 
-            <h1>O ecossistema digital<br><span>da fisioterapia</span></h1>
-            
-            <p class="subtitle">
-                Unindo aprendizado interativo, comunidade engajada e recursos profissionais em uma plataforma completa.
-            </p>
-        </section>
+    <div class="container">
 
-        <section class="action-cards">
-            <div class="card">
-                <div class="card-icon icon-study"><i class="fa-solid fa-book"></i></div>
-                <div class="card-text">Continuar Estudando</div>
-            </div>
-            <div class="card">
-                <div class="card-icon icon-flash"><i class="fa-solid fa-bolt"></i></div>
-                <div class="card-text">Desafio do Dia</div>
-            </div>
-            <div class="card">
-                <div class="card-icon icon-msg"><i class="fa-regular fa-comments"></i></div>
-                <div class="card-text">Novas Mensagens</div>
-            </div>
-            <div class="card">
-                <div class="card-icon icon-chart"><i class="fa-solid fa-chart-column"></i></div>
-                <div class="card-text">Meu Progresso</div>
-            </div>
-        </section>
-
-        <div class="section-title">
-            <h2>📚 Meus Cursos em Andamento</h2>
-            <a href="#">Ver todos <i class="fa-solid fa-arrow-right"></i></a>
+        <div class="section-header">
+            <h2>📚 Continue assistindo</h2>
         </div>
 
-        <section class="course-grid">
+        <div class="progress-grid">
+            <div class="progress-card">
+                <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=100&q=60" class="course-thumb-small">
+                <div class="progress-info">
+                    <h4>Anatomia Palpatória</h4>
+                    <div class="meta"><span>Módulo 3: Ombro</span> <span>75%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 75%;"></div></div>
+                </div>
+            </div>
+            <div class="progress-card">
+                <img src="https://images.unsplash.com/photo-1576091160550-217358c7e618?auto=format&fit=crop&w=100&q=60" class="course-thumb-small">
+                <div class="progress-info">
+                    <h4>Biomecânica Clínica</h4>
+                    <div class="meta"><span>Aula 2: Vetores</span> <span>30%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: 30%;"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>🔍 Explorar Áreas</h2>
+        </div>
+        <div class="categories-row">
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fa-solid fa-bone"></i></div>
+                <span class="cat-name">Traumato</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fa-solid fa-brain"></i></div>
+                <span class="cat-name">Neuro</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                <span class="cat-name">Cardio</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fa-solid fa-child"></i></div>
+                <span class="cat-name">Pediatria</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fa-solid fa-person-running"></i></div>
+                <span class="cat-name">Esportiva</span>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>🔥 Em alta na comunidade</h2>
+            <a href="#" class="see-all">Ver tudo</a>
+        </div>
+
+        <div class="courses-grid">
             <div class="course-card">
-                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="course-img" alt="Anatomia">
-                <div class="course-content">
-                    <span class="tag">Anatomia Humana</span>
-                    <div class="course-title">Sistema Musculoesquelético II</div>
-                    <div class="progress-area">
-                        <div class="progress-bar-bg">
-                            <div class="progress-fill" style="width: 75%;"></div>
-                        </div>
-                        <div class="progress-text">
-                            <span>Módulo 3/4</span>
-                            <span>75%</span>
-                        </div>
+                <span class="badge">NOVO</span>
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="course-img">
+                <div class="card-body">
+                    <div class="card-tag">Terapia Manual</div>
+                    <div class="card-title">Domine a Liberação Miofascial Instrumental</div>
+                    <div class="instructor">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg">
+                        <span>Dr. André Silva</span>
                     </div>
                 </div>
             </div>
 
             <div class="course-card">
-                <img src="https://images.unsplash.com/photo-1579126038374-6064e9370f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="course-img" alt="Fisioterapia Desportiva">
-                <div class="course-content">
-                    <span class="tag">Esportiva</span>
-                    <div class="course-title">Reabilitação de Joelho em Atletas</div>
-                    <div class="progress-area">
-                        <div class="progress-bar-bg">
-                            <div class="progress-fill" style="width: 30%;"></div>
-                        </div>
-                        <div class="progress-text">
-                            <span>Módulo 1/5</span>
-                            <span>30%</span>
-                        </div>
+                <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="course-img">
+                <div class="card-body">
+                    <div class="card-tag">Fisioterapia Esportiva</div>
+                    <div class="card-title">Prevenção de Lesão no LCA: Protocolo 2024</div>
+                    <div class="instructor">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg">
+                        <span>Dra. Carla Mendes</span>
                     </div>
                 </div>
             </div>
 
             <div class="course-card">
-                <img src="https://images.unsplash.com/photo-1544367563-12123d8965cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="course-img" alt="Terapia Manual">
-                <div class="course-content">
-                    <span class="tag">Terapia Manual</span>
-                    <div class="course-title">Técnicas de Liberação Miofascial</div>
-                    <div class="progress-area">
-                        <div class="progress-bar-bg">
-                            <div class="progress-fill" style="width: 10%;"></div>
-                        </div>
-                        <div class="progress-text">
-                            <span>Início</span>
-                            <span>10%</span>
-                        </div>
+                <span class="badge" style="background: #ef4444;">LIVE</span>
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="course-img">
+                <div class="card-body">
+                    <div class="card-tag">Gestão</div>
+                    <div class="card-title">Como lotar sua agenda usando Instagram</div>
+                    <div class="instructor">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg">
+                        <span>Mkt. Lucas F.</span>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-    </main>
+    </div>
+
 </body>
 </html>
