@@ -1,0 +1,25 @@
+/* assets/css/vercel-fix.css */
+/* REMOVE TODOS OS ESTILOS DO VERCEL */
+.geist_*,
+[class*="geist"],
+[class*="ds-"] {
+    all: unset !important;
+}
+
+/* RESTAURA SEUS ESTILOS */
+body {
+    background-color: #f8fafc !important;
+    font-family: 'Nunito', sans-serif !important;
+    color: #64748b !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+}
+
+/* Remove variáveis do Vercel */
+:root {
+    --primary: #6366f1 !important;
+    --bg: #f8fafc !important;
+    --text: #64748b !important;
+    /* SUAS variáveis aqui */
+}
