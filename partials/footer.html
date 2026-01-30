@@ -1,49 +1,80 @@
-<!-- partials/footer.html - Rodapé do site -->
+<!-- partials/footer.html - Rodapé do ConectaFisio360 -->
 <footer class="conectafisio-footer">
     <div class="footer-content">
         <div class="footer-section">
             <h3><span class="logo-emoji">🐟</span> ConectaFisio360</h3>
             <p>Transformando a fisioterapia através da educação e tecnologia.</p>
+            <div class="footer-social">
+                <a href="#" class="social-link" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-link" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" class="social-link" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="social-link" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
         </div>
         
         <div class="footer-section">
             <h4>📚 Cursos</h4>
-            <a href="../pages/aula.html">Anatomia</a>
-            <a href="../pages/aula.html">Esportiva</a>
-            <a href="../pages/aula.html">Ortopedia</a>
+            <a href="../pages/aula.html" class="footer-link">Anatomia</a>
+            <a href="../pages/aula.html" class="footer-link">Esportiva</a>
+            <a href="../pages/aula.html" class="footer-link">Ortopedia</a>
+            <a href="../pages/aula.html" class="footer-link">Neurologia</a>
+            <a href="../pages/aula.html" class="footer-link">Respiratória</a>
         </div>
         
         <div class="footer-section">
             <h4>⚡ Plataforma</h4>
-            <a href="../pages/dashboard.html">Painel do Aluno</a>
-            <a href="../pages/comunidade.html">Comunidade</a>
-            <a href="../pages/arena.html">FisioArena</a>
+            <a href="../pages/dashboard.html" class="footer-link">Painel do Aluno</a>
+            <a href="../pages/comunidade.html" class="footer-link">Comunidade</a>
+            <a href="../pages/modelos.html" class="footer-link">Modelos 3D</a>
+            <a href="../pages/arena.html" class="footer-link">FisioArena</a>
+            <a href="../pages/loja.html" class="footer-link">Loja</a>
         </div>
         
         <div class="footer-section">
             <h4>📞 Contato</h4>
-            <p>contato@conectafisio.com</p>
-            <p>(11) 99999-9999</p>
-            <div class="social-links">
-                <a href="#">📘</a>
-                <a href="#">📸</a>
-                <a href="#">🎬</a>
+            <p><i class="fas fa-envelope"></i> contato@conectafisio.com</p>
+            <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
+            <p><i class="fas fa-map-marker-alt"></i> São Paulo, Brasil</p>
+            
+            <div class="newsletter">
+                <p>Receba novidades:</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Seu email" required>
+                    <button type="submit">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
     
     <div class="footer-bottom">
         <p>© 2024 ConectaFisio360 | Desenvolvido por <strong>Leonardo Teodoro</strong></p>
+        <div class="footer-links">
+            <a href="#">Política de Privacidade</a>
+            <a href="#">Termos de Uso</a>
+            <a href="#">FAQ</a>
+        </div>
     </div>
 </footer>
 
 <style>
+/* ===== ESTILOS DO FOOTER ===== */
 .conectafisio-footer {
-    background: #1e293b;
-    color: white;
-    padding: 40px 20px 20px;
-    margin-top: 60px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #cbd5e1;
+    padding: 50px 20px 20px;
+    margin-top: 80px;
     border-top: 3px solid #6366f1;
+    font-family: 'Nunito', sans-serif;
 }
 
 .footer-content {
@@ -52,89 +83,210 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 40px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .footer-content {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .footer-content {
         grid-template-columns: 1fr;
     }
 }
 
+/* Seções do Footer */
 .footer-section h3 {
     color: #6366f1;
+    font-size: 1.4rem;
     margin-bottom: 15px;
-    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .footer-section h4 {
-    color: #cbd5e1;
-    margin-bottom: 15px;
+    color: #e2e8f0;
     font-size: 1.1rem;
-}
-
-.footer-section a {
-    display: block;
-    color: #94a3b8;
-    text-decoration: none;
-    margin-bottom: 8px;
-    transition: color 0.3s;
-}
-
-.footer-section a:hover {
-    color: white;
-    transform: translateX(5px);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #6366f1;
+    display: inline-block;
 }
 
 .footer-section p {
-    color: #94a3b8;
     line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+/* Links */
+.footer-link {
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
     margin-bottom: 10px;
+    transition: all 0.3s;
+    font-size: 0.95rem;
 }
 
-.logo-emoji {
-    font-size: 1.2em;
-    margin-right: 5px;
+.footer-link:hover {
+    color: #ffffff;
+    transform: translateX(5px);
 }
 
-.social-links {
+/* Social */
+.footer-social {
     display: flex;
     gap: 15px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
-.social-links a {
-    display: inline-flex;
+.social-link {
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: rgba(255,255,255,0.1);
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
+    color: white;
     font-size: 1.2rem;
     transition: all 0.3s;
 }
 
-.social-links a:hover {
+.social-link:hover {
     background: #6366f1;
     transform: translateY(-3px);
 }
 
+/* Newsletter */
+.newsletter {
+    margin-top: 20px;
+}
+
+.newsletter p {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 5px;
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 0.9rem;
+}
+
+.newsletter-form input::placeholder {
+    color: #94a3b8;
+}
+
+.newsletter-form button {
+    background: #6366f1;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1.1rem;
+}
+
+.newsletter-form button:hover {
+    background: #4f46e5;
+}
+
+/* Footer Bottom */
 .footer-bottom {
     border-top: 1px solid #334155;
     padding-top: 20px;
-    text-align: center;
-    color: #94a3b8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
     font-size: 0.9rem;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #94a3b8;
 }
 
 .footer-bottom strong {
     color: #6366f1;
 }
+
+.footer-links {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+/* Ícones */
+.footer-section i {
+    margin-right: 8px;
+    color: #6366f1;
+    width: 18px;
+    text-align: center;
+}
+
+.logo-emoji {
+    font-size: 1.5rem;
+}
 </style>
+
+<script>
+// Script do footer
+document.addEventListener('DOMContentLoaded', function() {
+    // Newsletter form
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input[type="email"]');
+            const email = emailInput.value.trim();
+            
+            if (email) {
+                // Simulação de cadastro
+                alert(`Obrigado! Você será notificado em: ${email}`);
+                emailInput.value = '';
+                emailInput.focus();
+            } else {
+                alert('Por favor, digite um email válido.');
+            }
+        });
+    }
+    
+    // Adiciona ano atual dinamicamente
+    const yearSpan = document.querySelector('#current-year');
+    if (!yearSpan) {
+        const copyrightText = document.querySelector('.footer-bottom p');
+        if (copyrightText) {
+            copyrightText.innerHTML = copyrightText.innerHTML.replace('2024', new Date().getFullYear());
+        }
+    }
+});
+</script>
