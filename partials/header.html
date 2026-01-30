@@ -1,0 +1,117 @@
+<!-- header.html - Cabeçalho usado em todas as páginas -->
+
+<header class="main-header">
+    <div class="container header-content">
+        <a href="../index.html" class="logo">
+            <div class="logo-icon">🐟</div>
+            <span>ConectaFisio360</span>
+        </a>
+        
+        <nav class="main-nav">
+            <a href="dashboard.html" class="nav-link">
+                <i class="fas fa-home"></i> Início
+            </a>
+            <a href="comunidade.html" class="nav-link">
+                <i class="fas fa-users"></i> Comunidade
+            </a>
+            <a href="modelos.html" class="nav-link">
+                <i class="fas fa-cube"></i> Modelos 3D
+            </a>
+            <a href="arena.html" class="nav-link arena">
+                <i class="fas fa-trophy"></i> FisioArena
+            </a>
+            <a href="loja.html" class="nav-link">
+                <i class="fas fa-store"></i> Loja
+            </a>
+        </nav>
+        
+        <div class="user-area">
+            <span class="user-name">LEO</span>
+            <div class="user-avatar">LT</div>
+        </div>
+    </div>
+</header>
+
+<style>
+.main-header {
+    background: var(--white);
+    padding: 15px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.logo-icon {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.main-nav {
+    display: flex;
+    gap: 5px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.nav-link.arena {
+    color: var(--arena);
+}
+
+.user-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+</style>
