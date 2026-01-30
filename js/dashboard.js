@@ -6,7 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const barra = curso.querySelector(".progress-fill");
     const texto = curso.querySelector(".progress-text");
 
-    barra.style.width = progresso + "%";
-    texto.textContent = progresso + "% concluído";
+    if (barra) {
+      barra.style.width = progresso + "%";
+    }
+
+    if (texto) {
+      texto.textContent = progresso + "% concluído";
+    }
   });
 });
