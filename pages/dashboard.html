@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- BLOQUEIA CSS DO VERCEL -->
+    <meta name="vercel-disable-css" content="true">
+    
     <title>Painel do Aluno - ConectaFisio360</title>
 
     <!-- Font Awesome -->
@@ -10,14 +14,16 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Seus CSS organizados -->
+    <!-- CSS em ORDEM CORRETA -->
+    <link rel="stylesheet" href="../assets/css/vercel-fix.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     
 </head>
 
-<body>
+<body class="conectafisio-body">
     <!-- Header do Dashboard -->
     <header class="dashboard-header">
         <a href="../index.html" class="logo-area">
