@@ -1,0 +1,140 @@
+<!-- partials/footer.html - Rodapé do site -->
+<footer class="conectafisio-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3><span class="logo-emoji">🐟</span> ConectaFisio360</h3>
+            <p>Transformando a fisioterapia através da educação e tecnologia.</p>
+        </div>
+        
+        <div class="footer-section">
+            <h4>📚 Cursos</h4>
+            <a href="../pages/aula.html">Anatomia</a>
+            <a href="../pages/aula.html">Esportiva</a>
+            <a href="../pages/aula.html">Ortopedia</a>
+        </div>
+        
+        <div class="footer-section">
+            <h4>⚡ Plataforma</h4>
+            <a href="../pages/dashboard.html">Painel do Aluno</a>
+            <a href="../pages/comunidade.html">Comunidade</a>
+            <a href="../pages/arena.html">FisioArena</a>
+        </div>
+        
+        <div class="footer-section">
+            <h4>📞 Contato</h4>
+            <p>contato@conectafisio.com</p>
+            <p>(11) 99999-9999</p>
+            <div class="social-links">
+                <a href="#">📘</a>
+                <a href="#">📸</a>
+                <a href="#">🎬</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>© 2024 ConectaFisio360 | Desenvolvido por <strong>Leonardo Teodoro</strong></p>
+    </div>
+</footer>
+
+<style>
+.conectafisio-footer {
+    background: #1e293b;
+    color: white;
+    padding: 40px 20px 20px;
+    margin-top: 60px;
+    border-top: 3px solid #6366f1;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+.footer-section h3 {
+    color: #6366f1;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.footer-section h4 {
+    color: #cbd5e1;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.footer-section a {
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+.footer-section p {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.logo-emoji {
+    font-size: 1.2em;
+    margin-right: 5px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+}
+
+.social-links a:hover {
+    background: #6366f1;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    border-top: 1px solid #334155;
+    padding-top: 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.footer-bottom strong {
+    color: #6366f1;
+}
+</style>
