@@ -3,113 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Premium - ConectaFisio</title>
+    <title>Painel do Aluno - ConectaFisio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #6366f1; --dark: #1e293b; --bg: #f3f4f6; }
-        body { font-family: 'Nunito', sans-serif; margin: 0; background-color: var(--bg); color: var(--dark); }
-        
-        /* --- MENU SUPERIOR PREMIUM --- */
-        header { background: white; padding: 10px 30px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.03); position: sticky; top: 0; z-index: 100; }
-        
-        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.4rem; color: var(--primary); text-decoration: none; }
-        .logo-icon { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        :root { 
+            --primary: #6366f1; 
+            --primary-light: #e0e7ff;
+            --dark: #1e293b; 
+            --text-gray: #64748b;
+            --bg: #f8fafc; 
+            --white: #ffffff;
+        }
 
-        .main-menu { display: flex; gap: 10px; }
-        .menu-item { display: flex; align-items: center; gap: 8px; padding: 8px 15px; border-radius: 8px; text-decoration: none; color: #64748b; font-weight: 700; font-size: 0.9rem; transition: 0.2s; }
-        .menu-item:hover { background: #f1f5f9; color: var(--primary); }
-        .menu-item.active { background: #e0e7ff; color: var(--primary); }
-        .badge-new { background: #ef4444; color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 10px; margin-left: -5px; margin-top: -10px; }
+        body { font-family: 'Nunito', sans-serif; margin: 0; background-color: var(--bg); color: var(--dark); overflow-x: hidden; }
 
-        .user-actions { display: flex; align-items: center; gap: 20px; }
-        .icon-btn { color: #64748b; font-size: 1.2rem; cursor: pointer; position: relative; }
-        .notif-dot { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; border: 2px solid white; }
-        .avatar { width: 35px; height: 35px; background: #cbd5e1; border-radius: 50%; overflow: hidden; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        /* --- HEADER PREMIUM --- */
+        header { 
+            background: var(--white); 
+            padding: 12px 40px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+        }
         
-        /* --- HERO --- */
-        .hero-banner { background: white; margin: 20px; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
-        .hero-banner h1 { font-size: 2.2rem; margin: 0 0 10px 0; color: var(--dark); }
-        .hero-banner p { color: #64748b; max-width: 600px; margin: 0 auto; }
-        
-        /* --- GRID DE CONTEÚDO --- */
-        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 20px 40px 20px; }
-        
-        .section-title { grid-column: 1 / -1; margin-top: 20px; font-size: 1.3rem; display: flex; justify-content: space-between; align-items: center; }
-        
-        /* CARD DE CURSO (ESTILO APP) */
-        .course-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; border: 1px solid transparent; }
-        .course-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px rgba(99, 102, 241, 0.15); }
-        .card-img { height: 140px; background: #e2e8f0; position: relative; }
-        .play-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.2s; }
-        .course-card:hover .play-overlay { opacity: 1; }
-        
-        .card-body { padding: 15px; }
-        .tag { font-size: 0.7rem; font-weight: 800; color: var(--primary); background: #e0e7ff; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; }
-        .card-title { font-weight: 800; margin: 10px 0 5px 0; font-size: 1rem; }
-        .progress-bar { height: 6px; background: #f1f5f9; border-radius: 10px; margin-top: 15px; overflow: hidden; }
-        .fill { height: 100%; background: var(--primary); border-radius: 10px; }
+        .logo-area { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.4rem; color: var(--primary); text-decoration: none; }
+        .logo-icon { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: var(--white); width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
 
-        @media(max-width: 900px) { .main-menu { display: none; } header { padding: 15px; } }
+        .main-menu { display: flex; gap: 8px; }
+        .menu-item { 
+            display: flex; align-items: center; gap: 8px; padding: 10px 16px; 
+            border-radius: 10px; text-decoration: none; color: var(--text-gray); 
+            font-weight: 700; font-size: 0.95rem; transition: 0.3s; 
+        }
+        .menu-item:hover { background: var(--bg); color: var(--primary); }
+        .menu-item.active { background: var(--primary-light); color: var(--primary); }
+
+        .user-nav { display: flex; align-items: center; gap: 20px; }
+        .avatar { 
+            width: 40px; height: 40px; border-radius: 50%; 
+            border: 2px solid var(--primary-light); cursor: pointer;
+        }
+
+        /* --- LAYOUT DO PAINEL --- */
+        .dashboard-container { max-width: 1300px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 350px; gap: 30px; }
+
+        /* --- LADO ESQUERDO (CONTEÚDO) --- */
+        .welcome-card { 
+            background: linear-gradient(135deg, #6366f1, #4f46e5); 
+            border-radius: 24px; padding: 40px; color: white; margin-bottom: 30px;
+            position: relative; overflow: hidden;
+        }
+        .welcome-card h1 { margin: 0; font-size: 2.2rem; font-weight: 800; }
+        .welcome-card p { opacity: 0.9; font-size: 1.1rem; margin-top: 10px; }
+        .welcome-card i { position: absolute; right: -20px; bottom: -20px; font-size: 10rem; opacity: 0.1; transform: rotate(-15deg); }
+
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .section-header h3 { font-size: 1.3rem; font-weight: 800; margin: 0; }
+        .section-header a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        
+        .course-card { 
+            background: var(--white); border-radius: 20px; overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: 0.3s; 
+            text-decoration: none; color: inherit; border: 1px solid #f1f5f9;
+        }
+        .course-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(99, 102, 241, 0.12); border-color: var(--primary); }
+        .card-banner { height: 160px; background-size: cover; background-position: center; position: relative; }
+        .card-tag { 
+            position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.9); 
+            padding: 5px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; color: var(--primary);
+        }
+        .card-info { padding: 20px; }
+        .card-info h4 { margin: 0 0 10px 0; font-size: 1.1rem; font-weight: 800; }
+        
+        .progress-container { margin-top: 15px; }
+        .progress-text { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; color: var(--text-gray); margin-bottom: 5px; }
+        .progress-bar { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary); border-radius: 10px; }
+
+        /* --- LADO DIREITO (STATUS) --- */
+        .status-sidebar { display: flex; flex-direction: column; gap: 25px; }
+        
+        .stat-card { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .stat-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .stat-item:last-child { margin-bottom: 0; }
+        .stat-icon { 
+            width: 45px; height: 45px; border-radius: 12px; display: flex; 
+            align-items: center; justify-content: center; font-size: 1.2rem;
+        }
+
+        .quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-quick { 
+            background: var(--white); border: 1.5px solid #f1f5f9; padding: 15px; 
+            border-radius: 15px; text-align: center; text-decoration: none; 
+            color: var(--dark); font-weight: 700; font-size: 0.85rem; transition: 0.2s;
+        }
+        .btn-quick:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+        .btn-quick i { display: block; font-size: 1.3rem; margin-bottom: 8px; }
+
+        @media(max-width: 1100px) {
+            .dashboard-container { grid-template-columns: 1fr; }
+            .status-sidebar { order: -1; }
+        }
     </style>
 </head>
 <body>
 
     <header>
         <a href="index.html" class="logo-area">
-            <div class="logo-icon"><i class="fa-solid fa-globe"></i></div>
+            <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
             ConectaFisio
         </a>
 
         <nav class="main-menu">
             <a href="dashboard.html" class="menu-item active"><i class="fa-solid fa-house"></i> Início</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-book-open"></i> Cursos</a>
-            <a href="modelos.html" class="menu-item">
-                <i class="fa-solid fa-cube"></i> Modelos 3D <span class="badge-new">Novo</span>
-            </a>
+            <a href="comunidade.html" class="menu-item"><i class="fa-solid fa-users"></i> Comunidade</a>
+            <a href="modelos.html" class="menu-item"><i class="fa-solid fa-cube"></i> Modelos 3D</a>
             <a href="arena.html" class="menu-item"><i class="fa-solid fa-gamepad"></i> FisioArena</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Comunidade</a>
             <a href="loja.html" class="menu-item"><i class="fa-solid fa-store"></i> Loja</a>
         </nav>
 
-        <div class="user-actions">
-            <div class="icon-btn"><i class="fa-regular fa-comment-dots"></i></div>
-            <div class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></div>
-            <div class="avatar"><img src="https://ui-avatars.com/api/?name=Leo+Teodoro&background=6366f1&color=fff" width="100%"></div>
+        <div class="user-nav">
+            <i class="fa-regular fa-bell" style="font-size: 1.2rem; color: var(--text-gray); cursor:pointer;"></i>
+            <img src="https://ui-avatars.com/api/?name=Leo+Teodoro&background=6366f1&color=fff" class="avatar" alt="Perfil">
         </div>
     </header>
 
-    <div class="hero-banner">
-        <h1>O ecossistema digital da fisioterapia</h1>
-        <p>Unindo aprendizado interativo, comunidade engajada e recursos profissionais em uma plataforma completa.</p>
-    </div>
-
-    <div class="content-grid">
-        <div class="section-title">
-            <h3>📚 Continue assistindo</h3>
-        </div>
-
-        <a href="aula.html" class="course-card">
-            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'); background-size: cover;">
-                <div class="play-overlay"><i class="fa-solid fa-play-circle" style="color:white; font-size:3rem;"></i></div>
+    <div class="dashboard-container">
+        
+        <main>
+            <div class="welcome-card">
+                <h1>Olá, Leo Teodoro! 👋</h1>
+                <p>Você já completou 75% da sua meta semanal. Continue assim!</p>
+                <i class="fa-solid fa-graduation-cap"></i>
             </div>
-            <div class="card-body">
-                <span class="tag">Anatomia</span>
-                <div class="card-title">Sistema Musculoesquelético</div>
-                <div style="font-size:0.8rem; color:#64748b;">Módulo 1: Introdução</div>
-                <div class="progress-bar"><div class="fill" style="width: 75%;"></div></div>
-            </div>
-        </a>
 
-        <div class="course-card">
-            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'); background-size: cover;"></div>
-            <div class="card-body">
-                <span class="tag">Esportiva</span>
-                <div class="card-title">Prevenção de Lesões no Futebol</div>
-                <div style="font-size:0.8rem; color:#64748b;">Módulo 1: Biomecânica</div>
-                <div class="progress-bar"><div class="fill" style="width: 30%;"></div></div>
+            <div class="section-header">
+                <h3>📚 Continue Assistindo</h3>
+                <a href="#">Ver todos os cursos</a>
             </div>
-        </div>
+
+            <div class="courses-grid">
+                <a href="aula.html" class="course-card">
+                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=500&q=60');">
+                        <span class="card-tag">ANATOMIA</span>
+                    </div>
+                    <div class="card-info">
+                        <h4>Sistema Musculoesquelético</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-gray); margin: 0;">Módulo 2: Biomecânica da Coluna</p>
+                        <div class="progress-container">
+                            <div class="progress-text"><span>Progresso</span><span>82%</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 82%;"></div></div>
+                        </div>
+                    </div>
+                </a>
+
+                <div class="course-card">
+                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?auto=format&fit=crop&w=500&q=60');">
+                        <span class="card-tag">REABILITAÇÃO</span>
+                    </div>
+                    <div class="card-info">
+                        <h4>Fisioterapia Esportiva Pro</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-gray); margin: 0;">Módulo 1: Lesões de Ligamento</p>
+                        <div class="progress-container">
+                            <div class="progress-text"><span>Progresso</span><span>15%</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 15%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 40px;">
+                <h3>🎯 Sugerido para você</h3>
+            </div>
+            <div class="courses-grid">
+                 <div class="course-card">
+                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=500&q=60');">
+                        <span class="card-tag">PRÁTICA</span>
+                    </div>
+                    <div class="card-info">
+                        <h4>Liberação Miofascial</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-gray); margin: 0;">Aprenda técnicas avançadas.</p>
+                        <button style="margin-top:15px; width:100%; padding:10px; border-radius:10px; border:none; background: var(--bg); font-weight:800; color:var(--primary); cursor:pointer;">Começar agora</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="status-sidebar">
+            
+            <div class="stat-card">
+                <h4 style="margin: 0 0 20px 0;">Sua Performance</h4>
+                
+                <div class="stat-item">
+                    <div class="stat-icon" style="background: #fff7ed; color: #f97316;"><i class="fa-solid fa-fire"></i></div>
+                    <div>
+                        <div style="font-weight: 800; font-size: 1.1rem;">7 Dias</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Ofensiva atual</div>
+                    </div>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-icon" style="background: #f0fdf4; color: #22c55e;"><i class="fa-solid fa-star"></i></div>
+                    <div>
+                        <div style="font-weight: 800; font-size: 1.1rem;">1.250 XP</div>
+                        <div style="font-size: 0.8rem; color: var(--text-gray);">Nível 12 (Experiente)</div>
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="margin: 10px 0 0 0;">Acesso Rápido</h4>
+            <div class="quick-links">
+                <a href="modelos.html" class="btn-quick">
+                    <i class="fa-solid fa-cube"></i> Anatomia 3D
+                </a>
+                <a href="comunidade.html" class="btn-quick">
+                    <i class="fa-solid fa-comments"></i> Fórum
+                </a>
+                <a href="arena.html" class="btn-quick">
+                    <i class="fa-solid fa-trophy"></i> Rankings
+                </a>
+                <a href="loja.html" class="btn-quick">
+                    <i class="fa-solid fa-bag-shopping"></i> Materiais
+                </a>
+            </div>
+
+            <div class="stat-card" style="background: var(--dark); color: white;">
+                <h4 style="margin: 0 0 10px 0;">Anúncio Arena</h4>
+                <p style="font-size: 0.85rem; opacity: 0.8;">O evento **"Maratona do Fêmur"** começa em 2 dias. Prepare seu avatar!</p>
+                <button style="width: 100%; padding: 10px; border-radius: 10px; border: none; background: var(--primary); color: white; font-weight: 800; cursor: pointer;">Saber mais</button>
+            </div>
+
+        </aside>
     </div>
 
 </body>
