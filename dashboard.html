@@ -4,125 +4,218 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Aluno - ConectaFisio</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        :root { --primary: #6366f1; --primary-light: #e0e7ff; --dark: #1e293b; --text-gray: #64748b; --bg: #f8fafc; --white: #ffffff; --arena: #bd00ff; }
-        body { font-family: 'Nunito', sans-serif; margin: 0; background-color: var(--bg); color: var(--dark); }
+        :root {
+            --primary: #6366f1;
+            --primary-light: #e0e7ff;
+            --dark: #1e293b;
+            --text-gray: #64748b;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --arena: #bd00ff;
+        }
 
-        /* HEADER */
-        header { background: var(--white); padding: 12px 40px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); position: sticky; top: 0; z-index: 1000; }
-        .logo-area { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.4rem; color: var(--primary); text-decoration: none; }
-        .logo-icon { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: var(--white); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-        .main-menu { display: flex; gap: 5px; }
-        .menu-item { display: flex; align-items: center; gap: 8px; padding: 10px 15px; border-radius: 8px; text-decoration: none; color: var(--text-gray); font-weight: 700; font-size: 0.9rem; transition: 0.3s; }
-        .menu-item:hover, .menu-item.active { background: var(--primary-light); color: var(--primary); }
-        
-        /* Destaque para a Arena no Menu */
-        .menu-item.arena-btn { color: var(--arena); }
-        .menu-item.arena-btn:hover { background: #f5e6ff; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--dark);
+        }
 
-        /* LAYOUT */
-        .dashboard-container { max-width: 1300px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 350px; gap: 30px; }
+        header {
+            background: var(--white);
+            padding: 12px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-        /* CARDS */
-        .welcome-card { background: linear-gradient(135deg, #6366f1, #4f46e5); border-radius: 24px; padding: 40px; color: white; position: relative; overflow: hidden; margin-bottom: 30px; }
-        .welcome-card h1 { margin: 0; font-size: 2rem; }
-        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .course-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: 0.3s; text-decoration: none; color: inherit; border: 1px solid #f1f5f9; }
-        .course-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-        .card-banner { height: 150px; background-size: cover; background-position: center; }
-        .card-info { padding: 20px; }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
 
-        /* SIDEBAR */
-        .stat-card { background: var(--white); border-radius: 20px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 20px; }
-        .quick-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn-quick { background: var(--white); border: 1.5px solid #f1f5f9; padding: 15px; border-radius: 15px; text-align: center; text-decoration: none; color: var(--dark); font-weight: 700; font-size: 0.8rem; transition: 0.2s; }
-        .btn-quick:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
-        .btn-quick i { display: block; font-size: 1.2rem; margin-bottom: 5px; }
-        
-        /* Estilo especial para o Ranking na Sidebar */
-        .btn-quick.rank-btn:hover { border-color: var(--arena); background: #f5e6ff; color: var(--arena); }
+        .logo-icon {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        /* PROGRESS BAR */
-        .progress-bar { height: 8px; background: #e2e8f0; border-radius: 10px; margin-top: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--primary); border-radius: 10px; }
+        .main-menu {
+            display: flex;
+            gap: 5px;
+        }
 
-        @media(max-width: 1000px) { .dashboard-container { grid-template-columns: 1fr; } }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .menu-item.arena-btn {
+            color: var(--arena);
+        }
+
+        .dashboard-container {
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border: 1px solid #f1f5f9;
+        }
+
+        .card-banner {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-info {
+            padding: 20px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        @media(max-width: 1000px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
+
 <body>
 
-    <header>
-        <a href="dashboard.html" class="logo-area">
-            <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
-            ConectaFisio
-        </a>
-        <nav class="main-menu">
-            <a href="dashboard.html" class="menu-item active"><i class="fa-solid fa-house"></i> Início</a>
-            <a href="comunidade.html" class="menu-item"><i class="fa-solid fa-users"></i> Comunidade</a>
-            <a href="modelos.html" class="menu-item"><i class="fa-solid fa-cube"></i> Modelos 3D</a>
-            <a href="arena.html" class="menu-item arena-btn"><i class="fa-solid fa-gamepad"></i> FisioArena</a>
-            <a href="loja.html" class="menu-item"><i class="fa-solid fa-store"></i> Loja</a>
-        </nav>
-        <div style="font-weight:bold; color:var(--primary);">LEO</div>
-    </header>
+<header>
+    <a href="dashboard.html" class="logo-area">
+        <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+        ConectaFisio
+    </a>
 
-    <div class="dashboard-container">
-        <main>
-            <div class="welcome-card">
-                <h1>Olá, Leo Teodoro! 👋</h1>
-                <p>Seu progresso está excelente esta semana. Continue assim!</p>
-                <i class="fa-solid fa-graduation-cap" style="position:absolute; right:-20px; bottom:-20px; font-size:150px; opacity:0.1;"></i>
-            </div>
+    <nav class="main-menu">
+        <a class="menu-item active">Início</a>
+        <a class="menu-item">Comunidade</a>
+        <a class="menu-item">Modelos 3D</a>
+        <a class="menu-item arena-btn">FisioArena</a>
+        <a class="menu-item">Loja</a>
+    </nav>
 
-            <h3 style="margin-bottom:20px;">📚 Continue Assistindo</h3>
-            <div class="courses-grid">
-                <a href="aula.html" class="course-card">
-                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=500&q=60');"></div>
-                    <div class="card-info">
-                        <span style="font-size:0.7rem; font-weight:800; color:var(--primary);">ANATOMIA</span>
-                        <h4 style="margin:5px 0;">Sistema Musculoesquelético</h4>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 82%;"></div></div>
-                        <p style="font-size:0.75rem; color:var(--text-gray); margin-top:8px;">82% concluído</p>
+    <div style="font-weight:bold; color:var(--primary);">LEO</div>
+</header>
+
+<div class="dashboard-container">
+    <main>
+
+        <div class="welcome-card">
+            <h1>Olá, Leo Teodoro! 👋</h1>
+            <p>Seu progresso está excelente esta semana. Continue assim!</p>
+        </div>
+
+        <h3>📚 Continue Assistindo</h3>
+
+        <div class="courses-grid">
+
+            <div class="course-card" data-progress="82">
+                <div class="card-banner" style="background-image:url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d');"></div>
+                <div class="card-info">
+                    <strong>ANATOMIA</strong>
+                    <h4>Sistema Musculoesquelético</h4>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
                     </div>
-                </a>
 
-                <div class="course-card">
-                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?auto=format&fit=crop&w=500&q=60');"></div>
-                    <div class="card-info">
-                        <span style="font-size:0.7rem; font-weight:800; color:var(--primary);">ESPORTIVA</span>
-                        <h4 style="margin:5px 0;">Prevenção de Lesões</h4>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 15%;"></div></div>
-                        <p style="font-size:0.75rem; color:var(--text-gray); margin-top:8px;">15% concluído</p>
+                    <p class="progress-text"></p>
+                </div>
+            </div>
+
+            <div class="course-card" data-progress="15">
+                <div class="card-banner" style="background-image:url('https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d');"></div>
+                <div class="card-info">
+                    <strong>ESPORTIVA</strong>
+                    <h4>Prevenção de Lesões</h4>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
                     </div>
-                </div>
-            </div>
-        </main>
 
-        <aside>
-            <div class="stat-card">
-                <h4 style="margin-top:0;">Performance</h4>
-                <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
-                    <i class="fa-solid fa-fire" style="color:#f97316; font-size:1.5rem;"></i>
-                    <div><b style="display:block;">7 Dias</b><span style="font-size:0.8rem; color:var(--text-gray);">Ofensiva atual</span></div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <i class="fa-solid fa-star" style="color:#eab308; font-size:1.5rem;"></i>
-                    <div><b style="display:block;">1.250 XP</b><span style="font-size:0.8rem; color:var(--text-gray);">Nível 12 (Pro)</span></div>
+                    <p class="progress-text"></p>
                 </div>
             </div>
 
-            <h4>Acesso Rápido</h4>
-            <div class="quick-links">
-                <a href="modelos.html" class="btn-quick"><i class="fa-solid fa-cube"></i> Anatomia 3D</a>
-                <a href="comunidade.html" class="btn-quick"><i class="fa-solid fa-comments"></i> Fórum</a>
-                <a href="arena.html" class="btn-quick rank-btn"><i class="fa-solid fa-trophy"></i> Rankings</a>
-                <a href="loja.html" class="btn-quick"><i class="fa-solid fa-bag-shopping"></i> Loja</a>
-            </div>
-        </aside>
-    </div>
+        </div>
+    </main>
+</div>
+
 <script src="js/dashboard.js"></script>
-
 </body>
 </html>
