@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel do Aluno - ConectaFisio</title>
+    <title>Painel do Aluno - ConectaFisio360</title>
 
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+    
+    <!-- Seus CSS organizados -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    
+    <!-- Estilos específicos desta página -->
     <style>
         :root {
             --primary: #6366f1;
             --primary-light: #e0e7ff;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
             --dark: #1e293b;
             --text-gray: #64748b;
             --bg: #f8fafc;
             --white: #ffffff;
             --arena: #bd00ff;
+            --success: #10b981;
+            --shadow: 0 4px 15px rgba(0,0,0,0.05);
+            --radius: 16px;
         }
 
         body {
@@ -24,15 +37,17 @@
             margin: 0;
             background-color: var(--bg);
             color: var(--dark);
+            min-height: 100vh;
         }
 
-        header {
+        /* Header específico do dashboard */
+        .dashboard-header {
             background: var(--white);
             padding: 12px 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            box-shadow: var(--shadow);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -49,44 +64,67 @@
         }
 
         .logo-icon {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.2rem;
         }
 
-        .main-menu {
+        .dashboard-nav {
             display: flex;
             gap: 5px;
         }
 
-        .menu-item {
+        .nav-item {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
             text-decoration: none;
             color: var(--text-gray);
             font-weight: 700;
             font-size: 0.9rem;
-            transition: 0.3s;
+            transition: all 0.3s;
         }
 
-        .menu-item:hover,
-        .menu-item.active {
+        .nav-item:hover,
+        .nav-item.active {
             background: var(--primary-light);
             color: var(--primary);
         }
 
-        .menu-item.arena-btn {
+        .nav-item.arena {
             color: var(--arena);
         }
 
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Container principal */
         .dashboard-container {
             max-width: 1300px;
             margin: 30px auto;
@@ -96,57 +134,234 @@
             gap: 30px;
         }
 
+        /* Card de boas-vindas */
         .welcome-card {
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius);
             padding: 40px;
             color: white;
             margin-bottom: 30px;
             position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-card::after {
+            content: '🐟';
+            position: absolute;
+            right: 40px;
+            bottom: 30px;
+            font-size: 3.5rem;
+            opacity: 0.2;
+        }
+
+        .welcome-card h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+        }
+
+        .welcome-card p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Seção de cursos */
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin: 30px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .courses-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 24px;
+            margin-top: 20px;
         }
 
+        /* Cards de cursos */
         .course-card {
             background: var(--white);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            box-shadow: var(--shadow);
             border: 1px solid #f1f5f9;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.1);
         }
 
         .card-banner {
-            height: 150px;
+            height: 160px;
             background-size: cover;
             background-position: center;
+            background-color: var(--primary-light);
         }
 
         .card-info {
-            padding: 20px;
+            padding: 24px;
         }
 
+        .card-info strong {
+            color: var(--primary);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .card-info h4 {
+            margin: 8px 0 15px 0;
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+
+        /* Barra de progresso */
         .progress-bar {
-            height: 8px;
+            height: 10px;
             background: #e2e8f0;
             border-radius: 10px;
-            margin-top: 10px;
+            margin: 15px 0;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            width: 0%;
-            background: var(--primary);
             border-radius: 10px;
-            transition: width 1s ease;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @media(max-width: 1000px) {
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* Sidebar */
+        .dashboard-sidebar {
+            background: var(--white);
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .quick-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            color: var(--text-gray);
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+
+        .quick-link:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .quick-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
             .dashboard-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .dashboard-sidebar {
+                position: static;
+                order: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 12px 20px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .dashboard-nav {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            
+            .welcome-card {
+                padding: 30px 20px;
+            }
+            
+            .welcome-card h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -154,68 +369,220 @@
 </head>
 
 <body>
+    <!-- Header do Dashboard -->
+    <header class="dashboard-header">
+        <a href="../index.html" class="logo-area">
+            <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
+            ConectaFisio360
+        </a>
 
-<header>
-    <a href="dashboard.html" class="logo-area">
-        <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
-        ConectaFisio
-    </a>
+        <nav class="dashboard-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-home"></i> Início
+            </a>
+            <a href="comunidade.html" class="nav-item">
+                <i class="fas fa-users"></i> Comunidade
+            </a>
+            <a href="modelos.html" class="nav-item">
+                <i class="fas fa-cube"></i> Modelos 3D
+            </a>
+            <a href="arena.html" class="nav-item arena">
+                <i class="fas fa-trophy"></i> FisioArena
+            </a>
+            <a href="loja.html" class="nav-item">
+                <i class="fas fa-store"></i> Loja
+            </a>
+        </nav>
 
-    <nav class="main-menu">
-        <a class="menu-item active">Início</a>
-        <a class="menu-item">Comunidade</a>
-        <a class="menu-item">Modelos 3D</a>
-        <a class="menu-item arena-btn">FisioArena</a>
-        <a class="menu-item">Loja</a>
-    </nav>
-
-    <div style="font-weight:bold; color:var(--primary);">LEO</div>
-</header>
-
-<div class="dashboard-container">
-    <main>
-
-        <div class="welcome-card">
-            <h1>Olá, Leo Teodoro! 👋</h1>
-            <p>Seu progresso está excelente esta semana. Continue assim!</p>
+        <div class="user-badge">
+            <span>LEO</span>
+            <div class="user-avatar">LT</div>
         </div>
+    </header>
 
-        <h3>📚 Continue Assistindo</h3>
+    <!-- Conteúdo Principal -->
+    <div class="dashboard-container">
+        <!-- Main Content -->
+        <main>
+            <!-- Card de Boas-vindas -->
+            <div class="welcome-card">
+                <h1>Olá, Leo Teodoro! 👋</h1>
+                <p>Seu progresso está excelente esta semana. Continue assim!</p>
+            </div>
 
-        <div class="courses-grid">
+            <!-- Seção: Continue Assistindo -->
+            <h2 class="section-title">
+                <i class="fas fa-play-circle"></i> Continue Assistindo
+            </h2>
 
-            <div class="course-card" data-progress="82">
-                <div class="card-banner" style="background-image:url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d');"></div>
-                <div class="card-info">
-                    <strong>ANATOMIA</strong>
-                    <h4>Sistema Musculoesquelético</h4>
-
-                    <div class="progress-bar">
-                        <div class="progress-fill"></div>
+            <div class="courses-grid">
+                <!-- Curso de Anatomia -->
+                <div class="course-card" data-progress="82" data-course="anatomia">
+                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-info">
+                        <strong>ANATOMIA</strong>
+                        <h4>Sistema Musculoesquelético</h4>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        
+                        <p class="progress-text">82% completo</p>
+                        
+                        <button class="btn continue-btn" style="margin-top: 15px; width: 100%;">
+                            <i class="fas fa-play"></i> Continuar Curso
+                        </button>
                     </div>
+                </div>
 
-                    <p class="progress-text"></p>
+                <!-- Curso de Esportiva -->
+                <div class="course-card" data-progress="15" data-course="esportiva">
+                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-info">
+                        <strong>ESPORTIVA</strong>
+                        <h4>Prevenção de Lesões</h4>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        
+                        <p class="progress-text">15% completo</p>
+                        
+                        <button class="btn continue-btn" style="margin-top: 15px; width: 100%;">
+                            <i class="fas fa-play"></i> Continuar Curso
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="course-card" data-progress="15">
-                <div class="card-banner" style="background-image:url('https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d');"></div>
-                <div class="card-info">
-                    <strong>ESPORTIVA</strong>
-                    <h4>Prevenção de Lesões</h4>
+            <!-- Seção: Próximas Aulas -->
+            <h2 class="section-title" style="margin-top: 40px;">
+                <i class="fas fa-calendar-alt"></i> Próximas Aulas
+            </h2>
 
-                    <div class="progress-bar">
-                        <div class="progress-fill"></div>
+            <div class="courses-grid">
+                <div class="course-card" data-course="ortopedia">
+                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-color: #f0f9ff;"></div>
+                    <div class="card-info">
+                        <strong>ORTOPEDIA</strong>
+                        <h4>Fraturas e Imobilizações</h4>
+                        <p style="color: var(--text-gray); margin: 10px 0;">Amanhã, 10:00 AM</p>
+                        <button class="btn" style="width: 100%; background: var(--success);">
+                            <i class="fas fa-bell"></i> Agendar Lembrete
+                        </button>
                     </div>
+                </div>
+            </div>
+        </main>
 
-                    <p class="progress-text"></p>
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <h3 class="sidebar-title">📊 Seu Progresso</h3>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">82%</div>
+                    <div class="stat-label">Anatomia</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">15%</div>
+                    <div class="stat-label">Esportiva</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Aulas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Dias seguidos</div>
                 </div>
             </div>
 
-        </div>
-    </main>
-</div>
+            <h3 class="sidebar-title">⚡ Acesso Rápido</h3>
+            
+            <ul class="quick-links">
+                <li>
+                    <a href="aula.html" class="quick-link">
+                        <i class="fas fa-video"></i>
+                        <span>Minhas Aulas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="comunidade.html" class="quick-link">
+                        <i class="fas fa-comments"></i>
+                        <span>Fórum da Comunidade</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="modelos.html" class="quick-link">
+                        <i class="fas fa-cube"></i>
+                        <span>Modelos 3D Interativos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="arena.html" class="quick-link">
+                        <i class="fas fa-trophy"></i>
+                        <span>Desafios da Arena</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="loja.html" class="quick-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Loja de Materiais</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+    </div>
 
-<script src="js/dashboard.js"></script>
+    <!-- Footer será carregado automaticamente pelo main.js -->
+
+    <!-- SEUS SCRIPTS ORGANIZADOS -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+
+    <!-- Script específico para esta página -->
+    <script>
+        // Script específico do dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard do ConectaFisio360 carregado!');
+            
+            // Efeito nos botões de continuar
+            const continueButtons = document.querySelectorAll('.continue-btn');
+            continueButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const courseCard = this.closest('.course-card');
+                    const courseName = courseCard.querySelector('h4').textContent;
+                    
+                    // Simulação de abrir aula
+                    alert(`Iniciando aula: ${courseName}`);
+                    
+                    // Aqui você pode redirecionar para a página da aula
+                    // window.location.href = 'aula.html?curso=' + courseCard.dataset.course;
+                });
+            });
+            
+            // Carrega o footer automaticamente
+            fetch('../partials/footer.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer não encontrado');
+                    return response.text();
+                })
+                .then(html => {
+                    document.body.insertAdjacentHTML('beforeend', html);
+                    console.log('Footer carregado com sucesso!');
+                })
+                .catch(error => {
+                    console.warn('Não foi possível carregar o footer:', error);
+                    // Cria um footer básico se o fetch falhar
+                    const fallbackFooter = `
+                        <footer style="text-align: center; padding: 20px; background: #1e293b; color: white; margin-top: 50px;">
+                            <p>© 2024 ConectaFisio360 | Desenvolvido por Leonardo Teodoro</p>
+                        </footer>
+                    `;
+                    document.body.insertAdjacentHTML('beforeend', fallbackFooter);
+                });
+        });
+    </script>
 </body>
 </html>
