@@ -1,0 +1,92 @@
+/* style.css - Estilos principais do ConectaFisio360 */
+
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #e0e7ff;
+    --secondary: #8b5cf6;
+    --arena: #bd00ff;
+    --dark: #1e293b;
+    --text: #64748b;
+    --light: #f8fafc;
+    --white: #ffffff;
+    --shadow: 0 4px 15px rgba(0,0,0,0.05);
+    --radius: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', 'Poppins', sans-serif;
+    background-color: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+/* Botões */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+/* Cards */
+.card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    gap: 24px;
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+}
