@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #6366f1; --primary-light: #e0e7ff; --dark: #1e293b; --text-gray: #64748b; --bg: #f8fafc; --white: #ffffff; }
+        :root { --primary: #6366f1; --primary-light: #e0e7ff; --dark: #1e293b; --text-gray: #64748b; --bg: #f8fafc; --white: #ffffff; --arena: #bd00ff; }
         body { font-family: 'Nunito', sans-serif; margin: 0; background-color: var(--bg); color: var(--dark); }
 
         /* HEADER */
@@ -17,6 +17,10 @@
         .main-menu { display: flex; gap: 5px; }
         .menu-item { display: flex; align-items: center; gap: 8px; padding: 10px 15px; border-radius: 8px; text-decoration: none; color: var(--text-gray); font-weight: 700; font-size: 0.9rem; transition: 0.3s; }
         .menu-item:hover, .menu-item.active { background: var(--primary-light); color: var(--primary); }
+        
+        /* Destaque para a Arena no Menu */
+        .menu-item.arena-btn { color: var(--arena); }
+        .menu-item.arena-btn:hover { background: #f5e6ff; }
 
         /* LAYOUT */
         .dashboard-container { max-width: 1300px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 350px; gap: 30px; }
@@ -36,6 +40,9 @@
         .btn-quick { background: var(--white); border: 1.5px solid #f1f5f9; padding: 15px; border-radius: 15px; text-align: center; text-decoration: none; color: var(--dark); font-weight: 700; font-size: 0.8rem; transition: 0.2s; }
         .btn-quick:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
         .btn-quick i { display: block; font-size: 1.2rem; margin-bottom: 5px; }
+        
+        /* Estilo especial para o Ranking na Sidebar */
+        .btn-quick.rank-btn:hover { border-color: var(--arena); background: #f5e6ff; color: var(--arena); }
 
         /* PROGRESS BAR */
         .progress-bar { height: 8px; background: #e2e8f0; border-radius: 10px; margin-top: 10px; overflow: hidden; }
@@ -55,7 +62,7 @@
             <a href="dashboard.html" class="menu-item active"><i class="fa-solid fa-house"></i> Início</a>
             <a href="comunidade.html" class="menu-item"><i class="fa-solid fa-users"></i> Comunidade</a>
             <a href="modelos.html" class="menu-item"><i class="fa-solid fa-cube"></i> Modelos 3D</a>
-            <a href="#" class="menu-item"><i class="fa-solid fa-gamepad"></i> FisioArena</a>
+            <a href="arena.html" class="menu-item arena-btn"><i class="fa-solid fa-gamepad"></i> FisioArena</a>
             <a href="loja.html" class="menu-item"><i class="fa-solid fa-store"></i> Loja</a>
         </nav>
         <div style="font-weight:bold; color:var(--primary);">LEO</div>
@@ -110,7 +117,7 @@
             <div class="quick-links">
                 <a href="modelos.html" class="btn-quick"><i class="fa-solid fa-cube"></i> Anatomia 3D</a>
                 <a href="comunidade.html" class="btn-quick"><i class="fa-solid fa-comments"></i> Fórum</a>
-                <a href="#" class="btn-quick"><i class="fa-solid fa-trophy"></i> Rankings</a>
+                <a href="arena.html" class="btn-quick rank-btn"><i class="fa-solid fa-trophy"></i> Rankings</a>
                 <a href="loja.html" class="btn-quick"><i class="fa-solid fa-bag-shopping"></i> Loja</a>
             </div>
         </aside>
