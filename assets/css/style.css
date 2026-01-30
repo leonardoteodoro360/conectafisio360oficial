@@ -4,7 +4,18 @@
    Autor: Leonardo Teodoro
    ============================================ */
 
-/* ===== 1. VARIÁVEIS CSS ===== */
+/* ===== 1. RESET COMPLETO ===== */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box !important;
+}
+
+/* ===== 2. VARIÁVEIS CSS NOSSAS ===== */
 :root {
     /* Cores Principais */
     --primary: #6366f1;
@@ -57,32 +68,36 @@
     --font-mono: 'SF Mono', Monaco, 'Cascadia Mono', monospace;
 }
 
-/* ===== 2. RESET E ESTILOS BASE ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* ===== 3. BASE HTML E BODY ===== */
 html {
     scroll-behavior: smooth;
     font-size: 16px;
+    height: 100%;
+    width: 100%;
 }
 
-/* IMPORTANTE: Background claro para TODAS as páginas EXCETO a home */
-body:not(.home-page) {
-    font-family: var(--font-sans);
-    background-color: var(--bg);
-    color: var(--text);
+body.conectafisio-body {
+    font-family: var(--font-sans) !important;
+    background-color: var(--bg) !important;
+    color: var(--text) !important;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
     overflow-x: hidden;
-    margin: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    width: 100% !important;
 }
 
-/* ===== 3. TIPOGRAFIA ===== */
+/* PÁGINAS QUE NÃO SÃO HOME TEM FUNDO CLARO */
+body.conectafisio-body:not(.home-page) {
+    background-color: var(--bg) !important;
+    background-image: none !important;
+}
+
+/* ===== 4. TIPOGRAFIA ===== */
 h1, h2, h3, h4, h5, h6 {
     color: var(--dark);
     font-weight: 800;
@@ -122,71 +137,72 @@ small {
     color: var(--text-light);
 }
 
-/* ===== 4. BOTÕES GLOBAIS ===== */
+/* ===== 5. BOTÕES GLOBAIS ===== */
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-sm);
-    padding: 12px 28px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    user-select: none;
-    line-height: 1.5;
-    text-decoration: none;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: var(--space-sm) !important;
+    padding: 12px 28px !important;
+    background: var(--primary) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: var(--radius) !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-align: center !important;
+    user-select: none !important;
+    line-height: 1.5 !important;
+    text-decoration: none !important;
+    font-family: var(--font-sans) !important;
 }
 
 .btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    background: var(--primary-dark) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-lg) !important;
 }
 
 .btn:active {
-    transform: translateY(0);
+    transform: translateY(0) !important;
 }
 
 .btn-secondary {
-    background: var(--secondary);
+    background: var(--secondary) !important;
 }
 
 .btn-secondary:hover {
-    background: #7c3aed;
+    background: #7c3aed !important;
 }
 
 .btn-outline {
-    background: transparent;
-    color: var(--primary);
-    border: 2px solid var(--primary);
+    background: transparent !important;
+    color: var(--primary) !important;
+    border: 2px solid var(--primary) !important;
 }
 
 .btn-outline:hover {
-    background: var(--primary);
-    color: white;
+    background: var(--primary) !important;
+    color: white !important;
 }
 
 .btn-sm {
-    padding: 8px 20px;
-    font-size: 0.875rem;
+    padding: 8px 20px !important;
+    font-size: 0.875rem !important;
 }
 
 .btn-lg {
-    padding: 16px 36px;
-    font-size: 1.125rem;
+    padding: 16px 36px !important;
+    font-size: 1.125rem !important;
 }
 
 .btn-full {
-    width: 100%;
+    width: 100% !important;
 }
 
-/* ===== 5. CONTAINERS E GRID ===== */
+/* ===== 6. CONTAINERS E GRID ===== */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -227,19 +243,19 @@ small {
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
 
-/* ===== 6. CARDS GLOBAIS ===== */
+/* ===== 7. CARDS GLOBAIS ===== */
 .card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: var(--space-lg);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
+    background: var(--white) !important;
+    border-radius: var(--radius) !important;
+    padding: var(--space-lg) !important;
+    box-shadow: var(--shadow) !important;
+    border: 1px solid var(--border) !important;
+    transition: all 0.3s ease !important;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-5px) !important;
+    box-shadow: var(--shadow-xl) !important;
 }
 
 .card-header {
@@ -252,45 +268,45 @@ small {
     margin-bottom: var(--space-sm);
 }
 
-/* ===== 7. UTILITÁRIOS ===== */
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+/* ===== 8. UTILITÁRIOS ===== */
+.text-center { text-align: center !important; }
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
 
-.mt-0 { margin-top: 0; }
-.mt-1 { margin-top: var(--space); }
-.mt-2 { margin-top: var(--space-md); }
-.mt-3 { margin-top: var(--space-lg); }
-.mt-4 { margin-top: var(--space-xl); }
+.mt-0 { margin-top: 0 !important; }
+.mt-1 { margin-top: var(--space) !important; }
+.mt-2 { margin-top: var(--space-md) !important; }
+.mt-3 { margin-top: var(--space-lg) !important; }
+.mt-4 { margin-top: var(--space-xl) !important; }
 
-.mb-0 { margin-bottom: 0; }
-.mb-1 { margin-bottom: var(--space); }
-.mb-2 { margin-bottom: var(--space-md); }
-.mb-3 { margin-bottom: var(--space-lg); }
-.mb-4 { margin-bottom: var(--space-xl); }
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { margin-bottom: var(--space) !important; }
+.mb-2 { margin-bottom: var(--space-md) !important; }
+.mb-3 { margin-bottom: var(--space-lg) !important; }
+.mb-4 { margin-bottom: var(--space-xl) !important; }
 
-.p-0 { padding: 0; }
-.p-1 { padding: var(--space); }
-.p-2 { padding: var(--space-md); }
-.p-3 { padding: var(--space-lg); }
-.p-4 { padding: var(--space-xl); }
+.p-0 { padding: 0 !important; }
+.p-1 { padding: var(--space) !important; }
+.p-2 { padding: var(--space-md) !important; }
+.p-3 { padding: var(--space-lg) !important; }
+.p-4 { padding: var(--space-xl) !important; }
 
-.d-none { display: none; }
-.d-block { display: block; }
-.d-flex { display: flex; }
-.d-grid { display: grid; }
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-flex { display: flex !important; }
+.d-grid { display: grid !important; }
 
 .flex-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
-.gap-1 { gap: var(--space); }
-.gap-2 { gap: var(--space-md); }
-.gap-3 { gap: var(--space-lg); }
+.gap-1 { gap: var(--space) !important; }
+.gap-2 { gap: var(--space-md) !important; }
+.gap-3 { gap: var(--space-lg) !important; }
 
-/* ===== 8. ANIMAÇÕES ===== */
+/* ===== 9. ANIMAÇÕES ===== */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -302,14 +318,14 @@ small {
 }
 
 .fade-in {
-    animation: fadeIn 0.6s ease-out;
+    animation: fadeIn 0.6s ease-out !important;
 }
 
 .slide-in {
-    animation: slideIn 0.5s ease-out;
+    animation: slideIn 0.5s ease-out !important;
 }
 
-/* ===== 9. RESPONSIVIDADE ===== */
+/* ===== 10. RESPONSIVIDADE ===== */
 @media (max-width: 1024px) {
     .container {
         max-width: 960px;
@@ -343,39 +359,56 @@ small {
         padding: var(--space-xl) 0;
     }
     
-    h1 { font-size: 2.25rem; }
-    h2 { font-size: 1.875rem; }
-    h3 { font-size: 1.5rem; }
+    h1 { font-size: 2.25rem !important; }
+    h2 { font-size: 1.875rem !important; }
+    h3 { font-size: 1.5rem !important; }
 }
 
-/* ===== 10. COMPONENTES ESPECÍFICOS ===== */
+/* ===== 11. COMPONENTES ESPECÍFICOS ===== */
 .badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    display: inline-block !important;
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
 }
 
 .badge-primary {
-    background: var(--primary-light);
-    color: var(--primary);
+    background: var(--primary-light) !important;
+    color: var(--primary) !important;
 }
 
 .badge-arena {
-    background: var(--arena-light);
-    color: var(--arena);
+    background: var(--arena-light) !important;
+    color: var(--arena) !important;
 }
 
 .badge-success {
-    background: #d1fae5;
-    color: var(--success);
+    background: #d1fae5 !important;
+    color: var(--success) !important;
 }
 
-/* CORREÇÃO DE CONFLITOS - GARANTE BACKGROUND CLARO */
-body:not(.home-page) {
-    background-color: var(--bg) !important;
-    background-image: none !important;
+/* ===== 12. UTILITÁRIOS DE COR ===== */
+.bg-primary { background: var(--primary) !important; color: white !important; }
+.bg-primary-light { background: var(--primary-light) !important; }
+.bg-success { background: var(--success) !important; color: white !important; }
+.bg-danger { background: var(--danger) !important; color: white !important; }
+.bg-warning { background: var(--warning) !important; color: white !important; }
+.bg-dark { background: var(--dark) !important; color: white !important; }
+.bg-light { background: var(--bg-light) !important; }
+
+.text-primary { color: var(--primary) !important; }
+.text-success { color: var(--success) !important; }
+.text-danger { color: var(--danger) !important; }
+.text-warning { color: var(--warning) !important; }
+.text-dark { color: var(--dark) !important; }
+.text-light { color: var(--text-light) !important; }
+
+/* GARANTE QUE NADA DO VERCEL INTERFIRA */
+body.conectafisio-body * {
+    font-family: var(--font-sans) !important;
+    color: inherit !important;
+    background-color: transparent !important;
 }
