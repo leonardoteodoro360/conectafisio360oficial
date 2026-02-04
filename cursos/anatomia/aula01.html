@@ -2,18 +2,18 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Aula 01 - Anatomia Funcional | ConectaFisio360</title>
+    <title>Aula 01 – Conceitos Básicos | ConectaFisio360</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Fontes e Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         body {
             margin: 0;
             font-family: 'Nunito', sans-serif;
-            background-color: #1e293b;
+            background-color: #0f172a;
             color: #fff;
             display: flex;
             height: 100vh;
@@ -23,30 +23,39 @@
         /* SIDEBAR */
         .sidebar {
             width: 300px;
-            background: #0f172a;
-            border-right: 1px solid #334155;
+            background: #020617;
+            border-right: 1px solid #1e293b;
             display: flex;
             flex-direction: column;
         }
 
         .sidebar-header {
             padding: 20px;
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid #1e293b;
         }
 
         .back-btn {
             color: #94a3b8;
             text-decoration: none;
             font-size: 0.9rem;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            transition: 0.2s;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .back-btn:hover {
             color: #fff;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+        }
+
+        .sidebar-header p {
+            margin: 5px 0 0;
+            font-size: 0.8rem;
+            color: #94a3b8;
         }
 
         .module-list {
@@ -58,7 +67,7 @@
 
         .module-item {
             padding: 15px 20px;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid #020617;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -67,17 +76,12 @@
         }
 
         .module-item:hover {
-            background: #1e293b;
+            background: #020617;
         }
 
         .module-item.active {
-            background: #334155;
+            background: #1e293b;
             border-left: 4px solid #6366f1;
-        }
-
-        .play-icon {
-            font-size: 0.9rem;
-            color: #6366f1;
         }
 
         /* CONTEÚDO PRINCIPAL */
@@ -89,7 +93,7 @@
 
         .video-container {
             flex: 1;
-            background: #000;
+            background: black;
         }
 
         iframe {
@@ -100,30 +104,39 @@
 
         .video-info {
             padding: 20px;
-            background: #1e293b;
-            border-top: 1px solid #334155;
+            background: #020617;
+            border-top: 1px solid #1e293b;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
+        .video-info h2 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .video-info p {
+            margin: 5px 0 0;
+            color: #94a3b8;
+        }
+
         .btn-next {
             background: #6366f1;
-            color: #fff;
+            color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.2s;
         }
 
         .btn-next:hover {
             background: #4f46e5;
         }
 
-        /* MOBILE */
-        @media (max-width: 768px) {
+        /* RESPONSIVO */
+        @media(max-width: 768px) {
             body {
                 flex-direction: column;
                 height: auto;
@@ -131,11 +144,11 @@
 
             .sidebar {
                 width: 100%;
-                height: 260px;
+                height: auto;
             }
 
             .video-container {
-                height: 240px;
+                height: 250px;
             }
         }
     </style>
@@ -143,23 +156,20 @@
 
 <body>
 
-    <!-- MENU LATERAL -->
+    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="../../pages/dashboard.html" class="back-btn">
                 <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
             </a>
-
-            <h3 style="margin:0;">Anatomia Funcional</h3>
-            <p style="margin:5px 0 0; font-size:0.8rem; color:#94a3b8;">
-                Módulo 1 · Introdução
-            </p>
+            <h3>Anatomia Humana</h3>
+            <p>Módulo 1: Introdução</p>
         </div>
 
         <ul class="module-list">
             <li class="module-item active">
                 <span>01. Conceitos Básicos</span>
-                <i class="fa-solid fa-circle-play play-icon"></i>
+                <i class="fa-solid fa-circle-play" style="color:#6366f1;"></i>
             </li>
 
             <li class="module-item" onclick="location.href='aula02.html'">
@@ -183,20 +193,18 @@
     <main class="main-content">
 
         <div class="video-container">
+            <!-- TROQUE APENAS O LINK DO EMBED SE QUISER -->
             <iframe 
-                src="https://www.youtube.com/embed/S2qY4r-4GnA"
-                title="Aula 01 - Conceitos Básicos"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="Aula 01 - Conceitos Básicos de Anatomia"
                 allowfullscreen>
             </iframe>
         </div>
 
         <div class="video-info">
             <div>
-                <h2 style="margin:0;">Aula 01 · Conceitos Básicos de Anatomia</h2>
-                <p style="margin:5px 0 0; color:#94a3b8;">
-                    Prof. Leonardo Teodoro
-                </p>
+                <h2>Aula 01: Conceitos Básicos de Anatomia</h2>
+                <p>Prof. Leonardo Teodoro</p>
             </div>
 
             <button class="btn-next" onclick="location.href='aula02.html'">
