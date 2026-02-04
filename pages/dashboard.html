@@ -1,249 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- BLOQUEIA CSS DO VERCEL -->
-    <meta name="vercel-disable-css" content="true">
-    
-    <title>Painel do Aluno - ConectaFisio360</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ConectaFisio360 | Dashboard</title>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- CSS em ORDEM CORRETA -->
-    <link rel="stylesheet" href="../assets/css/vercel-fix.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
-    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <!-- Fonte (opcional, mas profissional) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="conectafisio-body">
-    <!-- Header do Dashboard -->
-    <header class="dashboard-header">
-        <a href="../index.html" class="logo-area">
-            <div class="logo-icon"><i class="fa-solid fa-bolt"></i></div>
-            ConectaFisio360
-        </a>
+<body>
 
-        <nav class="dashboard-nav">
-            <a href="dashboard.html" class="nav-item active">
-                <i class="fas fa-home"></i> Início
-            </a>
-            <a href="comunidade.html" class="nav-item">
-                <i class="fas fa-users"></i> Comunidade
-            </a>
-            <a href="modelos.html" class="nav-item">
-                <i class="fas fa-cube"></i> Modelos 3D
-            </a>
-            <a href="arena.html" class="nav-item arena">
-                <i class="fas fa-trophy"></i> FisioArena
-            </a>
-            <a href="loja.html" class="nav-item">
-                <i class="fas fa-store"></i> Loja
-            </a>
+    <!-- HEADER -->
+    <header class="header">
+        <h1>ConectaFisio360</h1>
+        <nav class="nav">
+            <a href="dashboard.html" class="nav-link active">Dashboard</a>
+            <a href="aula.html" class="nav-link">Cursos</a>
+            <a href="arena.html" class="nav-link">ArenaFisio</a>
+            <a href="comunidade.html" class="nav-link">Comunidade</a>
         </nav>
-
-        <div class="user-badge">
-            <span>LEO</span>
-            <div class="user-avatar">LT</div>
-        </div>
     </header>
 
-    <!-- Conteúdo Principal -->
-    <div class="dashboard-container">
-        <!-- Main Content -->
-        <main>
-            <!-- Card de Boas-vindas -->
-            <div class="welcome-card">
-                <h1>Olá, Leo Teodoro! 👋</h1>
-                <p>Seu progresso está excelente esta semana. Continue assim!</p>
-            </div>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container">
 
-            <!-- Seção: Continue Assistindo -->
-            <h2 class="section-title">
-                <i class="fas fa-play-circle"></i> Continue Assistindo
-            </h2>
+        <section class="welcome">
+            <h2>Bem-vindo(a) 👋</h2>
+            <p>Seu centro de controle da fisioterapia em um só lugar.</p>
+        </section>
 
-            <div class="courses-grid">
-                <!-- Curso de Anatomia -->
-                <div class="course-card" data-progress="82" data-course="anatomia">
-                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
-                    <div class="card-info">
-                        <strong>ANATOMIA</strong>
-                        <h4>Sistema Musculoesquelético</h4>
-                        
-                        <div class="progress-bar">
-                            <div class="progress-fill"></div>
-                        </div>
-                        
-                        <p class="progress-text">82% completo</p>
-                        
-                        <button class="btn continue-btn" style="margin-top: 15px; width: 100%;">
-                            <i class="fas fa-play"></i> Continuar Curso
-                        </button>
+        <!-- CURSOS -->
+        <section class="courses">
+
+            <h3>Seus Cursos</h3>
+
+            <div class="course-grid">
+
+                <div class="course-card" data-progress="40">
+                    <h4>Anatomia Funcional</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
                     </div>
+                    <span class="progress-text">0%</span>
                 </div>
 
-                <!-- Curso de Esportiva -->
-                <div class="course-card" data-progress="15" data-course="esportiva">
-                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
-                    <div class="card-info">
-                        <strong>ESPORTIVA</strong>
-                        <h4>Prevenção de Lesões</h4>
-                        
-                        <div class="progress-bar">
-                            <div class="progress-fill"></div>
-                        </div>
-                        
-                        <p class="progress-text">15% completo</p>
-                        
-                        <button class="btn continue-btn" style="margin-top: 15px; width: 100%;">
-                            <i class="fas fa-play"></i> Continuar Curso
-                        </button>
+                <div class="course-card" data-progress="70">
+                    <h4>Cinesiologia</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
                     </div>
+                    <span class="progress-text">0%</span>
                 </div>
-            </div>
 
-            <!-- Seção: Próximas Aulas -->
-            <h2 class="section-title" style="margin-top: 40px;">
-                <i class="fas fa-calendar-alt"></i> Próximas Aulas
-            </h2>
-
-            <div class="courses-grid">
-                <div class="course-card" data-course="ortopedia">
-                    <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-color: #f0f9ff;"></div>
-                    <div class="card-info">
-                        <strong>ORTOPEDIA</strong>
-                        <h4>Fraturas e Imobilizações</h4>
-                        <p style="color: var(--text-gray); margin: 10px 0;">Amanhã, 10:00 AM</p>
-                        <button class="btn" style="width: 100%; background: var(--success);">
-                            <i class="fas fa-bell"></i> Agendar Lembrete
-                        </button>
+                <div class="course-card" data-progress="20">
+                    <h4>Fisioterapia Respiratória</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
                     </div>
+                    <span class="progress-text">0%</span>
                 </div>
+
             </div>
-        </main>
+        </section>
 
-        <!-- Sidebar -->
-        <aside class="dashboard-sidebar">
-            <h3 class="sidebar-title">📊 Seu Progresso</h3>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">82%</div>
-                    <div class="stat-label">Anatomia</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">15%</div>
-                    <div class="stat-label">Esportiva</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">24</div>
-                    <div class="stat-label">Aulas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">7</div>
-                    <div class="stat-label">Dias seguidos</div>
-                </div>
-            </div>
+    </main>
 
-            <h3 class="sidebar-title">⚡ Acesso Rápido</h3>
-            
-            <ul class="quick-links">
-                <li>
-                    <a href="aula.html" class="quick-link">
-                        <i class="fas fa-video"></i>
-                        <span>Minhas Aulas</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="comunidade.html" class="quick-link">
-                        <i class="fas fa-comments"></i>
-                        <span>Fórum da Comunidade</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="modelos.html" class="quick-link">
-                        <i class="fas fa-cube"></i>
-                        <span>Modelos 3D Interativos</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="arena.html" class="quick-link">
-                        <i class="fas fa-trophy"></i>
-                        <span>Desafios da Arena</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="loja.html" class="quick-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Loja de Materiais</span>
-                    </a>
-                </li>
-            </ul>
-        </aside>
-    </div>
-
-    <!-- Footer será carregado automaticamente -->
-
-    <!-- SEUS SCRIPTS ORGANIZADOS -->
-    <script type="module" src="assets/js/main.js"></script>
+    <!-- JS -->
     <script src="../assets/js/dashboard.js"></script>
 
-    <!-- Script específico para esta página -->
-    <script>
-        // Script específico do dashboard
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Dashboard do ConectaFisio360 carregado!');
-            
-            // Anima as barras de progresso
-            document.querySelectorAll('.progress-fill').forEach(bar => {
-                const card = bar.closest('.course-card');
-                const progress = card.getAttribute('data-progress');
-                setTimeout(() => {
-                    bar.style.width = progress + '%';
-                }, 300);
-            });
-            
-            // Efeito nos botões de continuar
-            const continueButtons = document.querySelectorAll('.continue-btn');
-            continueButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const courseCard = this.closest('.course-card');
-                    const courseName = courseCard.querySelector('h4').textContent;
-                    
-                    // Simulação de abrir aula
-                    alert(`Iniciando aula: ${courseName}`);
-                });
-            });
-            
-            // Carrega o footer automaticamente
-            fetch('../partials/footer.html')
-                .then(response => {
-                    if (!response.ok) throw new Error('Footer não encontrado');
-                    return response.text();
-                })
-                .then(html => {
-                    document.body.insertAdjacentHTML('beforeend', html);
-                    console.log('Footer carregado com sucesso!');
-                })
-                .catch(error => {
-                    console.warn('Não foi possível carregar o footer:', error);
-                    // Cria um footer básico se o fetch falhar
-                    const fallbackFooter = `
-                        <footer style="text-align: center; padding: 20px; background: #1e293b; color: white; margin-top: 50px;">
-                            <p>© 2024 ConectaFisio360 | Desenvolvido por Leonardo Teodoro</p>
-                        </footer>
-                    `;
-                    document.body.insertAdjacentHTML('beforeend', fallbackFooter);
-                });
-        });
-    </script>
 </body>
 </html>
