@@ -1,414 +1,196 @@
-/* ============================================
-   CONECTAFISIO360 - ESTILOS GERAIS
-   Arquivo: style.css
-   Autor: Leonardo Teodoro
-   ============================================ */
+/* ===============================
+   CONECTAFISIO360 – STYLE BASE
+   =============================== */
 
-/* ===== 1. RESET COMPLETO ===== */
+/* RESET BÁSICO */
 * {
     margin: 0;
     padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    box-sizing: border-box !important;
+    box-sizing: border-box;
 }
 
-/* ===== 2. VARIÁVEIS CSS NOSSAS ===== */
+/* VARIÁVEIS GLOBAIS */
 :root {
-    /* Cores Principais */
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: #e0e7ff;
-    --secondary: #8b5cf6;
-    --accent: #06b6d4;
-    
-    /* Cores de Destaque */
-    --arena: #bd00ff;
-    --arena-light: rgba(189, 0, 255, 0.1);
-    --success: #10b981;
-    --warning: #f59e0b;
+    --primary: #1f7cff;
+    --secondary: #22c55e;
     --danger: #ef4444;
-    --info: #3b82f6;
-    
-    /* Cores Neutras */
-    --dark: #1e293b;
-    --dark-light: #334155;
-    --text: #64748b;
-    --text-light: #94a3b8;
-    --bg: #f8fafc;
-    --bg-light: #f1f5f9;
+    --dark: #0f172a;
+    --gray: #64748b;
+    --light: #f8fafc;
     --white: #ffffff;
-    --border: #e2e8f0;
-    
-    /* Sombras */
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
-    --shadow: 0 4px 15px rgba(0,0,0,0.08);
-    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
-    --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
-    
-    /* Bordas */
-    --radius-sm: 8px;
-    --radius: 16px;
-    --radius-lg: 24px;
-    --radius-xl: 32px;
-    
-    /* Espaçamentos */
-    --space-xs: 4px;
-    --space-sm: 8px;
-    --space: 16px;
-    --space-md: 24px;
-    --space-lg: 32px;
-    --space-xl: 48px;
-    --space-2xl: 64px;
-    
-    /* Tipografia */
-    --font-sans: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono: 'SF Mono', Monaco, 'Cascadia Mono', monospace;
+
+    --radius: 12px;
+    --shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* ===== 3. BASE HTML E BODY ===== */
-html {
-    scroll-behavior: smooth;
-    font-size: 16px;
-    height: 100%;
-    width: 100%;
-}
-
+/* BODY */
 body.conectafisio-body {
-    font-family: var(--font-sans) !important;
-    background-color: var(--bg) !important;
-    color: var(--text) !important;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-    overflow-x: hidden;
-    margin: 0 !important;
-    padding: 0 !important;
-    position: relative !important;
-    width: 100% !important;
-}
-
-/* PÁGINAS QUE NÃO SÃO HOME TEM FUNDO CLARO */
-body.conectafisio-body:not(.home-page) {
-    background-color: var(--bg) !important;
-    background-image: none !important;
-}
-
-/* ===== 4. TIPOGRAFIA ===== */
-h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    background-color: var(--light);
     color: var(--dark);
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: var(--space);
+    min-height: 100vh;
 }
 
-h1 { font-size: 3rem; }
-h2 { font-size: 2.25rem; }
-h3 { font-size: 1.75rem; }
-h4 { font-size: 1.5rem; }
-h5 { font-size: 1.25rem; }
-h6 { font-size: 1rem; }
-
-p {
-    margin-bottom: var(--space);
-    font-size: 1rem;
-}
-
+/* LINKS */
 a {
     color: var(--primary);
     text-decoration: none;
-    transition: all 0.3s ease;
 }
 
 a:hover {
-    color: var(--primary-dark);
+    text-decoration: underline;
 }
 
-strong {
-    font-weight: 700;
-    color: var(--dark);
-}
-
-small {
-    font-size: 0.875rem;
-    color: var(--text-light);
-}
-
-/* ===== 5. BOTÕES GLOBAIS ===== */
+/* BOTÕES */
 .btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: var(--space-sm) !important;
-    padding: 12px 28px !important;
-    background: var(--primary) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: var(--radius) !important;
-    font-weight: 700 !important;
-    font-size: 1rem !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    text-align: center !important;
-    user-select: none !important;
-    line-height: 1.5 !important;
-    text-decoration: none !important;
-    font-family: var(--font-sans) !important;
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
 }
 
-.btn:hover {
-    background: var(--primary-dark) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: var(--shadow-lg) !important;
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--white);
 }
 
-.btn:active {
-    transform: translateY(0) !important;
+.btn-primary:hover {
+    opacity: 0.9;
 }
 
 .btn-secondary {
-    background: var(--secondary) !important;
+    background-color: var(--secondary);
+    color: var(--white);
 }
 
-.btn-secondary:hover {
-    background: #7c3aed !important;
+.btn-danger {
+    background-color: var(--danger);
+    color: var(--white);
 }
 
-.btn-outline {
-    background: transparent !important;
-    color: var(--primary) !important;
-    border: 2px solid var(--primary) !important;
-}
-
-.btn-outline:hover {
-    background: var(--primary) !important;
-    color: white !important;
-}
-
-.btn-sm {
-    padding: 8px 20px !important;
-    font-size: 0.875rem !important;
-}
-
-.btn-lg {
-    padding: 16px 36px !important;
-    font-size: 1.125rem !important;
-}
-
-.btn-full {
-    width: 100% !important;
-}
-
-/* ===== 6. CONTAINERS E GRID ===== */
-.container {
+/* INPUTS */
+input,
+select,
+textarea {
     width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+    background-color: var(--white);
+    color: var(--dark);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* CONTAINERS */
+.container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--space);
+    padding: 20px;
 }
 
-.container-fluid {
-    width: 100%;
-    padding: 0 var(--space);
-}
-
-.section {
-    padding: var(--space-2xl) 0;
-}
-
-.section-sm {
-    padding: var(--space-xl) 0;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 calc(var(--space) * -0.5);
-}
-
-.col {
-    flex: 1 0 0%;
-    padding: 0 calc(var(--space) * 0.5);
-}
-
-.grid {
-    display: grid;
-    gap: var(--space);
-}
-
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-4 { grid-template-columns: repeat(4, 1fr); }
-
-/* ===== 7. CARDS GLOBAIS ===== */
+/* CARD */
 .card {
-    background: var(--white) !important;
-    border-radius: var(--radius) !important;
-    padding: var(--space-lg) !important;
-    box-shadow: var(--shadow) !important;
-    border: 1px solid var(--border) !important;
-    transition: all 0.3s ease !important;
+    background-color: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
 }
 
-.card:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: var(--shadow-xl) !important;
+/* HEADER */
+header.app-header {
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.card-header {
-    padding-bottom: var(--space);
-    margin-bottom: var(--space);
-    border-bottom: 1px solid var(--border);
+header.app-header h1 {
+    font-size: 20px;
+    color: var(--primary);
 }
 
-.card-title {
-    margin-bottom: var(--space-sm);
+/* MENU */
+nav.app-menu {
+    display: flex;
+    gap: 16px;
 }
 
-/* ===== 8. UTILITÁRIOS ===== */
-.text-center { text-align: center !important; }
-.text-left { text-align: left !important; }
-.text-right { text-align: right !important; }
-
-.mt-0 { margin-top: 0 !important; }
-.mt-1 { margin-top: var(--space) !important; }
-.mt-2 { margin-top: var(--space-md) !important; }
-.mt-3 { margin-top: var(--space-lg) !important; }
-.mt-4 { margin-top: var(--space-xl) !important; }
-
-.mb-0 { margin-bottom: 0 !important; }
-.mb-1 { margin-bottom: var(--space) !important; }
-.mb-2 { margin-bottom: var(--space-md) !important; }
-.mb-3 { margin-bottom: var(--space-lg) !important; }
-.mb-4 { margin-bottom: var(--space-xl) !important; }
-
-.p-0 { padding: 0 !important; }
-.p-1 { padding: var(--space) !important; }
-.p-2 { padding: var(--space-md) !important; }
-.p-3 { padding: var(--space-lg) !important; }
-.p-4 { padding: var(--space-xl) !important; }
-
-.d-none { display: none !important; }
-.d-block { display: block !important; }
-.d-flex { display: flex !important; }
-.d-grid { display: grid !important; }
-
-.flex-center {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+nav.app-menu a {
+    font-weight: 500;
+    color: var(--dark);
 }
 
-.gap-1 { gap: var(--space) !important; }
-.gap-2 { gap: var(--space-md) !important; }
-.gap-3 { gap: var(--space-lg) !important; }
-
-/* ===== 9. ANIMAÇÕES ===== */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* LOGIN / AUTH */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light);
 }
 
-@keyframes slideIn {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 }
 
-.fade-in {
-    animation: fadeIn 0.6s ease-out !important;
+.auth-card h2 {
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.slide-in {
-    animation: slideIn 0.5s ease-out !important;
+/* DASHBOARD */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
 }
 
-/* ===== 10. RESPONSIVIDADE ===== */
-@media (max-width: 1024px) {
-    .container {
-        max-width: 960px;
-    }
-    
-    .grid-4 {
-        grid-template-columns: repeat(3, 1fr);
-    }
+/* MODAL */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-@media (max-width: 768px) {
-    html {
-        font-size: 14px;
-    }
-    
-    .container {
-        padding: 0 var(--space-md);
-    }
-    
-    .grid-3, .grid-4 {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.modal {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: var(--shadow);
 }
 
-@media (max-width: 576px) {
-    .grid-2, .grid-3, .grid-4 {
-        grid-template-columns: 1fr;
-    }
-    
-    .section {
-        padding: var(--space-xl) 0;
-    }
-    
-    h1 { font-size: 2.25rem !important; }
-    h2 { font-size: 1.875rem !important; }
-    h3 { font-size: 1.5rem !important; }
+.modal-overlay.active {
+    display: flex;
 }
 
-/* ===== 11. COMPONENTES ESPECÍFICOS ===== */
-.badge {
-    display: inline-block !important;
-    padding: 4px 12px !important;
-    border-radius: 20px !important;
-    font-size: 0.75rem !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-}
-
-.badge-primary {
-    background: var(--primary-light) !important;
-    color: var(--primary) !important;
-}
-
-.badge-arena {
-    background: var(--arena-light) !important;
-    color: var(--arena) !important;
-}
-
-.badge-success {
-    background: #d1fae5 !important;
-    color: var(--success) !important;
-}
-
-/* ===== 12. UTILITÁRIOS DE COR ===== */
-.bg-primary { background: var(--primary) !important; color: white !important; }
-.bg-primary-light { background: var(--primary-light) !important; }
-.bg-success { background: var(--success) !important; color: white !important; }
-.bg-danger { background: var(--danger) !important; color: white !important; }
-.bg-warning { background: var(--warning) !important; color: white !important; }
-.bg-dark { background: var(--dark) !important; color: white !important; }
-.bg-light { background: var(--bg-light) !important; }
-
-.text-primary { color: var(--primary) !important; }
-.text-success { color: var(--success) !important; }
-.text-danger { color: var(--danger) !important; }
-.text-warning { color: var(--warning) !important; }
-.text-dark { color: var(--dark) !important; }
-.text-light { color: var(--text-light) !important; }
-
-/* GARANTE QUE NADA DO VERCEL INTERFIRA */
-body.conectafisio-body * {
-    font-family: var(--font-sans) !important;
-    color: inherit !important;
-    background-color: transparent !important;
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--gray);
+    font-size: 14px;
 }
