@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Vercel fixes -->
     <meta name="vercel-disable-optimizations" content="true">
-    
-    <!-- BLOQUEIA CSS DO VERCEL -->
     <meta name="vercel-disable-css" content="true">
-    
+
     <title>ConectaFisio360</title>
-    
+
+    <!-- ✅ FAVICON (arquivo que você já criou na raiz) -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
     <!-- Fontes -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CSS em ORDEM CORRETA -->
+
+    <!-- CSS em ordem correta -->
     <link rel="stylesheet" href="assets/css/vercel-fix.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/home.css">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
 </head>
+
 <body class="conectafisio-body home-page">
 
     <header class="home-header">
@@ -32,67 +35,29 @@
 
     <div class="hero">
         <h1>O Futuro da Fisioterapia</h1>
-        <p>Estude, evolua e conecte-se com os melhores profissionais. Uma plataforma completa para fisioterapeutas que querem transformar vidas.</p>
-        
-        <a href="pages/dashboard.html" class="btn btn-comecar">Começar Agora</a>
+        <p>
+            Estude, evolua e conecte-se com os melhores profissionais.
+            Uma plataforma completa para fisioterapeutas que querem transformar vidas.
+        </p>
+
+        <a href="pages/dashboard.html" class="btn btn-comecar">
+            Começar Agora
+        </a>
     </div>
-    
+
     <div class="features">
         <div class="feature-card">
             <div class="feature-icon">📚</div>
             <h3 class="feature-title">Cursos Completos</h3>
             <p>Anatomia, Esportiva, Ortopedia e muito mais com certificação.</p>
         </div>
-        
+
         <div class="feature-card">
             <div class="feature-icon">👥</div>
             <h3 class="feature-title">Comunidade Ativa</h3>
             <p>Conecte-se com fisioterapeutas de todo o Brasil.</p>
         </div>
-        
-        <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3 class="feature-title">Aprendizado Prático</h3>
-            <p>Modelos 3D, casos clínicos e simulações interativas.</p>
-        </div>
-    </div>
 
-    <!-- Footer será carregado pelo JavaScript -->
-    
-    <script>
-        // Carrega o footer automaticamente
-        fetch('partials/footer.html')
-            .then(response => response.text())
-            .then(html => {
-                document.body.insertAdjacentHTML('beforeend', html);
-            })
-            .catch(error => {
-                console.log('Footer não carregado, criando simples...');
-                const simpleFooter = `
-                    <footer class="home-footer">
-                        <p>© 2024 ConectaFisio360 | Desenvolvido por Leonardo Teodoro</p>
-                    </footer>
-                `;
-                document.body.insertAdjacentHTML('beforeend', simpleFooter);
-            });
-            
-        // Anima os cards
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.feature-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'all 0.5s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 200);
-            });
-        });
-    </script>
-    
-    <!-- Seu JavaScript -->
-    <script type="module" src="assets/js/main.js"></script>
-</body>
-</html>
+        <div class="feature-card">
+            <di
+
