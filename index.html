@@ -59,5 +59,37 @@
         </div>
 
         <div class="feature-card">
-            <di
+            <div class="feature-icon">⚡</div>
+            <h3 class="feature-title">Aprendizado Prático</h3>
+            <p>Modelos 3D, casos clínicos e simulações interativas.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="home-footer">
+        <p>© 2024 ConectaFisio360 | Desenvolvido por Leonardo Teodoro</p>
+    </footer>
+
+    <!-- Animações -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.feature-card');
+
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+
+    <!-- App -->
+    <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
 
