@@ -1,58 +1,51 @@
-// assets/js/base.js - Gerenciador de Paths Universal
+// ativos/js/base.js - Gerenciador de Paths + Autenticação Universal
 class PathManager {
     constructor() {
-        this.basePath = this.getBasePath();
         this.isGitHubPages = window.location.hostname.includes('github.io');
+        this.basePath = this.getBasePath();
         this.init();
     }
-    
+
     getBasePath() {
-        // Detecta ambiente
         const path = window.location.pathname;
-        
+
         if (this.isGitHubPages) {
-            // GitHub Pages: /reponame/
             const repoName = path.split('/')[1];
             return repoName ? `/${repoName}/` : '/';
         }
-        
-        // Local ou outros hosts
+
         return '/';
     }
-    
+
     resolve(path) {
-        // Resolve paths relativos para absolutos
         if (path.startsWith('http')) return path;
-        
-        // Remove leading slash se já tiver no basePath
+
         const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-        
         return `${this.basePath}${cleanPath}`;
     }
-    
+
     async loadComponent(componentPath, targetSelector) {
         const fullPath = this.resolve(componentPath);
-        
+
         try {
             const response = await fetch(fullPath);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
+
             const html = await response.text();
             const target = document.querySelector(targetSelector);
-            
+
             if (target) {
                 target.innerHTML = html;
-                // Re-processa scripts dentro do componente
                 this.executeScripts(target);
                 return true;
             }
         } catch (error) {
-            console.error(`Failed to load ${componentPath}:`, error);
+            console.error(`Erro ao carregar ${componentPath}:`, error);
             this.fallbackComponent(targetSelector);
             return false;
         }
     }
-    
+
     executeScripts(container) {
         const scripts = container.querySelectorAll('script');
         scripts.forEach(oldScript => {
@@ -64,11 +57,11 @@ class PathManager {
             oldScript.parentNode.replaceChild(newScript, oldScript);
         });
     }
-    
+
     fallbackComponent(targetSelector) {
         const target = document.querySelector(targetSelector);
         if (!target) return;
-        
+
         if (targetSelector === 'footer') {
             target.innerHTML = `
                 <div style="text-align:center;padding:20px;background:#1e293b;color:white;">
@@ -77,15 +70,45 @@ class PathManager {
             `;
         }
     }
-    
+
+    /* =========================
+       🔒 AUTENTICAÇÃO
+       ========================= */
+
+    isLoggedIn() {
+        return !!localStorage.getItem('usuarioLogado');
+    }
+
+    requireAuth() {
+        const publicPages = ['login.html', 'cadastro.html', 'index.html'];
+
+        const currentPage = window.location.pathname.split('/').pop();
+
+        if (!this.isLoggedIn() && !publicPages.includes(currentPage)) {
+            window.location.href = this.resolve('login.html');
+        }
+    }
+
+    logout() {
+        localStorage.removeItem('usuarioLogado');
+        window.location.href = this.resolve('login.html');
+    }
+
+    getUser() {
+        return localStorage.getItem('usuarioLogado');
+    }
+
     init() {
-        // Expõe globalmente
         window.PathManager = this;
-        console.log('PathManager initialized:', {
+
+        console.log('PathManager inicializado:', {
             basePath: this.basePath,
             isGitHubPages: this.isGitHubPages,
             currentPath: window.location.pathname
         });
+
+        // Protege páginas automaticamente
+        this.requireAuth();
     }
 }
 
@@ -93,3 +116,4 @@ class PathManager {
 document.addEventListener('DOMContentLoaded', () => {
     window.paths = new PathManager();
 });
+
