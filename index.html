@@ -1,70 +1,75 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>ConectaFisio360</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConectaFisio360</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/home.css">
+<link rel="icon" href="favicon.ico">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- CSS -->
+<link rel="stylesheet" href="ativos/CSS/style.css">
+<link rel="stylesheet" href="ativos/CSS/home.css">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 
-<body data-app="conectafisio">
+<body class="conectafisio-body home-page" data-app="conectafisio360">
 
 <header class="home-header">
     <div class="logo">ConectaFisio360</div>
 
     <nav>
-        <a href="pages/dashboard.html">Dashboard</a>
-        <a href="pages/arena.html">ArenaFisio</a>
-        <a href="pages/comunidade.html">Comunidade</a>
+        <a href="login.html" class="btn btn-sm">Login</a>
+        <a href="cadastro.html" class="btn btn-secondary btn-sm">Cadastrar</a>
     </nav>
-
-    <div class="auth-buttons">
-        <button id="btn-login">Entrar</button>
-        <button id="btn-cadastro">Cadastrar</button>
-    </div>
 </header>
 
-<section class="hero">
-    <h1>O Futuro da Fisioterapia</h1>
-    <p>Estude, evolua e conecte-se com os melhores profissionais.</p>
-    <a href="pages/dashboard.html" class="btn btn-comecar">Começar Agora</a>
+<section class="hero text-center">
+    <div class="container">
+        <h1>O Futuro da Fisioterapia</h1>
+        <p>
+            Estude, evolua e conecte-se com os melhores profissionais.
+            Uma plataforma completa para fisioterapeutas que querem transformar vidas.
+        </p>
+
+        <a href="login.html" class="btn btn-lg mt-2">
+            Entrar na Plataforma
+        </a>
+    </div>
 </section>
 
-<!-- LOGIN MODAL -->
-<div id="login-modal" class="modal hidden">
-    <div class="modal-box">
-        <h2>Login</h2>
-        <input type="email" placeholder="Email">
-        <input type="password" placeholder="Senha">
-        <button>Entrar</button>
-        <span class="close-modal">✖</span>
-    </div>
-</div>
+<section class="section">
+<div class="container grid grid-3">
 
-<!-- CADASTRO MODAL -->
-<div id="cadastro-modal" class="modal hidden">
-    <div class="modal-box">
-        <h2>Cadastro</h2>
-        <input type="text" placeholder="Nome">
-        <input type="email" placeholder="Email">
-        <input type="password" placeholder="Senha">
-        <button>Criar Conta</button>
-        <span class="close-modal">✖</span>
+    <div class="card text-center">
+        <h3>📚 Cursos Completos</h3>
+        <p>Anatomia, Ortopedia, Esportiva e muito mais.</p>
     </div>
-</div>
 
-<footer class="home-footer">
-    <p>© 2026 ConectaFisio360</p>
+    <div class="card text-center">
+        <h3>👥 Comunidade</h3>
+        <p>Conecte-se com fisioterapeutas de todo o Brasil.</p>
+    </div>
+
+    <div class="card text-center">
+        <h3>⚡ Arena Fisio</h3>
+        <p>Desafios, ranking e evolução profissional.</p>
+    </div>
+
+</div>
+</section>
+
+<footer class="text-center p-3">
+© 2026 ConectaFisio360 | Desenvolvido por Leonardo Teodoro
 </footer>
 
-<script src="assets/js/main.js"></script>
+<!-- JS -->
+<script src="ativos/js/base.js"></script>
+<script src="ativos/js/main.js"></script>
+
 </body>
 </html>
-
 
