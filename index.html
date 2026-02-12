@@ -1,113 +1,163 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>ConectaFisio360</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel - ConectaFisio360</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: white;
-            text-align: center;
-        }
+<style>
 
-        header {
-            padding: 60px 20px;
-        }
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color:white;
+}
 
-        h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
+header{
+    padding:20px 40px;
+    background:#0f172a;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
 
-        p {
-            color: #cbd5e1;
-        }
+header h1{
+    margin:0;
+    font-size:22px;
+}
 
-        nav {
-            margin-top: 30px;
-        }
+nav a{
+    color:#cbd5e1;
+    text-decoration:none;
+    margin-left:20px;
+    font-size:14px;
+}
 
-        nav a {
-            display: inline-block;
-            margin: 10px;
-            padding: 12px 20px;
-            background-color: #2563eb;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
+nav a:hover{
+    color:white;
+}
 
-        nav a:hover {
-            background-color: #1d4ed8;
-        }
+.container{
+    padding:40px;
+}
 
-        .section {
-            padding: 60px 20px;
-        }
+.grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap:25px;
+}
 
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+.card{
+    background:#1e293b;
+    padding:25px;
+    border-radius:12px;
+    transition:0.3s;
+    cursor:pointer;
+}
 
-        .card {
-            background: #1e293b;
-            padding: 25px;
-            width: 250px;
-            border-radius: 10px;
-        }
+.card:hover{
+    transform:translateY(-5px);
+    background:#273549;
+}
 
-        footer {
-            padding: 30px;
-            background: #0f172a;
-            margin-top: 50px;
-            color: #94a3b8;
-        }
-    </style>
+.card h3{
+    margin-top:0;
+}
+
+.button{
+    display:inline-block;
+    margin-top:15px;
+    padding:10px 15px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    font-size:14px;
+}
+
+.button:hover{
+    background:#1d4ed8;
+}
+
+.progress-bar{
+    width:100%;
+    height:8px;
+    background:#334155;
+    border-radius:5px;
+    margin-top:10px;
+}
+
+.progress{
+    width:35%;
+    height:8px;
+    background:#22c55e;
+    border-radius:5px;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#94a3b8;
+}
+
+</style>
 </head>
+
 <body>
 
 <header>
-    <h1>ConectaFisio360</h1>
-    <p>A evolução do estudante de fisioterapia começa aqui.</p>
+    <h1>ConectaFisio360 - Painel</h1>
 
     <nav>
-        <a href="cadastro.html">Começar</a>
-        <a href="painel.html">Entrar</a>
+        <a href="index.html">Home</a>
         <a href="arena.html">Arena</a>
         <a href="comunidade.html">Comunidade</a>
+        <a href="cadastro.html">Perfil</a>
     </nav>
 </header>
 
-<section class="section">
-    <h2>O que você encontra aqui?</h2>
+<div class="container">
 
-    <div class="cards">
+    <h2>Bem-vindo, Leonardo 👋</h2>
+    <p>Continue evoluindo na sua jornada acadêmica.</p>
+
+    <br>
+
+    <div class="grid">
+
         <div class="card">
-            <h3>Arena Clínica</h3>
-            <p>Simulações e desafios para testar seu raciocínio clínico.</p>
+            <h3>📊 Seu Progresso</h3>
+            <p>Você completou 35% da jornada.</p>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
         </div>
 
         <div class="card">
-            <h3>Painel do Aluno</h3>
-            <p>Acompanhe seu progresso e evolução acadêmica.</p>
+            <h3>🔥 Arena Clínica</h3>
+            <p>Participe de desafios e simulações.</p>
+            <a class="button" href="arena.html">Entrar</a>
         </div>
 
         <div class="card">
-            <h3>Comunidade</h3>
-            <p>Conecte-se com outros estudantes e profissionais.</p>
+            <h3>👥 Comunidade</h3>
+            <p>Interaja com outros estudantes.</p>
+            <a class="button" href="comunidade.html">Acessar</a>
         </div>
+
+        <div class="card">
+            <h3>📚 Cursos</h3>
+            <p>Acesse conteúdos exclusivos.</p>
+            <a class="button" href="#">Em breve</a>
+        </div>
+
     </div>
-</section>
+
+</div>
 
 <footer>
-    © 2026 ConectaFisio360 - Plataforma em desenvolvimento
+© 2026 ConectaFisio360
 </footer>
 
 </body>
