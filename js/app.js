@@ -1,10 +1,10 @@
 // ===============================
-// CONECTAFISIO360 - REALTIME DATABASE
+// CONECTAFISIO360 - REALTIME DATABASE (COM EXPORTS)
 // ===============================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getDatabase, ref, set, get, update, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBceFT9nmk1XfVbYZEcZ3yUY1pstUblD3E",
@@ -20,11 +20,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
+// ========== VARIÁVEIS GLOBAIS ==========
 let usuarioAtual = null;
 let xp = 0;
 let desafios = 0;
 let plano = 'normal';
 
+// ========== OBSERVADOR DE ESTADO DO USUÁRIO ==========
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     usuarioAtual = user;
@@ -65,35 +67,60 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-window.cadastrar = async (email, senha, nome, planoSelecionado) => {
+// ========== FUNÇÃO DE NÍVEL ==========
+export function getLevel(xp) {
+  if (xp < 500) return "Iniciante";
+  if (xp < 1000) return "Intermediário";
+  if (xp < 1500) return "Avançado";
+  return "Elite Clínico";
+}
+window.getLevel = getLevel;
+
+// ========== CADASTRAR ==========
+export async function cadastrar(email, senha, nome, planoSelecionado, especialidade = "Não informada") {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
     const userRef = ref(db, `usuarios/${user.uid}`);
+    const inicial = nome ? nome.charAt(0).toUpperCase() : 'U';
     await set(userRef, {
-      nome, email, xp: 0, desafios: 0, plano: planoSelecionado, criadoEm: new Date().toISOString()
+      nome,
+      email,
+      especialidade,
+      avatar: inicial,
+      xp: 0,
+      desafios: 0,
+      plano: planoSelecionado,
+      criadoEm: new Date().toISOString(),
+      bio: "Olá! Estou no ConectaFisio360 🩺"
     });
     alert("✅ Conta criada! Faça login.");
     window.location.href = "login.html";
   } catch (error) {
     alert("Erro: " + error.message);
   }
-};
+}
+window.cadastrar = cadastrar;
 
-window.logar = async (email, senha) => {
+// ========== LOGAR ==========
+export async function logar(email, senha) {
   try {
     await signInWithEmailAndPassword(auth, email, senha);
   } catch (error) {
     alert("Erro: " + error.message);
   }
-};
+}
+window.logar = logar;
 
-window.logout = async () => {
+// ========== LOGOUT ==========
+export async function logout() {
   await signOut(auth);
   window.location.href = "index.html";
-};
+}
+window.logout = logout;
 
-window.adicionarXP = async (pontos) => {
+// ========== ADICIONAR XP ==========
+export async function adicionarXP(pontos) {
   if (!usuarioAtual) return;
   const userRef = ref(db, `usuarios/${usuarioAtual.uid}`);
   const snapshot = await get(userRef);
@@ -112,16 +139,18 @@ window.adicionarXP = async (pontos) => {
   window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
     detail: { usuario: usuarioAtual, xp, desafios, plano, nivel: getLevel(xp) }
   }));
-};
+}
+window.adicionarXP = adicionarXP;
 
-window.getLevel = (xp) => {
-  if (xp < 500) return "Iniciante";
-  if (xp < 1000) return "Intermediário";
-  if (xp < 1500) return "Avançado";
-  return "Elite Clínico";
-};
+// ========== GETTERS ==========
+export function usuarioAtual() { return usuarioAtual; }
+window.usuarioAtual = usuarioAtual;
 
-window.usuarioAtual = () => usuarioAtual;
-window.planoUsuario = () => plano;
-window.xpAtual = () => xp;
-window.desafiosAtual = () => desafios;
+export function planoUsuario() { return plano; }
+window.planoUsuario = planoUsuario;
+
+export function xpAtual() { return xp; }
+window.xpAtual = xpAtual;
+
+export function desafiosAtual() { return desafios; }
+window.desafiosAtual = desafiosAtual;
