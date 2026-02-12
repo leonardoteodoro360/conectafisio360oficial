@@ -1,5 +1,5 @@
 // ===============================
-// CONECTAFISIO360 - REALTIME DATABASE
+// CONECTAFISIO360 - REALTIME DATABASE (FINAL)
 // ===============================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -28,10 +28,15 @@ let plano = 'normal';
 
 // ========== OBSERVADOR DE ESTADO DO USUÁRIO ==========
 onAuthStateChanged(auth, async (user) => {
+  const publicPages = ['index.html', 'login.html', 'cadastro.html'];
+  const currentPage = window.location.pathname.split('/').pop();
+
   if (user) {
+    // ---------- USUÁRIO LOGADO ----------
     usuarioAtual = user;
     localStorage.setItem('firebaseUser', JSON.stringify({ uid: user.uid, email: user.email }));
 
+    // Buscar dados do Realtime Database
     const userRef = ref(db, `usuarios/${user.uid}`);
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
@@ -40,6 +45,7 @@ onAuthStateChanged(auth, async (user) => {
       desafios = data.desafios || 0;
       plano = data.plano || 'normal';
     } else {
+      // Primeiro acesso: criar documento
       await set(userRef, {
         email: user.email,
         nome: user.displayName || "Usuário",
@@ -49,18 +55,28 @@ onAuthStateChanged(auth, async (user) => {
         criadoEm: new Date().toISOString()
       });
     }
+
+    // Disparar evento de atualização
     window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
       detail: { usuario: user, xp, desafios, plano, nivel: getLevel(xp) }
     }));
+
+    // 🔥 REDIRECIONAMENTO AUTOMÁTICO PARA O PAINEL (se estiver em página pública)
+    if (publicPages.includes(currentPage) || currentPage === '') {
+      window.location.href = 'painel.html';
+    }
+
   } else {
+    // ---------- USUÁRIO NÃO LOGADO ----------
     usuarioAtual = null;
     localStorage.removeItem('firebaseUser');
     xp = 0; desafios = 0; plano = 'normal';
+
     window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
       detail: { usuario: null, xp, desafios, plano, nivel: getLevel(xp) }
     }));
-    const publicPages = ['index.html', 'login.html', 'cadastro.html'];
-    const currentPage = window.location.pathname.split('/').pop();
+
+    // 🔥 REDIRECIONAMENTO PARA LOGIN (se estiver em página protegida)
     if (!publicPages.includes(currentPage) && currentPage !== '') {
       window.location.href = 'login.html';
     }
@@ -76,7 +92,7 @@ export function getLevel(xp) {
 }
 window.getLevel = getLevel;
 
-// ========== GETTER DO USUÁRIO (NOME DIFERENTE PARA NÃO CONFLITAR) ==========
+// ========== GETTER DO USUÁRIO ==========
 export function getUsuarioAtual() { return usuarioAtual; }
 window.getUsuarioAtual = getUsuarioAtual;
 
@@ -110,7 +126,7 @@ window.cadastrar = cadastrar;
 export async function logar(email, senha) {
   try {
     await signInWithEmailAndPassword(auth, email, senha);
-    // Redirecionamento feito pelo onAuthStateChanged
+    // O redirecionamento é feito pelo onAuthStateChanged
   } catch (error) {
     alert("Erro: " + error.message);
   }
