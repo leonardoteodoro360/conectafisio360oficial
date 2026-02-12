@@ -1,41 +1,19 @@
 // ===============================
-// SISTEMA GLOBAL DE XP
+// SISTEMA DE USUÁRIO E ACESSO
 // ===============================
 
-let xp = localStorage.getItem("xp")
-  ? parseInt(localStorage.getItem("xp"))
-  : 0;
+// Simula um banco de dados de usuários (Para teste)
+const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado")) || null;
 
-// Definição de níveis
-function getLevel(xp){
-    if(xp < 200) return "Iniciante";
-    if(xp < 500) return "Intermediário";
-    if(xp < 1000) return "Avançado";
-    return "Elite Clínico";
+function verificarAcessoPremium() {
+    if (!usuarioLogado || usuarioLogado.tipo !== 'premium') {
+        // Se tentar acessar página premium sem ser premium, volta pro painel
+        alert("Acesso restrito para membros Premium!");
+        window.location.href = "painel.html";
+    }
 }
 
-// Progresso percentual (base 1000 XP)
-function getProgressPercent(xp){
-    let max = 1000;
-    return (xp / max) * 100;
+function logout() {
+    localStorage.removeItem("usuarioLogado");
+    window.location.href = "login.html";
 }
-
-// Adicionar XP
-function addXP(value){
-    xp += value;
-    localStorage.setItem("xp", xp);
-}
-
-// Atualizar painel (se existir na página)
-function updateDashboard(){
-    const xpText = document.getElementById("xpText");
-    const progress = document.getElementById("progress");
-    const levelText = document.getElementById("levelText");
-
-    if(xpText) xpText.innerText = "XP: " + xp;
-    if(progress) progress.style.width = getProgressPercent(xp) + "%";
-    if(levelText) levelText.innerText = "Nível " + getLevel(xp);
-}
-
-// Executa automaticamente quando página carrega
-document.addEventListener("DOMContentLoaded", updateDashboard);
