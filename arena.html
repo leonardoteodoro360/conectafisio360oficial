@@ -1,69 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arena Clínica - ConectaFisio360</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
-
-<style>
-body{
-    margin:0;
-    font-family:'Poppins', sans-serif;
-    background: linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
-    text-align:center;
-    padding:60px;
-}
-
-.button{
-    padding:15px 25px;
-    border:none;
-    border-radius:8px;
-    background: linear-gradient(90deg,#22c55e,#06b6d4);
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.button:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 20px #06b6d4;
-}
-
-a{
-    display:block;
-    margin-top:30px;
-    color:#94a3b8;
-    text-decoration:none;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arena Clínica - ConectaFisio360</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #0f172a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .btn-concluir {
+            background: linear-gradient(to r, #10b981, #06b6d4);
+            border: none;
+            padding: 15px 30px;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+        .btn-concluir:hover { transform: scale(1.05); }
+        a { color: #94a3b8; text-decoration: none; font-size: 14px; }
+    </style>
 </head>
-
 <body>
 
-<h1>🔥 Arena Clínica</h1>
-<p>Resolva casos clínicos e evolua seu nível.</p>
+    <h1 style="font-size: 40px;">🔥 Arena Clínica</h1>
+    <p>Resolva casos clínicos e evolua seu nível.</p>
 
-<br><br>
+    <button class="btn-concluir" onclick="ganharXP(100)">
+        Concluir Caso Clínico (+100 XP)
+    </button>
 
-<button class="button" onclick="completeChallenge()">
-Concluir Caso Clínico (+100 XP)
-</button>
+    <br>
+    <a href="painel.html">← Voltar para o Painel</a>
 
-<a href="index.html">← Voltar para o Painel</a>
-
-<script>
-let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
-
-function completeChallenge(){
-    xp += 100;
-    localStorage.setItem("xp", xp);
-    alert("🔥 Você ganhou 100 XP!");
-}
-</script>
-
+    <script src="js/app.js"></script>
 </body>
 </html>
