@@ -1,5 +1,5 @@
 // ===============================
-// CONECTAFISIO360 - REALTIME DATABASE (COM EXPORTS)
+// CONECTAFISIO360 - REALTIME DATABASE
 // ===============================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -20,25 +20,37 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-// ========== VARIÁVEIS GLOBAIS ==========
-let usuarioAtual = null;
-let xp = 0;
-let desafios = 0;
-let plano = 'normal';
+// ========== VARIÁVEIS GLOBAIS (privadas do módulo) ==========
+let _usuarioAtual = null;
+let _xp = 0;
+let _desafios = 0;
+let _plano = 'normal';
+
+// ========== GETTERS EXPORTADOS ==========
+export function getUsuarioAtual() { return _usuarioAtual; }
+export function getXp() { return _xp; }
+export function getDesafios() { return _desafios; }
+export function getPlano() { return _plano; }
+
+// Também expõe no window para compatibilidade com chamadas onclick antigas
+window.getUsuarioAtual = getUsuarioAtual;
+window.getXp = getXp;
+window.getDesafios = getDesafios;
+window.getPlano = getPlano;
 
 // ========== OBSERVADOR DE ESTADO DO USUÁRIO ==========
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    usuarioAtual = user;
+    _usuarioAtual = user;
     localStorage.setItem('firebaseUser', JSON.stringify({ uid: user.uid, email: user.email }));
 
     const userRef = ref(db, `usuarios/${user.uid}`);
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
       const data = snapshot.val();
-      xp = data.xp || 0;
-      desafios = data.desafios || 0;
-      plano = data.plano || 'normal';
+      _xp = data.xp || 0;
+      _desafios = data.desafios || 0;
+      _plano = data.plano || 'normal';
     } else {
       await set(userRef, {
         email: user.email,
@@ -50,14 +62,26 @@ onAuthStateChanged(auth, async (user) => {
       });
     }
     window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
-      detail: { usuario: user, xp, desafios, plano, nivel: getLevel(xp) }
+      detail: { 
+        usuario: user, 
+        xp: _xp, 
+        desafios: _desafios, 
+        plano: _plano, 
+        nivel: getLevel(_xp) 
+      }
     }));
   } else {
-    usuarioAtual = null;
+    _usuarioAtual = null;
     localStorage.removeItem('firebaseUser');
-    xp = 0; desafios = 0; plano = 'normal';
+    _xp = 0; _desafios = 0; _plano = 'normal';
     window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
-      detail: { usuario: null, xp, desafios, plano, nivel: getLevel(xp) }
+      detail: { 
+        usuario: null, 
+        xp: _xp, 
+        desafios: _desafios, 
+        plano: _plano, 
+        nivel: getLevel(_xp) 
+      }
     }));
     const publicPages = ['index.html', 'login.html', 'cadastro.html'];
     const currentPage = window.location.pathname.split('/').pop();
@@ -121,36 +145,29 @@ window.logout = logout;
 
 // ========== ADICIONAR XP ==========
 export async function adicionarXP(pontos) {
-  if (!usuarioAtual) return;
-  const userRef = ref(db, `usuarios/${usuarioAtual.uid}`);
+  if (!_usuarioAtual) return;
+  const userRef = ref(db, `usuarios/${_usuarioAtual.uid}`);
   const snapshot = await get(userRef);
   if (snapshot.exists()) {
     const dados = snapshot.val();
     const novoXP = (dados.xp || 0) + pontos;
     const novosDesafios = (dados.desafios || 0) + 1;
     await update(userRef, { xp: novoXP, desafios: novosDesafios });
-    xp = novoXP;
-    desafios = novosDesafios;
+    _xp = novoXP;
+    _desafios = novosDesafios;
   } else {
     await set(userRef, { xp: pontos, desafios: 1 });
-    xp = pontos;
-    desafios = 1;
+    _xp = pontos;
+    _desafios = 1;
   }
   window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
-    detail: { usuario: usuarioAtual, xp, desafios, plano, nivel: getLevel(xp) }
+    detail: { 
+      usuario: _usuarioAtual, 
+      xp: _xp, 
+      desafios: _desafios, 
+      plano: _plano, 
+      nivel: getLevel(_xp) 
+    }
   }));
 }
 window.adicionarXP = adicionarXP;
-
-// ========== GETTERS ==========
-export function usuarioAtual() { return usuarioAtual; }
-window.usuarioAtual = usuarioAtual;
-
-export function planoUsuario() { return plano; }
-window.planoUsuario = planoUsuario;
-
-export function xpAtual() { return xp; }
-window.xpAtual = xpAtual;
-
-export function desafiosAtual() { return desafios; }
-window.desafiosAtual = desafiosAtual;
