@@ -4,17 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArenaFisio - RPG Clínico</title>
+    
+    <!-- Carrega o sistema global (XP, usuário, logout) -->
+    <script src="js/app.js"></script>
+    
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            background-color: #0b1120;
-            color: white;
+            box-sizing: border-box;
             font-family: 'Segoe UI', sans-serif;
-            overflow: hidden; /* Impede scroll para o jogo não fugir */
         }
 
-        /* CENÁRIO DO JOGO */
+        body {
+            background-color: #0b1120;
+            color: white;
+            overflow: hidden; /* Sem scroll – jogo ocupa tudo */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 30px;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+        }
+
+        header a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        header a:hover {
+            color: #38bdf8;
+        }
+
+        /* CENÁRIO – GRID DE CLÍNICA */
         #game-container {
             position: relative;
             width: 100vw;
@@ -23,55 +51,65 @@
             background-image: 
                 linear-gradient(#334155 1px, transparent 1px),
                 linear-gradient(90deg, #334155 1px, transparent 1px);
-            background-size: 50px 50px; /* Cria um grid de chão */
+            background-size: 50px 50px;
             border-bottom: 4px solid #38bdf8;
         }
 
-        /* O JOGADOR */
+        /* JOGADOR (VOCÊ) */
         #player {
             position: absolute;
-            width: 40px;
-            height: 40px;
-            background-color: #38bdf8;
-            border-radius: 8px;
+            width: 45px;
+            height: 45px;
+            background: #38bdf8;
+            border-radius: 12px;
             border: 3px solid white;
-            transition: all 0.1s linear;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-size: 24px;
+            transition: all 0.08s linear;
+            box-shadow: 0 0 15px rgba(56,189,248,0.7);
             z-index: 10;
         }
 
-        /* O PACIENTE (NPC) */
-        #patient {
+        /* PACIENTE (NPC) */
+        .patient {
             position: absolute;
-            top: 200px;
-            left: 500px;
-            width: 45px;
-            height: 45px;
-            background-color: #fb7185;
+            width: 50px;
+            height: 50px;
+            background: #fb7185;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 15px #fb7185;
+            font-size: 26px;
+            box-shadow: 0 0 20px #fb7185;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px #fb7185; }
+            50% { box-shadow: 0 0 25px #fb7185; }
+            100% { box-shadow: 0 0 10px #fb7185; }
         }
 
         /* BALÃO DE INTERAÇÃO */
-        #interact-prompt {
+        .interact-prompt {
             position: absolute;
             top: -40px;
+            left: -15px;
             background: white;
-            color: black;
-            padding: 5px 10px;
-            border-radius: 5px;
+            color: #0f172a;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 12px;
-            display: none;
+            font-weight: bold;
             white-space: nowrap;
+            display: none;
+            border: 2px solid #38bdf8;
         }
 
-        /* MODAL DE DESAFIO (QUIZ) */
+        /* MODAL DO QUIZ */
         #quiz-modal {
             position: fixed;
             top: 50%;
@@ -82,24 +120,69 @@
             border-radius: 20px;
             border: 2px solid #38bdf8;
             width: 90%;
-            max-width: 400px;
+            max-width: 450px;
             display: none;
-            z-index: 100;
+            z-index: 200;
             text-align: center;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        #quiz-modal h3 {
+            color: #38bdf8;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        #pergunta {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #e2e8f0;
         }
 
         .btn-opcao {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #334155;
+            padding: 14px;
+            margin: 8px 0;
+            background: #1e293b;
             color: white;
-            border: none;
-            border-radius: 8px;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            font-size: 15px;
             cursor: pointer;
+            transition: 0.2s;
         }
 
-        .btn-opcao:hover { background: #475569; }
+        .btn-opcao:hover {
+            background: #334155;
+            border-color: #38bdf8;
+        }
+
+        #feedback {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* PAINEL DE XP NA ARENA */
+        .xp-hud {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 1px solid #38bdf8;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 50;
+        }
+
+        .xp-hud span {
+            color: #10b981;
+            font-weight: bold;
+            font-size: 18px;
+        }
 
         /* CONTROLES MOBILE */
         .controls {
@@ -107,82 +190,133 @@
             justify-content: center;
             gap: 20px;
             padding: 20px;
-        }
-        .btn-move {
-            width: 60px;
-            height: 60px;
-            background: #334155;
-            border: none;
-            color: white;
-            border-radius: 10px;
-            font-size: 20px;
+            background: #0f172a;
         }
 
-        header { padding: 15px; background: #0f172a; display: flex; justify-content: space-between; }
+        .btn-move {
+            width: 65px;
+            height: 65px;
+            background: #1e293b;
+            border: none;
+            color: white;
+            border-radius: 16px;
+            font-size: 26px;
+            cursor: pointer;
+            border: 1px solid #334155;
+            transition: 0.1s;
+        }
+
+        .btn-move:active {
+            background: #38bdf8;
+            transform: scale(0.95);
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 600px) {
+            .controls { gap: 10px; }
+            .btn-move { width: 55px; height: 55px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- CABEÇALHO COM LINK CORRETO PARA O PAINEL -->
     <header>
-        <div><strong>ArenaFisio</strong> - Modo RPG</div>
-        <a href="painel.html" style="color: #94a3b8; text-decoration: none;">Sair da Arena</a>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 24px;">🏥</span>
+            <strong style="font-size: 18px; background: linear-gradient(90deg,#3b82f6,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">ArenaFisio</strong>
+            <span style="background: #1e293b; padding: 4px 10px; border-radius: 30px; font-size: 12px; color: #94a3b8;">Modo RPG</span>
+        </div>
+        <!-- LINK CORRIGIDO: aponta para painel.html -->
+        <a href="painel.html" style="color: #94a3b8; text-decoration: none; padding: 8px 16px; border-radius: 8px; background: #1e293b; transition:0.2s;">← Sair da Arena</a>
     </header>
 
+    <!-- ÁREA DO JOGO -->
     <div id="game-container">
+        <!-- JOGADOR -->
         <div id="player">👨‍⚕️</div>
 
-        <div id="patient">
+        <!-- PACIENTES (agora são 3 para mais desafios) -->
+        <div id="patient1" class="patient" style="top: 200px; left: 500px;">
             🤕
-            <div id="interact-prompt">Pressione ESPAÇO para tratar</div>
+            <div class="interact-prompt" id="prompt1">Pressione ESPAÇO para tratar</div>
+        </div>
+        <div id="patient2" class="patient" style="top: 350px; left: 200px;">
+            🦴
+            <div class="interact-prompt" id="prompt2">Pressione ESPAÇO para tratar</div>
+        </div>
+        <div id="patient3" class="patient" style="top: 100px; left: 700px;">
+            ❤️
+            <div class="interact-prompt" id="prompt3">Pressione ESPAÇO para tratar</div>
+        </div>
+
+        <!-- HUD DE XP (mostra XP atual) -->
+        <div class="xp-hud">
+            <span>⭐ XP:</span>
+            <span id="xpDisplay">0</span>
         </div>
     </div>
 
+    <!-- CONTROLES (SETAS / WASD) -->
     <div class="controls">
         <button class="btn-move" onclick="move('up')">▲</button>
-        <div style="display: flex; gap: 40px;">
+        <div style="display: flex; gap: 20px;">
             <button class="btn-move" onclick="move('left')">◀</button>
             <button class="btn-move" onclick="move('right')">▶</button>
         </div>
         <button class="btn-move" onclick="move('down')">▼</button>
     </div>
 
+    <!-- MODAL DO QUIZ (DESAFIO CLÍNICO) -->
     <div id="quiz-modal">
-        <h3 id="titulo-caso">Atendimento Clínico</h3>
-        <p id="pergunta">O paciente apresenta dor aguda no ombro após queda. Qual o primeiro passo?</p>
-        <button class="btn-opcao" onclick="responder(true)">A) Avaliação de amplitude de movimento</button>
-        <button class="btn-opcao" onclick="responder(false)">B) Aplicar gelo e liberar o paciente</button>
-        <p id="feedback" style="margin-top: 15px; font-weight: bold;"></p>
+        <h3 id="titulo-caso">🩺 Caso Clínico</h3>
+        <p id="pergunta">Paciente com lombalgia aguda. Qual conduta inicial?</p>
+        <button class="btn-opcao" id="opcaoA" onclick="responder('A')">A) Crioterapia e repouso relativo</button>
+        <button class="btn-opcao" id="opcaoB" onclick="responder('B')">B) Encaminhar para cirurgia</button>
+        <button class="btn-opcao" id="opcaoC" onclick="responder('C')">C) Apenas medicação</button>
+        <p id="feedback" style="margin-top: 20px;"></p>
     </div>
 
-    <script src="js/app.js"></script>
-
+    <!-- SCRIPT PRÓPRIO DA ARENA (usa funções do app.js) -->
     <script>
-        // Lógica de Movimento
-        let pX = 50;
-        let pY = 50;
+        // ========== CONFIGURAÇÃO DO JOGO ==========
+        let pX = 50, pY = 50;
         const speed = 25;
         const player = document.getElementById('player');
-        const patient = document.getElementById('patient');
-        const prompt = document.getElementById('interact-prompt');
-        const modal = document.getElementById('quiz-modal');
+        const patients = [
+            { id: 'patient1', x: 500, y: 200, active: true, question: 'Paciente com dor aguda no ombro após queda. Qual o primeiro passo?', correct: 'A', options: ['A) Avaliar amplitude de movimento', 'B) Aplicar gelo e liberar', 'C) Solicitar ressonância'] },
+            { id: 'patient2', x: 200, y: 350, active: true, question: 'Paciente pós-AVC com hemiplegia. Qual conduta indicada?', correct: 'B', options: ['A) Repouso absoluto', 'B) Mobilização precoce', 'C) Órtese de imobilização'] },
+            { id: 'patient3', x: 700, y: 100, active: true, question: 'Paciente com fratura de tíbia. O que NÃO fazer?', correct: 'C', options: ['A) Imobilizar', 'B) Crioterapia', 'C) Carga imediata'] }
+        ];
+        let currentPatient = null; // paciente com quem está interagindo
 
+        // Atualiza XP na tela da arena
+        function atualizarXP_Arena() {
+            const xpAtual = localStorage.getItem('xp') ? parseInt(localStorage.getItem('xp')) : 0;
+            const display = document.getElementById('xpDisplay');
+            if (display) display.innerText = xpAtual;
+        }
+
+        // Atualiza posição do jogador
         function updatePosition() {
             player.style.left = pX + 'px';
             player.style.top = pY + 'px';
-            checkCollision();
+            checkAllCollisions();
         }
 
+        // Movimento (chamado pelos botões e teclado)
         function move(dir) {
-            if (modal.style.display === 'block') return; // Trava o boneco se estiver no quiz
-
+            if (document.getElementById('quiz-modal').style.display === 'block') return;
             if (dir === 'up') pY -= speed;
             if (dir === 'down') pY += speed;
             if (dir === 'left') pX -= speed;
             if (dir === 'right') pX += speed;
             
-            // Limites da tela
+            // Limites do container
             if (pX < 0) pX = 0;
             if (pY < 0) pY = 0;
+            if (pX > window.innerWidth - 60) pX = window.innerWidth - 60;
+            if (pY > document.getElementById('game-container').clientHeight - 60) pY = document.getElementById('game-container').clientHeight - 60;
 
             updatePosition();
         }
@@ -193,44 +327,107 @@
             if (e.key === 'ArrowDown' || e.key === 's') move('down');
             if (e.key === 'ArrowLeft' || e.key === 'a') move('left');
             if (e.key === 'ArrowRight' || e.key === 'd') move('right');
-            if (e.key === ' ' && prompt.style.display === 'block') {
-                abrirQuiz();
+            // Interagir com ESPAÇO
+            if (e.key === ' ') {
+                e.preventDefault();
+                for (let pat of patients) {
+                    const patientEl = document.getElementById(pat.id);
+                    const promptEl = patientEl.querySelector('.interact-prompt');
+                    if (promptEl.style.display === 'block') {
+                        abrirQuiz(pat);
+                        break;
+                    }
+                }
             }
         });
 
-        function checkCollision() {
-            const dist = Math.sqrt(Math.pow(pX - 500, 2) + Math.pow(pY - 200, 2));
-            if (dist < 60) {
-                prompt.style.display = 'block';
-            } else {
-                prompt.style.display = 'none';
-            }
+        // Verifica colisões com todos os pacientes
+        function checkAllCollisions() {
+            patients.forEach(pat => {
+                const patientEl = document.getElementById(pat.id);
+                const promptEl = patientEl.querySelector('.interact-prompt');
+                const dist = Math.sqrt(Math.pow(pX - pat.x, 2) + Math.pow(pY - pat.y, 2));
+                if (dist < 60 && pat.active) {
+                    promptEl.style.display = 'block';
+                } else {
+                    promptEl.style.display = 'none';
+                }
+            });
         }
 
-        function abrirQuiz() {
-            modal.style.display = 'block';
+        // Abre o modal com os dados do paciente específico
+        function abrirQuiz(patientData) {
+            currentPatient = patientData;
+            document.getElementById('pergunta').innerText = patientData.question;
+            // Atualiza as opções
+            document.getElementById('opcaoA').innerText = patientData.options[0];
+            document.getElementById('opcaoB').innerText = patientData.options[1];
+            document.getElementById('opcaoC').innerText = patientData.options[2];
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('quiz-modal').style.display = 'block';
         }
 
-        function responder(correta) {
+        // Responde ao quiz
+        function responder(opcao) {
+            if (!currentPatient) return;
             const feedback = document.getElementById('feedback');
-            if (correta) {
-                feedback.innerHTML = "✅ Excelente! +100 XP";
-                feedback.style.color = "#10b981";
+            const isCorrect = (opcao === currentPatient.correct);
+            
+            if (isCorrect) {
+                feedback.innerHTML = '✅ Resposta correta! +100 XP';
+                feedback.style.color = '#10b981';
+                
+                // Usa a função GLOBAL do app.js para adicionar XP
+                if (typeof adicionarXP === 'function') {
+                    adicionarXP(100);
+                } else {
+                    // fallback: salva direto
+                    let xp = localStorage.getItem('xp') ? parseInt(localStorage.getItem('xp')) : 0;
+                    xp += 100;
+                    localStorage.setItem('xp', xp);
+                }
+
+                // Atualiza o XP mostrado na arena
+                atualizarXP_Arena();
+
+                // Desativa o paciente (não pode mais interagir)
+                currentPatient.active = false;
+                document.getElementById(currentPatient.id).style.opacity = '0.5';
+                
+                // Fecha o modal após 1,5s
                 setTimeout(() => {
-                    if (typeof concluirDesafio === "function") {
-                        concluirDesafio(100); 
-                    } else {
-                        alert("Desafio Concluído! +100 XP");
-                        window.location.href = "painel.html";
-                    }
+                    document.getElementById('quiz-modal').style.display = 'none';
                 }, 1500);
             } else {
-                feedback.innerHTML = "❌ Tente novamente!";
-                feedback.style.color = "#ef4444";
+                feedback.innerHTML = '❌ Resposta incorreta. Tente novamente!';
+                feedback.style.color = '#ef4444';
             }
         }
 
-        updatePosition();
+        // Carrega XP inicial ao abrir a página
+        window.onload = function() {
+            atualizarXP_Arena();
+            // Posiciona os pacientes no mapa
+            patients.forEach(pat => {
+                const el = document.getElementById(pat.id);
+                el.style.left = pat.x + 'px';
+                el.style.top = pat.y + 'px';
+            });
+            // Coloca o jogador em posição inicial
+            pX = 50; pY = 50;
+            updatePosition();
+        };
+
+        // Se o app.js não tiver a função adicionarXP, define uma aqui mesmo
+        if (typeof adicionarXP !== 'function') {
+            window.adicionarXP = function(pontos) {
+                let xp = localStorage.getItem('xp') ? parseInt(localStorage.getItem('xp')) : 0;
+                xp += pontos;
+                localStorage.setItem('xp', xp);
+                // Atualiza o painel se existir a função global
+                if (typeof atualizarInterface === 'function') atualizarInterface();
+            };
+        }
     </script>
 </body>
 </html>
