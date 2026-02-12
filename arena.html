@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArenaFisio - RPG Clínico</title>
     
-    <!-- Carrega o sistema global (XP, usuário, logout) -->
-    <script src="js/app.js"></script>
+    <!-- Carrega o sistema global (Firebase) - AGORA COMO MÓDULO -->
+    <script type="module" src="js/app.js"></script>
     
     <style>
         * {
@@ -19,7 +19,7 @@
         body {
             background-color: #0b1120;
             color: white;
-            overflow: hidden; /* Sem scroll – jogo ocupa tudo */
+            overflow: hidden;
         }
 
         header {
@@ -42,7 +42,6 @@
             color: #38bdf8;
         }
 
-        /* CENÁRIO – GRID DE CLÍNICA */
         #game-container {
             position: relative;
             width: 100vw;
@@ -55,7 +54,6 @@
             border-bottom: 4px solid #38bdf8;
         }
 
-        /* JOGADOR (VOCÊ) */
         #player {
             position: absolute;
             width: 45px;
@@ -72,7 +70,6 @@
             z-index: 10;
         }
 
-        /* PACIENTE (NPC) */
         .patient {
             position: absolute;
             width: 50px;
@@ -93,7 +90,6 @@
             100% { box-shadow: 0 0 10px #fb7185; }
         }
 
-        /* BALÃO DE INTERAÇÃO */
         .interact-prompt {
             position: absolute;
             top: -40px;
@@ -109,7 +105,6 @@
             border: 2px solid #38bdf8;
         }
 
-        /* MODAL DO QUIZ */
         #quiz-modal {
             position: fixed;
             top: 50%;
@@ -162,7 +157,6 @@
             font-weight: bold;
         }
 
-        /* PAINEL DE XP NA ARENA */
         .xp-hud {
             position: absolute;
             top: 80px;
@@ -184,7 +178,6 @@
             font-size: 18px;
         }
 
-        /* CONTROLES MOBILE */
         .controls {
             display: flex;
             justify-content: center;
@@ -211,7 +204,6 @@
             transform: scale(0.95);
         }
 
-        /* RESPONSIVIDADE */
         @media (max-width: 600px) {
             .controls { gap: 10px; }
             .btn-move { width: 55px; height: 55px; }
@@ -220,23 +212,18 @@
 </head>
 <body>
 
-    <!-- CABEÇALHO COM LINK CORRETO PARA O PAINEL -->
     <header>
         <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-size: 24px;">🏥</span>
             <strong style="font-size: 18px; background: linear-gradient(90deg,#3b82f6,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">ArenaFisio</strong>
             <span style="background: #1e293b; padding: 4px 10px; border-radius: 30px; font-size: 12px; color: #94a3b8;">Modo RPG</span>
         </div>
-        <!-- LINK CORRIGIDO: aponta para painel.html -->
         <a href="painel.html" style="color: #94a3b8; text-decoration: none; padding: 8px 16px; border-radius: 8px; background: #1e293b; transition:0.2s;">← Sair da Arena</a>
     </header>
 
-    <!-- ÁREA DO JOGO -->
     <div id="game-container">
-        <!-- JOGADOR -->
         <div id="player">👨‍⚕️</div>
 
-        <!-- PACIENTES (agora são 3 para mais desafios) -->
         <div id="patient1" class="patient" style="top: 200px; left: 500px;">
             🤕
             <div class="interact-prompt" id="prompt1">Pressione ESPAÇO para tratar</div>
@@ -250,14 +237,12 @@
             <div class="interact-prompt" id="prompt3">Pressione ESPAÇO para tratar</div>
         </div>
 
-        <!-- HUD DE XP (mostra XP atual) -->
         <div class="xp-hud">
             <span>⭐ XP:</span>
             <span id="xpDisplay">0</span>
         </div>
     </div>
 
-    <!-- CONTROLES (SETAS / WASD) -->
     <div class="controls">
         <button class="btn-move" onclick="move('up')">▲</button>
         <div style="display: flex; gap: 20px;">
@@ -267,7 +252,6 @@
         <button class="btn-move" onclick="move('down')">▼</button>
     </div>
 
-    <!-- MODAL DO QUIZ (DESAFIO CLÍNICO) -->
     <div id="quiz-modal">
         <h3 id="titulo-caso">🩺 Caso Clínico</h3>
         <p id="pergunta">Paciente com lombalgia aguda. Qual conduta inicial?</p>
@@ -277,8 +261,11 @@
         <p id="feedback" style="margin-top: 20px;"></p>
     </div>
 
-    <!-- SCRIPT PRÓPRIO DA ARENA (usa funções do app.js) -->
-    <script>
+    <!-- SCRIPT PRÓPRIO DA ARENA – AGORA COMO MÓDULO E COM FIREBASE -->
+    <script type="module">
+        // ========== IMPORTAÇÕES DO FIREBASE ==========
+        import { adicionarXP, xpAtual, usuarioAtual } from './js/app.js';
+
         // ========== CONFIGURAÇÃO DO JOGO ==========
         let pX = 50, pY = 50;
         const speed = 25;
@@ -288,46 +275,50 @@
             { id: 'patient2', x: 200, y: 350, active: true, question: 'Paciente pós-AVC com hemiplegia. Qual conduta indicada?', correct: 'B', options: ['A) Repouso absoluto', 'B) Mobilização precoce', 'C) Órtese de imobilização'] },
             { id: 'patient3', x: 700, y: 100, active: true, question: 'Paciente com fratura de tíbia. O que NÃO fazer?', correct: 'C', options: ['A) Imobilizar', 'B) Crioterapia', 'C) Carga imediata'] }
         ];
-        let currentPatient = null; // paciente com quem está interagindo
+        let currentPatient = null;
 
-        // Atualiza XP na tela da arena
-        function atualizarXP_Arena() {
-            const xpAtual = localStorage.getItem('xp') ? parseInt(localStorage.getItem('xp')) : 0;
-            const display = document.getElementById('xpDisplay');
-            if (display) display.innerText = xpAtual;
+        // ========== VERIFICA SE USUÁRIO ESTÁ LOGADO ==========
+        if (!usuarioAtual()) {
+            alert('Você precisa estar logado para acessar a Arena.');
+            window.location.href = 'login.html';
         }
 
-        // Atualiza posição do jogador
+        // ========== ATUALIZA O HUD DE XP ==========
+        function atualizarXP_Arena() {
+            const display = document.getElementById('xpDisplay');
+            if (display) display.innerText = xpAtual();
+        }
+
+        // ========== ATUALIZA POSIÇÃO DO JOGADOR ==========
         function updatePosition() {
             player.style.left = pX + 'px';
             player.style.top = pY + 'px';
             checkAllCollisions();
         }
 
-        // Movimento (chamado pelos botões e teclado)
-        function move(dir) {
+        // ========== MOVIMENTO ==========
+        window.move = function(dir) {
             if (document.getElementById('quiz-modal').style.display === 'block') return;
             if (dir === 'up') pY -= speed;
             if (dir === 'down') pY += speed;
             if (dir === 'left') pX -= speed;
             if (dir === 'right') pX += speed;
             
-            // Limites do container
             if (pX < 0) pX = 0;
             if (pY < 0) pY = 0;
             if (pX > window.innerWidth - 60) pX = window.innerWidth - 60;
             if (pY > document.getElementById('game-container').clientHeight - 60) pY = document.getElementById('game-container').clientHeight - 60;
 
             updatePosition();
-        }
+        };
 
-        // Teclado
+        // ========== TECLADO ==========
         window.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowUp' || e.key === 'w') move('up');
             if (e.key === 'ArrowDown' || e.key === 's') move('down');
             if (e.key === 'ArrowLeft' || e.key === 'a') move('left');
             if (e.key === 'ArrowRight' || e.key === 'd') move('right');
-            // Interagir com ESPAÇO
+            
             if (e.key === ' ') {
                 e.preventDefault();
                 for (let pat of patients) {
@@ -341,7 +332,7 @@
             }
         });
 
-        // Verifica colisões com todos os pacientes
+        // ========== COLISÕES ==========
         function checkAllCollisions() {
             patients.forEach(pat => {
                 const patientEl = document.getElementById(pat.id);
@@ -355,20 +346,19 @@
             });
         }
 
-        // Abre o modal com os dados do paciente específico
-        function abrirQuiz(patientData) {
+        // ========== ABRIR MODAL ==========
+        window.abrirQuiz = function(patientData) {
             currentPatient = patientData;
             document.getElementById('pergunta').innerText = patientData.question;
-            // Atualiza as opções
             document.getElementById('opcaoA').innerText = patientData.options[0];
             document.getElementById('opcaoB').innerText = patientData.options[1];
             document.getElementById('opcaoC').innerText = patientData.options[2];
             document.getElementById('feedback').innerHTML = '';
             document.getElementById('quiz-modal').style.display = 'block';
-        }
+        };
 
-        // Responde ao quiz
-        function responder(opcao) {
+        // ========== RESPONDER QUIZ (AGORA COM FIREBASE) ==========
+        window.responder = async function(opcao) {
             if (!currentPatient) return;
             const feedback = document.getElementById('feedback');
             const isCorrect = (opcao === currentPatient.correct);
@@ -377,24 +367,16 @@
                 feedback.innerHTML = '✅ Resposta correta! +100 XP';
                 feedback.style.color = '#10b981';
                 
-                // Usa a função GLOBAL do app.js para adicionar XP
-                if (typeof adicionarXP === 'function') {
-                    adicionarXP(100);
-                } else {
-                    // fallback: salva direto
-                    let xp = localStorage.getItem('xp') ? parseInt(localStorage.getItem('xp')) : 0;
-                    xp += 100;
-                    localStorage.setItem('xp', xp);
-                }
-
-                // Atualiza o XP mostrado na arena
+                // Chama a função do Firebase para adicionar XP (já incrementa no banco)
+                await adicionarXP(100);
+                
+                // Atualiza o HUD com o novo valor (vindo do xpAtual())
                 atualizarXP_Arena();
 
-                // Desativa o paciente (não pode mais interagir)
+                // Desativa o paciente
                 currentPatient.active = false;
                 document.getElementById(currentPatient.id).style.opacity = '0.5';
                 
-                // Fecha o modal após 1,5s
                 setTimeout(() => {
                     document.getElementById('quiz-modal').style.display = 'none';
                 }, 1500);
@@ -402,32 +384,27 @@
                 feedback.innerHTML = '❌ Resposta incorreta. Tente novamente!';
                 feedback.style.color = '#ef4444';
             }
-        }
+        };
 
-        // Carrega XP inicial ao abrir a página
+        // ========== INICIALIZAÇÃO ==========
         window.onload = function() {
-            atualizarXP_Arena();
-            // Posiciona os pacientes no mapa
+            // Posiciona pacientes
             patients.forEach(pat => {
                 const el = document.getElementById(pat.id);
                 el.style.left = pat.x + 'px';
                 el.style.top = pat.y + 'px';
             });
-            // Coloca o jogador em posição inicial
+            // Posiciona jogador
             pX = 50; pY = 50;
             updatePosition();
+            // Atualiza XP
+            atualizarXP_Arena();
         };
 
-        // Se o app.js não tiver a função adicionarXP, define uma aqui mesmo
-        if (typeof adicionarXP !== 'function') {
-            window.adicionarXP = function(pontos) {
-                let xp = localStorage.getItem('xp') ? parseInt(localStorage.getItem('xp')) : 0;
-                xp += pontos;
-                localStorage.setItem('xp', xp);
-                // Atualiza o painel se existir a função global
-                if (typeof atualizarInterface === 'function') atualizarInterface();
-            };
-        }
+        // ========== ESCUTA ATUALIZAÇÕES DE XP ==========
+        window.addEventListener('usuarioAtualizado', () => {
+            atualizarXP_Arena();
+        });
     </script>
 </body>
 </html>
