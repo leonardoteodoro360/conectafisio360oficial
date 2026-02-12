@@ -1,88 +1,90 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - ConectaFisio360</title>
-
-<style>
-
-body{
-    margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    color:white;
-}
-
-.login-container{
-    background:#1e293b;
-    padding:40px;
-    border-radius:12px;
-    width:350px;
-    box-shadow:0 0 20px rgba(0,0,0,0.4);
-}
-
-h2{
-    margin-top:0;
-    text-align:center;
-}
-
-input{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
-    border:none;
-    border-radius:6px;
-    background:#334155;
-    color:white;
-}
-
-button{
-    width:100%;
-    margin-top:20px;
-    padding:10px;
-    background:#2563eb;
-    border:none;
-    color:white;
-    border-radius:6px;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#1d4ed8;
-}
-
-a{
-    display:block;
-    text-align:center;
-    margin-top:15px;
-    color:#38bdf8;
-    text-decoration:none;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ConectaFisio360</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+        .login-container {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 6px;
+            background: #334155;
+            color: white;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background: #2563eb;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background: #1d4ed8; }
+        a { display: block; margin-top: 15px; color: #38bdf8; text-decoration: none; font-size: 14px; }
+    </style>
 </head>
-
 <body>
 
 <div class="login-container">
+    <h2>ConectaFisio360</h2>
+    <p>Entre na sua conta</p>
 
-    <h2>Entrar</h2>
+    <form id="loginForm">
+        <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+        <input type="password" id="senha" placeholder="Sua senha" required>
+        
+        <label style="display:block; margin-top:15px; font-size:12px;">Tipo de conta (Para teste):</label>
+        <select id="tipoConta">
+            <option value="premium">Premium (Acesso Total)</option>
+            <option value="normal">Normal (Grátis)</option>
+        </select>
 
-    <form action="painel.html">
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Senha" required>
-        <button type="submit">Entrar</button>
+        <button type="submit">Entrar na Plataforma</button>
     </form>
 
-    <a href="cadastro.html">Criar conta</a>
-    <a href="index.html">Voltar para Home</a>
-
+    <a href="cadastro.html">Ainda não tem conta? Cadastre-se</a>
 </div>
+
+<script>
+    document.getElementById('loginForm').onsubmit = function(e) {
+        e.preventDefault();
+        
+        // Cria o usuário na memória do navegador
+        const usuario = {
+            nome: "Leonardo", // No futuro pegaremos do cadastro
+            email: document.getElementById('email').value,
+            tipo: document.getElementById('tipoConta').value
+        };
+        
+        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+        window.location.href = "painel.html";
+    };
+</script>
 
 </body>
 </html>
