@@ -3,23 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <title>ConectaFisio360</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #cbd5e1;
+        }
+
+        nav {
+            margin-top: 30px;
+        }
+
+        nav a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 20px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #1d4ed8;
+        }
+
+        .section {
+            padding: 60px 20px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 25px;
+            width: 250px;
+            border-radius: 10px;
+        }
+
+        footer {
+            padding: 30px;
+            background: #0f172a;
+            margin-top: 50px;
+            color: #94a3b8;
+        }
+    </style>
 </head>
 <body>
 
+<header>
     <h1>ConectaFisio360</h1>
+    <p>A evolução do estudante de fisioterapia começa aqui.</p>
 
     <nav>
-        <a href="index.html">Home</a> |
-        <a href="cadastro.html">Cadastro</a> |
-        <a href="painel.html">Painel</a> |
-        <a href="arena.html">Arena</a> |
+        <a href="cadastro.html">Começar</a>
+        <a href="painel.html">Entrar</a>
+        <a href="arena.html">Arena</a>
         <a href="comunidade.html">Comunidade</a>
     </nav>
+</header>
 
-    <hr>
+<section class="section">
+    <h2>O que você encontra aqui?</h2>
 
-    <h2>Bem-vindo à plataforma</h2>
-    <p>Estude, evolua e conecte-se com outros fisioterapeutas.</p>
+    <div class="cards">
+        <div class="card">
+            <h3>Arena Clínica</h3>
+            <p>Simulações e desafios para testar seu raciocínio clínico.</p>
+        </div>
+
+        <div class="card">
+            <h3>Painel do Aluno</h3>
+            <p>Acompanhe seu progresso e evolução acadêmica.</p>
+        </div>
+
+        <div class="card">
+            <h3>Comunidade</h3>
+            <p>Conecte-se com outros estudantes e profissionais.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    © 2026 ConectaFisio360 - Plataforma em desenvolvimento
+</footer>
 
 </body>
 </html>
+
