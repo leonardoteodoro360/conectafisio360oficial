@@ -85,6 +85,13 @@
             box-shadow: 0 0 20px #22d3ee;
         }
 
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         a {
             display: block;
             margin-top: 22px;
@@ -105,6 +112,17 @@
             color: #94a3b8;
             text-align: left;
         }
+
+        .erro-mensagem {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -122,29 +140,85 @@
                 <option value="normal">📘 Normal – gratuito</option>
             </select>
 
-            <button type="submit">➤ Entrar na plataforma</button>
+            <button type="submit" id="btnEntrar">➤ Entrar na plataforma</button>
+            <div id="erroLogin" class="erro-mensagem"></div>
         </form>
 
         <a href="cadastro.html">🆕 Ainda não tem conta? Cadastre-se</a>
     </div>
 
-    <!-- CORREÇÃO: type="module" é obrigatório para usar imports no app.js -->
+    <!-- Firebase como módulo -->
     <script type="module" src="js/app.js"></script>
     <script type="module">
         import { logar } from './js/app.js';
 
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
-            
-            // O tipo de conta NÃO é mais usado no login real, apenas para simulação.
-            // Se quiser, pode salvar no localStorage para testes.
-            const tipo = document.getElementById('tipoConta').value;
-            localStorage.setItem('simulacao_plano', tipo);
+        const form = document.getElementById('loginForm');
+        const btn = document.getElementById('btnEntrar');
+        const erroDiv = document.getElementById('erroLogin');
+        const emailInput = document.getElementById('email');
+        const senhaInput = document.getElementById('senha');
+        const tipoSelect = document.getElementById('tipoConta');
 
-            await logar(email, senha);
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+            const senha = senhaInput.value;
+
+            if (!email || !senha) {
+                exibirErro('Preencha todos os campos.');
+                return;
+            }
+
+            // Desabilita botão para evitar múltiplos envios
+            btn.disabled = true;
+            btn.innerText = 'Entrando...';
+            erroDiv.style.display = 'none';
+
+            // Apenas para simulação: salva o tipo de conta escolhido
+            localStorage.setItem('simulacao_plano', tipoSelect.value);
+
+            try {
+                await logar(email, senha);
+                // O redirecionamento é feito pelo onAuthStateChanged no app.js
+                // Se o login for bem-sucedido, o usuário será redirecionado automaticamente.
+                // Se não redirecionar em 3 segundos, mostramos erro (fallback)
+                setTimeout(() => {
+                    if (btn.disabled) {
+                        // Se ainda estiver desabilitado, algo deu errado
+                        btn.disabled = false;
+                        btn.innerText = '➤ Entrar na plataforma';
+                        exibirErro('Tempo limite excedido. Verifique sua conexão.');
+                    }
+                }, 5000);
+            } catch (error) {
+                btn.disabled = false;
+                btn.innerText = '➤ Entrar na plataforma';
+                exibirErro(tratarErroFirebase(error));
+            }
         });
+
+        function exibirErro(mensagem) {
+            erroDiv.innerText = mensagem;
+            erroDiv.style.display = 'block';
+        }
+
+        function tratarErroFirebase(error) {
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    return '❌ Usuário não encontrado. Verifique seu e-mail.';
+                case 'auth/wrong-password':
+                    return '❌ Senha incorreta.';
+                case 'auth/invalid-email':
+                    return '❌ E-mail inválido.';
+                case 'auth/user-disabled':
+                    return '❌ Esta conta foi desativada.';
+                case 'auth/too-many-requests':
+                    return '❌ Muitas tentativas. Tente mais tarde.';
+                default:
+                    return '❌ Erro ao fazer login: ' + error.message;
+            }
+        }
     </script>
 </body>
 </html>
