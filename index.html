@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -21,7 +20,6 @@ body{
     color:white;
 }
 
-/* HEADER */
 header{
     display:flex;
     justify-content:space-between;
@@ -51,7 +49,6 @@ nav a:hover{
     color:white;
 }
 
-/* CONTAINER */
 .container{
     padding:60px 50px;
 }
@@ -65,7 +62,6 @@ h2{
     margin-top:5px;
 }
 
-/* GRID */
 .grid{
     margin-top:40px;
     display:grid;
@@ -73,7 +69,6 @@ h2{
     gap:30px;
 }
 
-/* CARD */
 .card{
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(15px);
@@ -88,16 +83,6 @@ h2{
     box-shadow:0 0 20px rgba(59,130,246,0.4);
 }
 
-.card h3{
-    margin-bottom:10px;
-}
-
-.card p{
-    color:#cbd5e1;
-    font-size:14px;
-}
-
-/* BOTÃO */
 .button{
     display:inline-block;
     margin-top:15px;
@@ -117,7 +102,6 @@ h2{
     box-shadow:0 0 15px #22d3ee;
 }
 
-/* PROGRESSO */
 .progress-bar{
     margin-top:15px;
     width:100%;
@@ -135,7 +119,6 @@ h2{
     transition: width 0.8s ease;
 }
 
-/* LEVEL */
 .level{
     display:inline-block;
     margin-top:10px;
@@ -146,24 +129,12 @@ h2{
     color:#22c55e;
 }
 
-/* LEVEL UP EFFECT */
-.level-up{
-    animation: pop 0.6s ease;
-}
-
-@keyframes pop{
-    0%{ transform:scale(1);}
-    50%{ transform:scale(1.2);}
-    100%{ transform:scale(1);}
-}
-
 footer{
     text-align:center;
     padding:40px;
     color:#64748b;
     font-size:13px;
 }
-
 </style>
 </head>
 
@@ -171,7 +142,6 @@ footer{
 
 <header>
     <h1>ConectaFisio360</h1>
-
     <nav>
         <a href="index.html">Home</a>
         <a href="arena.html">Arena</a>
@@ -196,20 +166,12 @@ footer{
             </div>
 
             <span class="level" id="levelText">Nível Iniciante</span>
-
-            <button class="button" onclick="addXP()">Concluir Desafio (+50 XP)</button>
         </div>
 
         <div class="card">
             <h3>🔥 Arena Clínica</h3>
-            <p>Simulações realistas e desafios práticos.</p>
+            <p>Complete desafios e ganhe XP real.</p>
             <a class="button" href="arena.html">Entrar</a>
-        </div>
-
-        <div class="card">
-            <h3>👥 Comunidade</h3>
-            <p>Networking com estudantes e profissionais.</p>
-            <a class="button" href="comunidade.html">Acessar</a>
         </div>
 
     </div>
@@ -217,16 +179,12 @@ footer{
 </div>
 
 <footer>
-© 2026 ConectaFisio360 • Sistema Gamificado
+© 2026 ConectaFisio360 • Plataforma Integrada
 </footer>
 
 <script>
-
+// SISTEMA GLOBAL DE XP
 let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
-
-const xpText = document.getElementById("xpText");
-const progress = document.getElementById("progress");
-const levelText = document.getElementById("levelText");
 
 function getLevel(xp){
     if(xp < 200) return "Iniciante";
@@ -240,31 +198,13 @@ function getProgressPercent(xp){
     return (xp / max) * 100;
 }
 
-function updateUI(){
-    xpText.innerText = "XP: " + xp;
-    progress.style.width = getProgressPercent(xp) + "%";
-    levelText.innerText = "Nível " + getLevel(xp);
+function updateDashboard(){
+    document.getElementById("xpText").innerText = "XP: " + xp;
+    document.getElementById("progress").style.width = getProgressPercent(xp) + "%";
+    document.getElementById("levelText").innerText = "Nível " + getLevel(xp);
 }
 
-function addXP(){
-    let oldLevel = getLevel(xp);
-    xp += 50;
-    localStorage.setItem("xp", xp);
-
-    let newLevel = getLevel(xp);
-
-    if(oldLevel !== newLevel){
-        levelText.classList.add("level-up");
-        setTimeout(() => {
-            levelText.classList.remove("level-up");
-        }, 600);
-    }
-
-    updateUI();
-}
-
-updateUI();
-
+updateDashboard();
 </script>
 
 </body>
