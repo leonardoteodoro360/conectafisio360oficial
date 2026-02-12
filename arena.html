@@ -1,22 +1,69 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Arena - ConectaFisio360</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arena Clínica - ConectaFisio360</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    text-align:center;
+    padding:60px;
+}
+
+.button{
+    padding:15px 25px;
+    border:none;
+    border-radius:8px;
+    background: linear-gradient(90deg,#22c55e,#06b6d4);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 20px #06b6d4;
+}
+
+a{
+    display:block;
+    margin-top:30px;
+    color:#94a3b8;
+    text-decoration:none;
+}
+</style>
 </head>
+
 <body>
 
-    <h1>Arena Fisio</h1>
+<h1>🔥 Arena Clínica</h1>
+<p>Resolva casos clínicos e evolua seu nível.</p>
 
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="painel.html">Painel</a> |
-        <a href="comunidade.html">Comunidade</a>
-    </nav>
+<br><br>
 
-    <hr>
+<button class="button" onclick="completeChallenge()">
+Concluir Caso Clínico (+100 XP)
+</button>
 
-    <p>Desafios e simulações clínicas aqui.</p>
+<a href="index.html">← Voltar para o Painel</a>
+
+<script>
+let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
+
+function completeChallenge(){
+    xp += 100;
+    localStorage.setItem("xp", xp);
+    alert("🔥 Você ganhou 100 XP!");
+}
+</script>
 
 </body>
 </html>
