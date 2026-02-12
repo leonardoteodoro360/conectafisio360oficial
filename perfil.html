@@ -2,35 +2,381 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Perfil - ConectaFisio360</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil · ConectaFisio360</title>
+    <!-- Font Awesome (ícones) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { margin: 0; font-family: sans-serif; background: #0b1120; color: white; }
-        header { padding: 20px 5%; display: flex; justify-content: space-between; background: #0f172a; }
-        header a { color: #94a3b8; text-decoration: none; margin-left: 15px; }
-        .profile-container { max-width: 800px; margin: 50px auto; background: #1e293b; padding: 40px; border-radius: 20px; text-align: center; }
-        .avatar { width: 120px; height: 120px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 50px; margin: 0 auto 20px; }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 30px; }
-        .stat-box { background: #0f172a; padding: 20px; border-radius: 12px; }
-        .stat-val { display: block; font-size: 24px; font-weight: bold; color: #38bdf8; }
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #0b1120; 
+            color: white; 
+        }
+        header { 
+            padding: 20px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            background: #0f172a; 
+            border-bottom: 1px solid #1e293b;
+        }
+        .logo {
+            font-weight: bold;
+            font-size: 20px;
+            background: linear-gradient(90deg,#3b82f6,#22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        nav a { 
+            color: #94a3b8; 
+            text-decoration: none; 
+            margin-left: 20px; 
+            transition: 0.2s;
+        }
+        nav a:hover { color: white; }
+        
+        .profile-container { 
+            max-width: 800px; 
+            margin: 50px auto; 
+            background: #1e293b; 
+            padding: 40px; 
+            border-radius: 24px; 
+            border: 1px solid #334155;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center; 
+        }
+        
+        .avatar { 
+            width: 120px; 
+            height: 120px; 
+            background: #2563eb; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 50px; 
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 20px; 
+            border: 4px solid #38bdf8;
+            box-shadow: 0 0 20px rgba(56,189,248,0.3);
+        }
+        
+        .badge-plano {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+            background: #f59e0b20;
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+        
+        .badpe-premium { background: #f59e0b; color: black; border: none; }
+        
+        .info-email, .info-especialidade {
+            color: #94a3b8;
+            margin: 5px 0;
+            font-size: 15px;
+        }
+        
+        .stats-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 20px; 
+            margin: 30px 0; 
+        }
+        .stat-box { 
+            background: #0f172a; 
+            padding: 20px; 
+            border-radius: 16px; 
+            border: 1px solid #334155;
+        }
+        .stat-val { 
+            display: block; 
+            font-size: 28px; 
+            font-weight: bold; 
+            color: #38bdf8; 
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .bio-section {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 30px 0 20px;
+            text-align: left;
+            border: 1px solid #334155;
+        }
+        .bio-section h3 {
+            color: #38bdf8;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        #bioTexto {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #2563eb;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background: #1d4ed8;
+            transform: scale(1.02);
+        }
+        .btn-editar {
+            background: #f59e0b;
+            color: black;
+        }
+        .btn-editar:hover { background: #d97706; }
+        .btn-cancelar { background: #475569; }
+        .btn-cancelar:hover { background: #334155; }
+        
+        /* Modo edição */
+        .editavel {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            width: 100%;
+            margin: 10px 0;
+            font-size: 15px;
+        }
+        .editavel:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px #38bdf840;
+        }
+        select.editavel { cursor: pointer; }
+        
+        .edicao-botoes {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <header>
-        <div style="font-weight:bold; color:#38bdf8;">ConectaFisio360</div>
-        <nav><a href="painel.html">Painel</a> <a href="arena.html">Arena</a> <a href="comunidade.html">Comunidade</a></nav>
+        <div class="logo">ConectaFisio360</div>
+        <nav>
+            <a href="painel.html"><i class="fas fa-home"></i> Painel</a>
+            <a href="arena.html"><i class="fas fa-gamepad"></i> Arena</a>
+            <a href="comunidade.html"><i class="fas fa-users"></i> Comunidade</a>
+            <a href="javascript:void(0);" onclick="logout()" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </nav>
     </header>
 
     <div class="profile-container">
-        <div class="avatar">L</div>
-        <h2 id="nomeUsuario">Carregando...</h2>
-        <p style="color:#94a3b8;">Estudante de Fisioterapia</p>
+        <!-- MODO VISUALIZAÇÃO -->
+        <div id="modoVisualizacao">
+            <div class="avatar" id="avatar">L</div>
+            <h2 id="nomeUsuario" style="margin-bottom: 5px;">Carregando...</h2>
+            <div id="planoBadge" style="margin-bottom: 10px;"></div>
+            <div id="emailUsuario" class="info-email"><i class="fas fa-envelope"></i> carregando...</div>
+            <div id="especialidadeUsuario" class="info-especialidade"><i class="fas fa-stethoscope"></i> carregando...</div>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-val" id="levelText">--</span>
+                    <span class="stat-label">Nível</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-val" id="contDesafios">0</span>
+                    <span class="stat-label">Desafios</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-val" id="xpText">0</span>
+                    <span class="stat-label">XP Total</span>
+                </div>
+            </div>
 
-        <div class="stats-grid">
-            <div class="stat-box"><span class="stat-val" id="levelText">--</span>Nível</div>
-            <div class="stat-box"><span class="stat-val" id="contDesafios">0</span>Desafios</div>
-            <div class="stat-box"><span class="stat-val" id="xpText">0</span>XP Total</div>
+            <div class="bio-section">
+                <h3><i class="fas fa-edit"></i> Bio</h3>
+                <p id="bioTexto">Carregando sua bio...</p>
+            </div>
+
+            <button class="btn btn-editar" onclick="habilitarEdicao()">
+                <i class="fas fa-pencil-alt"></i> Editar Perfil
+            </button>
+        </div>
+
+        <!-- MODO EDIÇÃO (inicialmente oculto) -->
+        <div id="modoEdicao" style="display: none;">
+            <h2 style="margin-bottom: 20px; color:#38bdf8;">Editar Perfil</h2>
+            
+            <label style="display: block; text-align: left; color: #94a3b8; margin-top: 15px;">Nome completo</label>
+            <input type="text" id="editNome" class="editavel" placeholder="Seu nome">
+            
+            <label style="display: block; text-align: left; color: #94a3b8; margin-top: 15px;">Especialidade</label>
+            <select id="editEspecialidade" class="editavel">
+                <option value="Fisioterapia Geral">Fisioterapia Geral</option>
+                <option value="Ortopedia">Ortopedia</option>
+                <option value="Neurologia">Neurologia</option>
+                <option value="Respiratória">Respiratória</option>
+                <option value="Esportiva">Esportiva</option>
+                <option value="Dermato-funcional">Dermato-funcional</option>
+                <option value="Saúde da Mulher">Saúde da Mulher</option>
+                <option value="Geriatria">Geriatria</option>
+                <option value="Pediatria">Pediatria</option>
+            </select>
+            
+            <label style="display: block; text-align: left; color: #94a3b8; margin-top: 15px;">Bio</label>
+            <textarea id="editBio" class="editavel" rows="4" placeholder="Fale um pouco sobre você..."></textarea>
+            
+            <div class="edicao-botoes">
+                <button class="btn" onclick="salvarEdicao()"><i class="fas fa-save"></i> Salvar</button>
+                <button class="btn btn-cancelar" onclick="cancelarEdicao()"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
         </div>
     </div>
-    <script src="js/app.js"></script>
+
+    <!-- Carrega o Firebase como módulo -->
+    <script type="module" src="js/app.js"></script>
+    
+    <!-- Script principal da página (também como módulo para importar funções) -->
+    <script type="module">
+        // ===== IMPORTAÇÕES =====
+        import { usuarioAtual, xpAtual, desafiosAtual, planoUsuario, getLevel } from './js/app.js';
+        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // ===== VARIÁVEIS GLOBAIS DA PÁGINA =====
+        let uidAtual = null;
+
+        // ===== CARREGAR DADOS DO PERFIL =====
+        async function carregarPerfil() {
+            const user = usuarioAtual();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            uidAtual = user.uid;
+            const db = getDatabase();
+            const userRef = ref(db, `usuarios/${user.uid}`);
+            
+            try {
+                const snapshot = await get(userRef);
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    
+                    // Atualizar campos
+                    document.getElementById('nomeUsuario').innerText = data.nome || 'Usuário';
+                    document.getElementById('avatar').innerText = data.avatar || (data.nome ? data.nome.charAt(0).toUpperCase() : 'U');
+                    document.getElementById('emailUsuario').innerHTML = `<i class="fas fa-envelope"></i> ${data.email || user.email}`;
+                    document.getElementById('especialidadeUsuario').innerHTML = `<i class="fas fa-stethoscope"></i> ${data.especialidade || 'Não informada'}`;
+                    document.getElementById('bioTexto').innerText = data.bio || 'Olá! Estou no ConectaFisio360 🩺';
+                    
+                    // Plano
+                    const plano = data.plano || 'normal';
+                    const badge = document.getElementById('planoBadge');
+                    if (plano === 'premium') {
+                        badge.innerHTML = '<span class="badge-plano" style="background:#f59e0b; color:black; border:none;">🔥 PREMIUM</span>';
+                    } else {
+                        badge.innerHTML = '<span class="badge-plano">📘 GRATUITO</span>';
+                    }
+                    
+                    // Estatísticas (vindas do app.js ou do snapshot)
+                    const xp = data.xp || 0;
+                    const desafios = data.desafios || 0;
+                    document.getElementById('xpText').innerText = xp;
+                    document.getElementById('contDesafios').innerText = desafios;
+                    document.getElementById('levelText').innerText = getLevel(xp);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar perfil:', error);
+            }
+        }
+
+        // ===== HABILITAR MODO EDIÇÃO =====
+        window.habilitarEdicao = async function() {
+            const user = usuarioAtual();
+            if (!user) return;
+            
+            const db = getDatabase();
+            const userRef = ref(db, `usuarios/${user.uid}`);
+            const snapshot = await get(userRef);
+            
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                document.getElementById('editNome').value = data.nome || '';
+                document.getElementById('editEspecialidade').value = data.especialidade || 'Fisioterapia Geral';
+                document.getElementById('editBio').value = data.bio || '';
+            }
+            
+            document.getElementById('modoVisualizacao').style.display = 'none';
+            document.getElementById('modoEdicao').style.display = 'block';
+        };
+
+        // ===== CANCELAR EDIÇÃO =====
+        window.cancelarEdicao = function() {
+            document.getElementById('modoVisualizacao').style.display = 'block';
+            document.getElementById('modoEdicao').style.display = 'none';
+        };
+
+        // ===== SALVAR EDIÇÃO =====
+        window.salvarEdicao = async function() {
+            const user = usuarioAtual();
+            if (!user) return;
+            
+            const novosDados = {
+                nome: document.getElementById('editNome').value,
+                especialidade: document.getElementById('editEspecialidade').value,
+                bio: document.getElementById('editBio').value,
+                avatar: document.getElementById('editNome').value.charAt(0).toUpperCase()
+            };
+            
+            const db = getDatabase();
+            const userRef = ref(db, `usuarios/${user.uid}`);
+            
+            try {
+                await update(userRef, novosDados);
+                
+                // Atualizar visualização
+                document.getElementById('nomeUsuario').innerText = novosDados.nome;
+                document.getElementById('avatar').innerText = novosDados.avatar;
+                document.getElementById('especialidadeUsuario').innerHTML = `<i class="fas fa-stethoscope"></i> ${novosDados.especialidade}`;
+                document.getElementById('bioTexto').innerText = novosDados.bio;
+                
+                alert('✅ Perfil atualizado com sucesso!');
+                cancelarEdicao();
+            } catch (error) {
+                alert('Erro ao salvar: ' + error.message);
+            }
+        };
+
+        // ===== ESCUTAR ATUALIZAÇÕES DO USUÁRIO =====
+        window.addEventListener('usuarioAtualizado', () => {
+            carregarPerfil();
+        });
+
+        // ===== CARREGAR NA INICIALIZAÇÃO =====
+        window.onload = carregarPerfil;
+    </script>
 </body>
 </html>
