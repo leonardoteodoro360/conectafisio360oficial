@@ -1,5 +1,5 @@
 // ===============================
-// CONECTAFISIO360 - REALTIME DATABASE (FINAL)
+// CONECTAFISIO360 - REALTIME DATABASE (VERSÃO FINAL)
 // ===============================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -32,11 +32,9 @@ onAuthStateChanged(auth, async (user) => {
   const currentPage = window.location.pathname.split('/').pop();
 
   if (user) {
-    // ---------- USUÁRIO LOGADO ----------
     usuarioAtual = user;
     localStorage.setItem('firebaseUser', JSON.stringify({ uid: user.uid, email: user.email }));
 
-    // Buscar dados do Realtime Database
     const userRef = ref(db, `usuarios/${user.uid}`);
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
@@ -45,29 +43,27 @@ onAuthStateChanged(auth, async (user) => {
       desafios = data.desafios || 0;
       plano = data.plano || 'normal';
     } else {
-      // Primeiro acesso: criar documento
       await set(userRef, {
         email: user.email,
         nome: user.displayName || "Usuário",
         xp: 0,
         desafios: 0,
         plano: 'normal',
-        criadoEm: new Date().toISOString()
+        criadoEm: new Date().toISOString(),
+        bio: "Olá! Estou no ConectaFisio360 🩺"
       });
     }
 
-    // Disparar evento de atualização
     window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
       detail: { usuario: user, xp, desafios, plano, nivel: getLevel(xp) }
     }));
 
-    // 🔥 REDIRECIONAMENTO AUTOMÁTICO PARA O PAINEL (se estiver em página pública)
+    // REDIRECIONAMENTO AUTOMÁTICO PARA PAINEL (se estiver em página pública)
     if (publicPages.includes(currentPage) || currentPage === '') {
       window.location.href = 'painel.html';
     }
 
   } else {
-    // ---------- USUÁRIO NÃO LOGADO ----------
     usuarioAtual = null;
     localStorage.removeItem('firebaseUser');
     xp = 0; desafios = 0; plano = 'normal';
@@ -76,7 +72,7 @@ onAuthStateChanged(auth, async (user) => {
       detail: { usuario: null, xp, desafios, plano, nivel: getLevel(xp) }
     }));
 
-    // 🔥 REDIRECIONAMENTO PARA LOGIN (se estiver em página protegida)
+    // REDIRECIONAMENTO PARA LOGIN (se estiver em página protegida)
     if (!publicPages.includes(currentPage) && currentPage !== '') {
       window.location.href = 'login.html';
     }
@@ -126,7 +122,7 @@ window.cadastrar = cadastrar;
 export async function logar(email, senha) {
   try {
     await signInWithEmailAndPassword(auth, email, senha);
-    // O redirecionamento é feito pelo onAuthStateChanged
+    // redirecionamento feito pelo onAuthStateChanged
   } catch (error) {
     alert("Erro: " + error.message);
   }
