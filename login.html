@@ -122,31 +122,28 @@
                 <option value="normal">📘 Normal – gratuito</option>
             </select>
 
-            <button type="submit">▶ Entrar na plataforma</button>
+            <button type="submit">➤ Entrar na plataforma</button>
         </form>
 
         <a href="cadastro.html">🆕 Ainda não tem conta? Cadastre-se</a>
     </div>
 
-    <!-- Carrega funções globais (XP, logout, etc) -->
-    <script src="js/app.js"></script>
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+    <!-- CORREÇÃO: type="module" é obrigatório para usar imports no app.js -->
+    <script type="module" src="js/app.js"></script>
+    <script type="module">
+        import { logar } from './js/app.js';
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            
+            // O tipo de conta NÃO é mais usado no login real, apenas para simulação.
+            // Se quiser, pode salvar no localStorage para testes.
+            const tipo = document.getElementById('tipoConta').value;
+            localStorage.setItem('simulacao_plano', tipo);
 
-            // Cria usuário logado (modo simulação)
-            const usuario = {
-                nome: "Leonardo Teodoro",        // Pode ser alterado depois no perfil
-                email: document.getElementById('email').value,
-                tipo: document.getElementById('tipoConta').value,
-                plano: document.getElementById('tipoConta').value // compatibilidade
-            };
-
-            // Salva no localStorage
-            localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-
-            // Redireciona para o painel principal
-            window.location.href = 'painel.html';
+            await logar(email, senha);
         });
     </script>
 </body>
