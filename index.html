@@ -1,213 +1,510 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ConectaFisio360 - Painel Premium</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConectaFisio360 · Fisioterapia gamificada</title>
+    
+    <!-- Font Awesome (ícones) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts (opcional, para mais estilo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #0b1120;
+            color: white;
+            line-height: 1.6;
+        }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins', sans-serif;
-}
+        /* HEADER TRANSPARENTE */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
 
-body{
-    background: radial-gradient(circle at top left, #1e3a8a, #0f172a 60%);
-    color:white;
-}
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
 
-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 50px;
-    backdrop-filter: blur(15px);
-    background: rgba(15,23,42,0.6);
-}
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+        }
 
-header h1{
-    font-size:22px;
-    font-weight:600;
-    background: linear-gradient(90deg,#3b82f6,#22d3ee);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
+        .nav-buttons a {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.2s;
+        }
 
-nav a{
-    color:#cbd5e1;
-    text-decoration:none;
-    margin-left:25px;
-    font-size:14px;
-    transition:0.3s;
-}
+        .btn-login {
+            color: #cbd5e1;
+            padding: 10px 18px;
+        }
 
-nav a:hover{
-    color:white;
-}
+        .btn-login:hover {
+            color: white;
+        }
 
-.container{
-    padding:60px 50px;
-}
+        .btn-cadastro {
+            background: #2563eb;
+            color: white;
+            padding: 10px 22px;
+            border-radius: 40px;
+            box-shadow: 0 4px 10px rgba(37,99,235,0.3);
+        }
 
-h2{
-    font-size:28px;
-}
+        .btn-cadastro:hover {
+            background: #1d4ed8;
+            transform: scale(1.05);
+        }
 
-.sub{
-    color:#94a3b8;
-    margin-top:5px;
-}
+        /* CONTEÚDO PRINCIPAL */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 5%;
+        }
 
-.grid{
-    margin-top:40px;
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap:30px;
-}
+        /* SEÇÃO HERO */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 60px 0;
+            flex-wrap: wrap;
+        }
 
-.card{
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(15px);
-    border:1px solid rgba(255,255,255,0.1);
-    padding:30px;
-    border-radius:20px;
-    transition:0.4s;
-}
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
 
-.card:hover{
-    transform: translateY(-6px);
-    box-shadow:0 0 20px rgba(59,130,246,0.4);
-}
+        .hero-text h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.button{
-    display:inline-block;
-    margin-top:15px;
-    padding:10px 18px;
-    border-radius:8px;
-    background: linear-gradient(90deg,#2563eb,#22d3ee);
-    text-decoration:none;
-    color:white;
-    font-size:14px;
-    cursor:pointer;
-    border:none;
-    transition:0.3s;
-}
+        .hero-text p {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
 
-.button:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 15px #22d3ee;
-}
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
-.progress-bar{
-    margin-top:15px;
-    width:100%;
-    height:10px;
-    background:#1e293b;
-    border-radius:10px;
-    overflow:hidden;
-}
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 16px;
+        }
 
-.progress{
-    height:100%;
-    width:0%;
-    background: linear-gradient(90deg,#22c55e,#06b6d4);
-    border-radius:10px;
-    transition: width 0.8s ease;
-}
+        .btn-primary {
+            background: linear-gradient(90deg, #2563eb, #22d3ee);
+            color: white;
+            box-shadow: 0 8px 20px rgba(34,211,238,0.3);
+        }
 
-.level{
-    display:inline-block;
-    margin-top:10px;
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:12px;
-    background:rgba(34,197,94,0.2);
-    color:#22c55e;
-}
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(34,211,238,0.5);
+        }
 
-footer{
-    text-align:center;
-    padding:40px;
-    color:#64748b;
-    font-size:13px;
-}
-</style>
+        .btn-outline {
+            border: 2px solid #38bdf8;
+            color: white;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: rgba(56,189,248,0.1);
+            border-color: #22d3ee;
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 280px;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        /* PLACEHOLDER DE IMAGEM (enquanto não tem arte) */
+        .hero-image .illustration {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid #334155;
+            font-size: 80px;
+            color: #38bdf8;
+        }
+
+        /* SEÇÃO DE PLANOS */
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin: 80px 0 20px;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-size: 18px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .pricing-card {
+            background: #1e293b;
+            border-radius: 30px;
+            padding: 40px 30px;
+            border: 1px solid #334155;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            border-color: #38bdf8;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+        }
+
+        .pricing-card.premium {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 2px solid #f59e0b;
+            transform: scale(1.02);
+        }
+
+        .badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #f59e0b;
+            color: black;
+            font-weight: bold;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .pricing-card .price {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #cbd5e1;
+        }
+
+        .price strong {
+            font-size: 42px;
+            color: white;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .pricing-card li {
+            padding: 10px 0;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #cbd5e1;
+        }
+
+        .pricing-card li i {
+            color: #10b981;
+            width: 20px;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* SEÇÃO DE RECURSOS */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+            background: #0f172a;
+            border-radius: 20px;
+            border: 1px solid #1e293b;
+        }
+
+        .feature-item i {
+            font-size: 40px;
+            color: #38bdf8;
+            margin-bottom: 20px;
+        }
+
+        .feature-item h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            color: #94a3b8;
+        }
+
+        /* CTA FINAL */
+        .cta-section {
+            background: linear-gradient(135deg, #1e3a8a, #0f172a);
+            border-radius: 40px;
+            padding: 60px;
+            text-align: center;
+            margin: 80px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 50px 5% 30px;
+            color: #64748b;
+            border-top: 1px solid #1e293b;
+            margin-top: 60px;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-text h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-    <h1>ConectaFisio360</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="arena.html">Arena</a>
-        <a href="comunidade.html">Comunidade</a>
-        <a href="perfil.html">Perfil</a>
-    </nav>
-</header>
+    <!-- ========== HEADER ========== -->
+    <header>
+        <div class="logo">ConectaFisio360</div>
+        <div class="nav-buttons">
+            <a href="login.html" class="btn-login">Entrar</a>
+            <a href="cadastro.html" class="btn-cadastro">Cadastrar grátis</a>
+        </div>
+    </header>
 
-<div class="container">
-
-    <h2>Bem-vindo, Leonardo 👋</h2>
-    <p class="sub">Sua jornada rumo ao domínio clínico começa aqui.</p>
-
-    <div class="grid">
-
-        <div class="card">
-            <h3>📊 Seu Progresso</h3>
-            <p id="xpText">XP: 0</p>
-
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
+    <!-- ========== HERO (APRESENTAÇÃO) ========== -->
+    <div class="container">
+        <div class="hero">
+            <div class="hero-text">
+                <h1>A evolução da fisioterapia começa aqui.</h1>
+                <p>Treine casos clínicos, evolua seu personagem e conecte-se com outros profissionais. Tudo em uma plataforma gamificada.</p>
+                <div class="hero-buttons">
+                    <a href="cadastro.html" class="btn btn-primary">Começar agora →</a>
+                    <a href="#planos" class="btn btn-outline">Ver planos</a>
+                </div>
             </div>
-
-            <span class="level" id="levelText">Nível Iniciante</span>
+            <div class="hero-image">
+                <div class="illustration">
+                    <i class="fas fa-stethoscope"></i>
+                    <i class="fas fa-gamepad" style="margin-left: 15px;"></i>
+                    <i class="fas fa-users" style="margin-left: 15px;"></i>
+                </div>
+            </div>
         </div>
-
-        <div class="card">
-            <h3>🔥 Arena Clínica</h3>
-            <p>Complete desafios e ganhe XP real.</p>
-            <a class="button" href="arena.html">Entrar</a>
-        </div>
-
     </div>
 
-</div>
+    <!-- ========== RECURSOS ========== -->
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="fas fa-brain"></i>
+                <h4>Casos Clínicos</h4>
+                <p>Simule atendimentos reais e aprenda na prática.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-trophy"></i>
+                <h4>Gamificação</h4>
+                <p>Ganhe XP, suba de nível e desbloqueie conquistas.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-cube"></i>
+                <h4>Modelos 3D</h4>
+                <p>Explore a anatomia como nunca antes.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-comments"></i>
+                <h4>Comunidade</h4>
+                <p>Troque experiências com fisioterapeutas.</p>
+            </div>
+        </div>
+    </div>
 
-<footer>
-© 2026 ConectaFisio360 • Plataforma Integrada
-</footer>
+    <!-- ========== PLANOS ========== -->
+    <div class="container" id="planos">
+        <h2 class="section-title">Escolha seu plano</h2>
+        <p class="section-sub">Comece gratuitamente e evolua quando precisar. Cancele quando quiser.</p>
 
-<script>
-// SISTEMA GLOBAL DE XP
-let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
+        <div class="pricing-grid">
+            <!-- PLANO GRATUITO -->
+            <div class="pricing-card">
+                <h3>Grátis</h3>
+                <div class="price"><strong>R$ 0</strong> /mês</div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Modelos anatômicos 3D</li>
+                    <li><i class="fas fa-check"></i> Cursos gratuitos</li>
+                    <li><i class="fas fa-check"></i> Progresso básico</li>
+                    <li><i class="fas fa-times" style="color:#ef4444;"></i> ArenaFisio (jogo)</li>
+                    <li><i class="fas fa-times" style="color:#ef4444;"></i> Comunidade exclusiva</li>
+                    <li><i class="fas fa-times" style="color:#ef4444;"></i> Estudos científicos</li>
+                </ul>
+                <a href="cadastro.html" class="btn btn-outline" style="border-color: #2563eb;">Cadastrar grátis</a>
+            </div>
 
-function getLevel(xp){
-    if(xp < 200) return "Iniciante";
-    if(xp < 500) return "Intermediário";
-    if(xp < 1000) return "Avançado";
-    return "Elite Clínico";
-}
+            <!-- PLANO PREMIUM (DESTAQUE) -->
+            <div class="pricing-card premium">
+                <span class="badge">🔥 MAIS POPULAR</span>
+                <h3 style="color: #f59e0b;">Premium</h3>
+                <div class="price"><strong>R$ 29,90</strong> /mês</div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Tudo do plano grátis</li>
+                    <li><i class="fas fa-check"></i> <strong>ArenaFisio (RPG clínico)</strong></li>
+                    <li><i class="fas fa-check"></i> Comunidade com fisioterapeutas</li>
+                    <li><i class="fas fa-check"></i> Biblioteca de artigos científicos</li>
+                    <li><i class="fas fa-check"></i> Desafios semanais exclusivos</li>
+                    <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                </ul>
+                <a href="cadastro.html?plano=premium" class="btn btn-primary" style="background: #f59e0b; color: black;">Assinar Premium</a>
+            </div>
 
-function getProgressPercent(xp){
-    let max = 1000;
-    return (xp / max) * 100;
-}
+            <!-- PLANO ANUAL (opcional) -->
+            <div class="pricing-card">
+                <h3>Anual</h3>
+                <div class="price"><strong>R$ 279</strong> /ano</div>
+                <div style="background: #10b98120; color: #10b981; padding: 8px; border-radius: 30px; margin-bottom: 20px; font-size: 14px; font-weight: bold;">
+                    🎁 Economize R$ 79
+                </div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Todos os benefícios Premium</li>
+                    <li><i class="fas fa-check"></i> 2 meses grátis</li>
+                    <li><i class="fas fa-check"></i> Certificado de conclusão</li>
+                </ul>
+                <a href="cadastro.html?plano=anual" class="btn btn-outline">Assinar agora</a>
+            </div>
+        </div>
+    </div>
 
-function updateDashboard(){
-    document.getElementById("xpText").innerText = "XP: " + xp;
-    document.getElementById("progress").style.width = getProgressPercent(xp) + "%";
-    document.getElementById("levelText").innerText = "Nível " + getLevel(xp);
-}
+    <!-- ========== CTA FINAL ========== -->
+    <div class="container">
+        <div class="cta-section">
+            <h2>Pronto para evoluir sua prática clínica?</h2>
+            <p>Mais de 500 fisioterapeutas já estão usando o ConectaFisio360 para treinar e se conectar.</p>
+            <a href="cadastro.html" class="btn btn-primary" style="font-size: 18px; padding: 16px 40px;">Criar minha conta gratuita</a>
+            <p style="margin-top: 20px; font-size: 14px;">🚀 Não precisa cartão de crédito para começar</p>
+        </div>
+    </div>
 
-updateDashboard();
-</script>
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 1200px; margin: 0 auto;">
+            <div class="logo" style="font-size: 20px;">ConectaFisio360</div>
+            <div style="display: flex; gap: 30px;">
+                <a href="#" style="color: #94a3b8; text-decoration: none;">Sobre</a>
+                <a href="#" style="color: #94a3b8; text-decoration: none;">Termos</a>
+                <a href="#" style="color: #94a3b8; text-decoration: none;">Privacidade</a>
+                <a href="#" style="color: #94a3b8; text-decoration: none;">Suporte</a>
+            </div>
+        </div>
+        <div style="margin-top: 40px; color: #475569;">
+            © 2026 ConectaFisio360 · Plataforma Integrada para Fisioterapeutas e Acadêmicos
+            <br>
+            <span style="font-size: 12px;">Desenvolvido por Leonardo Teodoro · v2.0</span>
+        </div>
+    </footer>
 
+    <!-- Redirecionamento automático se usuário já estiver logado -->
+    <script>
+        // Se o usuário já estiver logado, vai direto para o painel
+        const usuarioLogado = localStorage.getItem('usuarioLogado');
+        if (usuarioLogado) {
+            window.location.href = 'painel.html';
+        }
+    </script>
 </body>
 </html>
-
 
