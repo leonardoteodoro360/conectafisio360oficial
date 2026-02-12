@@ -3,147 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arena Clínica - ConectaFisio360</title>
+    <title>ArenaFisio - RPG Clínico</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #0f172a;
+            padding: 0;
+            background-color: #0b1120;
             color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden; /* Impede scroll para o jogo não fugir */
         }
 
-        .arena-container {
-            max-width: 600px;
-            width: 100%;
+        /* CENÁRIO DO JOGO */
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 80vh;
             background: #1e293b;
+            background-image: 
+                linear-gradient(#334155 1px, transparent 1px),
+                linear-gradient(90deg, #334155 1px, transparent 1px);
+            background-size: 50px 50px; /* Cria um grid de chão */
+            border-bottom: 4px solid #38bdf8;
+        }
+
+        /* O JOGADOR */
+        #player {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #38bdf8;
+            border-radius: 8px;
+            border: 3px solid white;
+            transition: all 0.1s linear;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        /* O PACIENTE (NPC) */
+        #patient {
+            position: absolute;
+            top: 200px;
+            left: 500px;
+            width: 45px;
+            height: 45px;
+            background-color: #fb7185;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px #fb7185;
+        }
+
+        /* BALÃO DE INTERAÇÃO */
+        #interact-prompt {
+            position: absolute;
+            top: -40px;
+            background: white;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: none;
+            white-space: nowrap;
+        }
+
+        /* MODAL DE DESAFIO (QUIZ) */
+        #quiz-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #0f172a;
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-top: 50px;
-            border: 1px solid #334155;
+            border: 2px solid #38bdf8;
+            width: 90%;
+            max-width: 400px;
+            display: none;
+            z-index: 100;
             text-align: center;
         }
 
-        .caso-header {
-            color: #38bdf8;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .descricao-caso {
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            background: #0f172a;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: left;
-        }
-
-        .opcoes {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
         .btn-opcao {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
             background: #334155;
-            border: 2px solid transparent;
-            padding: 15px;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-opcao:hover { background: #475569; }
+
+        /* CONTROLES MOBILE */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .btn-move {
+            width: 60px;
+            height: 60px;
+            background: #334155;
+            border: none;
             color: white;
             border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s;
-            text-align: left;
+            font-size: 20px;
         }
 
-        .btn-opcao:hover {
-            background: #475569;
-            border-color: #38bdf8;
-        }
-
-        .btn-opcao.correta:active {
-            background: #10b981;
-        }
-
-        .feedback {
-            margin-top: 20px;
-            font-weight: bold;
-            padding: 10px;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .voltar {
-            margin-top: 30px;
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .voltar:hover { color: white; }
+        header { padding: 15px; background: #0f172a; display: flex; justify-content: space-between; }
     </style>
 </head>
 <body>
 
-    <h1 style="font-size: 32px;">🔥 Arena Clínica</h1>
-    
-    <div class="arena-container">
-        <div class="caso-header">Desafio #01 - Avaliação</div>
-        <h2>O Caso do Corredor</h2>
-        
-        <div class="descricao-caso">
-            "Um paciente de 28 anos, corredor de maratona, queixa-se de dor na face lateral do joelho. Durante o teste de Ober, você nota uma tensão excessiva." <br><br>
-            <strong>Qual estrutura está provavelmente encurtada?</strong>
-        </div>
+    <header>
+        <div><strong>ArenaFisio</strong> - Modo RPG</div>
+        <a href="painel.html" style="color: #94a3b8; text-decoration: none;">Sair da Arena</a>
+    </header>
 
-        <div class="opcoes">
-            <button class="btn-opcao" onclick="verificarResposta(false, this)">A) Tendão de Aquiles</button>
-            <button class="btn-opcao" onclick="verificarResposta(true, this)">B) Trato Iliotibial (TFL)</button>
-            <button class="btn-opcao" onclick="verificarResposta(false, this)">C) Ligamento Cruzado Anterior</button>
-            <button class="btn-opcao" onclick="verificarResposta(false, this)">D) Músculo Peitoral Maior</button>
-        </div>
+    <div id="game-container">
+        <div id="player">👨‍⚕️</div>
 
-        <div id="feedback" class="feedback"></div>
+        <div id="patient">
+            🤕
+            <div id="interact-prompt">Pressione ESPAÇO para tratar</div>
+        </div>
     </div>
 
-    <a href="painel.html" class="voltar">← Desistir e voltar ao Painel</a>
+    <div class="controls">
+        <button class="btn-move" onclick="move('up')">▲</button>
+        <div style="display: flex; gap: 40px;">
+            <button class="btn-move" onclick="move('left')">◀</button>
+            <button class="btn-move" onclick="move('right')">▶</button>
+        </div>
+        <button class="btn-move" onclick="move('down')">▼</button>
+    </div>
+
+    <div id="quiz-modal">
+        <h3 id="titulo-caso">Atendimento Clínico</h3>
+        <p id="pergunta">O paciente apresenta dor aguda no ombro após queda. Qual o primeiro passo?</p>
+        <button class="btn-opcao" onclick="responder(true)">A) Avaliação de amplitude de movimento</button>
+        <button class="btn-opcao" onclick="responder(false)">B) Aplicar gelo e liberar o paciente</button>
+        <p id="feedback" style="margin-top: 15px; font-weight: bold;"></p>
+    </div>
 
     <script src="js/app.js"></script>
 
     <script>
-        function verificarResposta(correta, elemento) {
-            const feedbackDiv = document.getElementById('feedback');
-            
-            if (correta) {
-                feedbackDiv.style.display = 'block';
-                feedbackDiv.style.backgroundColor = '#065f46';
-                feedbackDiv.innerHTML = "✅ Resposta Correta! O teste de Ober avalia o TFL. Ganhando XP...";
-                
-                // Desativa os botões para não clicar de novo
-                const botoes = document.querySelectorAll('.btn-opcao');
-                botoes.forEach(b => b.disabled = true);
-                
-                // Usa a função do seu app.js para ganhar XP e salvar o desafio
-                setTimeout(() => {
-                    concluirDesafio(150); // Dá 150 XP por ser um caso real
-                }, 1500);
+        // Lógica de Movimento
+        let pX = 50;
+        let pY = 50;
+        const speed = 25;
+        const player = document.getElementById('player');
+        const patient = document.getElementById('patient');
+        const prompt = document.getElementById('interact-prompt');
+        const modal = document.getElementById('quiz-modal');
 
+        function updatePosition() {
+            player.style.left = pX + 'px';
+            player.style.top = pY + 'px';
+            checkCollision();
+        }
+
+        function move(dir) {
+            if (modal.style.display === 'block') return; // Trava o boneco se estiver no quiz
+
+            if (dir === 'up') pY -= speed;
+            if (dir === 'down') pY += speed;
+            if (dir === 'left') pX -= speed;
+            if (dir === 'right') pX += speed;
+            
+            // Limites da tela
+            if (pX < 0) pX = 0;
+            if (pY < 0) pY = 0;
+
+            updatePosition();
+        }
+
+        // Teclado
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp' || e.key === 'w') move('up');
+            if (e.key === 'ArrowDown' || e.key === 's') move('down');
+            if (e.key === 'ArrowLeft' || e.key === 'a') move('left');
+            if (e.key === 'ArrowRight' || e.key === 'd') move('right');
+            if (e.key === ' ' && prompt.style.display === 'block') {
+                abrirQuiz();
+            }
+        });
+
+        function checkCollision() {
+            const dist = Math.sqrt(Math.pow(pX - 500, 2) + Math.pow(pY - 200, 2));
+            if (dist < 60) {
+                prompt.style.display = 'block';
             } else {
-                feedbackDiv.style.display = 'block';
-                feedbackDiv.style.backgroundColor = '#991b1b';
-                feedbackDiv.innerHTML = "❌ Resposta incorreta. Dica: O Teste de Ober foca na região lateral da coxa!";
-                elemento.style.borderColor = "#ef4444";
+                prompt.style.display = 'none';
             }
         }
+
+        function abrirQuiz() {
+            modal.style.display = 'block';
+        }
+
+        function responder(correta) {
+            const feedback = document.getElementById('feedback');
+            if (correta) {
+                feedback.innerHTML = "✅ Excelente! +100 XP";
+                feedback.style.color = "#10b981";
+                setTimeout(() => {
+                    if (typeof concluirDesafio === "function") {
+                        concluirDesafio(100); 
+                    } else {
+                        alert("Desafio Concluído! +100 XP");
+                        window.location.href = "painel.html";
+                    }
+                }, 1500);
+            } else {
+                feedback.innerHTML = "❌ Tente novamente!";
+                feedback.style.color = "#ef4444";
+            }
+        }
+
+        updatePosition();
     </script>
 </body>
 </html>
