@@ -1,11 +1,13 @@
 // ===============================
-// SISTEMA GLOBAL: XP, USUÁRIO E NÍVEIS
+// SISTEMA CONECTAFISIO 360
 // ===============================
 
+// Carrega os dados salvos ou começa do zero
 let xp = localStorage.getItem("xp") ? parseInt(localStorage.getItem("xp")) : 0;
-let usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado")) || { nome: "Leonardo", tipo: "premium" };
+let desafios = localStorage.getItem("desafios") ? parseInt(localStorage.getItem("desafios")) : 0;
+let usuario = JSON.parse(localStorage.getItem("usuarioLogado")) || { nome: "Leonardo Teodoro", tipo: "premium" };
 
-// Definição de níveis baseada no seu print
+// Lógica de Níveis (Baseado nos seus prints)
 function getLevel(xp) {
     if (xp < 500) return "Iniciante";
     if (xp < 1000) return "Intermediário";
@@ -13,35 +15,40 @@ function getLevel(xp) {
     return "Elite Clínico";
 }
 
-function getProgressPercent(xp) {
-    let max = 2000; // Meta para o próximo nível grande
-    let percent = (xp / max) * 100;
-    return percent > 100 ? 100 : percent;
+// Função para ganhar XP e contar desafio
+function concluirDesafio(valorXP) {
+    xp += valorXP;
+    desafios += 1; // Soma +1 desafio concluído
+    localStorage.setItem("xp", xp);
+    localStorage.setItem("desafios", desafios);
+    alert("Incrível! + " + valorXP + " XP para sua conta!");
+    window.location.href = "painel.html"; // Volta para o painel atualizado
 }
 
-// FUNÇÃO PARA GANHAR XP (Chamada pelo botão da Arena)
-function ganharXP(valor) {
-    xp += valor;
-    localStorage.setItem("xp", xp);
-    alert("Parabéns! Você ganhou " + valor + " XP!");
-    updateDashboard(); // Atualiza a tela na hora
+// Atualiza as informações nas telas
+function atualizarInterface() {
+    const elementos = {
+        xpText: document.getElementById("xpText"),
+        progress: document.getElementById("progress"),
+        levelText: document.getElementById("levelText"),
+        nomeUser: document.getElementById("nomeUsuario"),
+        contDesafios: document.getElementById("contDesafios")
+    };
+
+    if (elementos.xpText) elementos.xpText.innerText = "XP: " + xp;
+    if (elementos.levelText) elementos.levelText.innerText = getLevel(xp);
+    if (elementos.nomeUser) elementos.nomeUser.innerText = usuario.nome;
+    if (elementos.contDesafios) elementos.contDesafios.innerText = desafios;
+    
+    if (elementos.progress) {
+        let percent = (xp / 2000) * 100; // Meta de 2000 XP
+        elementos.progress.style.width = (percent > 100 ? 100 : percent) + "%";
+    }
 }
+
+document.addEventListener("DOMContentLoaded", atualizarInterface);
 
 function logout() {
     localStorage.removeItem("usuarioLogado");
     window.location.href = "login.html";
 }
-
-function updateDashboard() {
-    const xpText = document.getElementById("xpText");
-    const progress = document.getElementById("progress");
-    const levelText = document.getElementById("levelText");
-    const nomeDisplay = document.getElementById("nomeUsuario");
-
-    if (xpText) xpText.innerText = "XP: " + xp;
-    if (progress) progress.style.width = getProgressPercent(xp) + "%";
-    if (levelText) levelText.innerText = "Nível " + getLevel(xp);
-    if (nomeDisplay && usuarioLogado) nomeDisplay.innerText = usuarioLogado.nome;
-}
-
-document.addEventListener("DOMContentLoaded", updateDashboard);
