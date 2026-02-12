@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel · ConectaFisio360</title>
     
-    <!-- Sistema global (Firebase) - AGORA COMO MÓDULO -->
+    <!-- Sistema global (Firebase) - COMO MÓDULO -->
     <script type="module" src="js/app.js"></script>
     
     <!-- Font Awesome para ícones -->
@@ -25,7 +25,6 @@
             min-height: 100vh;
         }
 
-        /* HEADER com navegação */
         header {
             display: flex;
             justify-content: space-between;
@@ -62,7 +61,6 @@
             margin: 0 auto;
         }
 
-        /* CARD de boas-vindas */
         .welcome-card {
             background: linear-gradient(145deg, #1e293b, #0f172a);
             border-radius: 24px;
@@ -86,7 +84,6 @@
             font-size: 16px;
         }
 
-        /* GRADE DE CARDS */
         .grid-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -122,7 +119,6 @@
             line-height: 1.5;
         }
 
-        /* BARRA DE PROGRESSO */
         .progress-bar {
             width: 100%;
             height: 10px;
@@ -151,7 +147,6 @@
             margin-top: 10px;
         }
 
-        /* BOTÃO PADRÃO */
         .btn {
             display: inline-block;
             padding: 10px 20px;
@@ -180,7 +175,6 @@
             background: #d97706;
         }
 
-        /* ÁREA PREMIUM (inicialmente oculta) */
         .premium-section {
             margin-top: 50px;
         }
@@ -194,7 +188,6 @@
             font-size: 22px;
         }
 
-        /* FOOTER */
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -221,16 +214,14 @@
     <!-- ========== CONTEÚDO PRINCIPAL ========== -->
     <div class="container">
 
-        <!-- CARD DE BOAS-VINDAS com dados do usuário -->
         <div class="welcome-card">
             <h1>Bem-vindo, <span id="nomeUsuario">Doutor(a)</span> 👋</h1>
             <p class="sub">Sua jornada rumo ao domínio clínico começa aqui.</p>
         </div>
 
-        <!-- GRADE DE CARDS (VISÍVEL PARA TODOS) -->
         <div class="grid-cards">
 
-            <!-- CARD DE PROGRESSO (XP e Nível) -->
+            <!-- CARD DE PROGRESSO -->
             <div class="card">
                 <h3><i class="fas fa-chart-line" style="color:#38bdf8;"></i> Seu Progresso</h3>
                 <p id="xpText">XP: 0</p>
@@ -248,7 +239,7 @@
                 <a href="#" class="btn">Assistir agora</a>
             </div>
 
-            <!-- CARD DE MODELOS ANATÔMICOS (acesso gratuito) -->
+            <!-- CARD DE MODELOS ANATÔMICOS -->
             <div class="card">
                 <h3><i class="fas fa-bone" style="color:#f59e0b;"></i> Modelos 3D</h3>
                 <p>Explore o corpo humano em detalhes com modelos interativos.</p>
@@ -256,28 +247,22 @@
             </div>
         </div>
 
-        <!-- ========== CONTEÚDO PREMIUM (só aparece se o usuário for premium) ========== -->
+        <!-- CONTEÚDO PREMIUM -->
         <div id="areaPremium" class="premium-section" style="display: none;">
             <div class="premium-title">
                 <i class="fas fa-crown"></i> Conteúdo Premium
             </div>
             <div class="grid-cards">
-                
-                <!-- ARENA FISIO -->
                 <div class="card" style="border-color: #f59e0b;">
                     <h3><i class="fas fa-gamepad" style="color:#f59e0b;"></i> 🔥 ArenaFisio</h3>
                     <p>Simulador clínico interativo. Atenda pacientes, ganhe XP e evolua.</p>
                     <a href="arena.html" class="btn btn-premium">Entrar na Arena</a>
                 </div>
-
-                <!-- COMUNIDADE -->
                 <div class="card">
                     <h3><i class="fas fa-users" style="color:#38bdf8;"></i> Comunidade</h3>
                     <p>Troque experiências com outros fisioterapeutas e professores.</p>
                     <a href="comunidade.html" class="btn">Acessar fórum</a>
                 </div>
-
-                <!-- ESTUDOS CIENTÍFICOS -->
                 <div class="card">
                     <h3><i class="fas fa-flask" style="color:#a78bfa;"></i> Estudos Científicos</h3>
                     <p>Biblioteca atualizada com artigos e evidências em fisioterapia.</p>
@@ -299,29 +284,25 @@
 
     </div>
 
-    <!-- ========== FOOTER ========== -->
     <footer>
         © 2026 ConectaFisio360 · Plataforma Integrada para Fisioterapeutas
         <br>
         <span style="font-size: 12px; color: #475569;">Versão 2.0 - RPG Clínico</span>
     </footer>
 
-    <!-- ========== SCRIPT ESPECÍFICO DO PAINEL (AGORA COM FIREBASE) ========== -->
+    <!-- ========== SCRIPT CORRIGIDO ========== -->
     <script type="module">
-        // Importa as funções necessárias do Firebase
-        import { usuarioAtual, xpAtual, desafiosAtual, planoUsuario, getLevel } from './js/app.js';
+        // 🔥 IMPORTAÇÕES CORRETAS (com os nomes atualizados do app.js)
+        import { getLevel, getUsuarioAtual, getXpAtual, getDesafiosAtual, getPlanoUsuario } from './js/app.js';
         import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Função para atualizar todo o painel
         async function atualizarPainel() {
-            // Dados do app.js (mantidos em memória)
-            let xp = xpAtual();
-            let desafios = desafiosAtual();
-            let plano = planoUsuario();
-            let nivel = getLevel(xp);
+            const xp = getXpAtual();
+            const desafios = getDesafiosAtual();
+            const plano = getPlanoUsuario();
+            const nivel = getLevel(xp);
             
-            // Busca o nome do usuário no Realtime Database (mais completo)
-            const user = usuarioAtual();
+            const user = getUsuarioAtual();
             let nome = 'Doutor(a)';
             
             if (user) {
@@ -335,28 +316,17 @@
                 }
             }
 
-            // Atualiza elementos HTML
-            const nomeEl = document.getElementById('nomeUsuario');
-            if (nomeEl) nomeEl.innerText = nome;
+            document.getElementById('nomeUsuario').innerText = nome;
+            document.getElementById('xpText').innerText = 'XP: ' + xp;
+            document.getElementById('contDesafios').innerText = desafios;
+            document.getElementById('levelText').innerText = nivel;
 
-            const xpEl = document.getElementById('xpText');
-            if (xpEl) xpEl.innerText = 'XP: ' + xp;
-
-            const desafiosEl = document.getElementById('contDesafios');
-            if (desafiosEl) desafiosEl.innerText = desafios;
-
-            const levelEl = document.getElementById('levelText');
-            if (levelEl) levelEl.innerText = nivel;
-
-            // Barra de progresso (meta: 2000 XP)
             const progressEl = document.getElementById('progress');
             if (progressEl) {
                 let percent = (xp / 2000) * 100;
-                percent = percent > 100 ? 100 : percent;
-                progressEl.style.width = percent + '%';
+                progressEl.style.width = (percent > 100 ? 100 : percent) + '%';
             }
 
-            // Controle de acesso premium
             const premiumSection = document.getElementById('areaPremium');
             const upgradeMessage = document.getElementById('upgradeMessage');
             
@@ -369,18 +339,8 @@
             }
         }
 
-        // Escuta o evento disparado pelo app.js (qualquer alteração de XP, login, etc)
-        window.addEventListener('usuarioAtualizado', () => {
-            atualizarPainel();
-        });
-
-        // Carrega os dados assim que a página abrir
-        window.addEventListener('DOMContentLoaded', () => {
-            atualizarPainel();
-        });
-
-        // A função logout já existe no escopo global via app.js
-        // Não precisamos redeclarar
+        window.addEventListener('usuarioAtualizado', atualizarPainel);
+        window.addEventListener('DOMContentLoaded', atualizarPainel);
     </script>
 </body>
 </html>
