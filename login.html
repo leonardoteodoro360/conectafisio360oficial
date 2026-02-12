@@ -3,88 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ConectaFisio360</title>
+    <title>Login · ConectaFisio360</title>
     <style>
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
+        }
+
+        body {
+            background: radial-gradient(circle at top left, #0f172a, #0b1120);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             color: white;
         }
+
         .login-container {
-            background: #1e293b;
-            padding: 40px;
-            border-radius: 12px;
-            width: 350px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px 35px;
+            border-radius: 24px;
+            width: 380px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.6);
+            border: 1px solid rgba(59, 130, 246, 0.3);
             text-align: center;
         }
+
+        h2 {
+            background: linear-gradient(90deg, #3b82f6, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
         input, select {
             width: 100%;
-            padding: 12px;
-            margin-top: 15px;
+            padding: 14px 16px;
+            margin-top: 16px;
             border: none;
-            border-radius: 6px;
-            background: #334155;
+            border-radius: 12px;
+            background: #1e293b;
             color: white;
-            box-sizing: border-box;
+            border: 1px solid #334155;
+            transition: 0.2s;
+            font-size: 14px;
         }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+        }
+
         button {
             width: 100%;
-            margin-top: 25px;
-            padding: 12px;
-            background: #2563eb;
+            margin-top: 28px;
+            padding: 14px;
+            background: linear-gradient(90deg, #2563eb, #22d3ee);
             border: none;
             color: white;
-            border-radius: 6px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
             cursor: pointer;
-            font-weight: bold;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        button:hover { background: #1d4ed8; }
-        a { display: block; margin-top: 15px; color: #38bdf8; text-decoration: none; font-size: 14px; }
+
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px #22d3ee;
+        }
+
+        a {
+            display: block;
+            margin-top: 22px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        a:hover {
+            color: #38bdf8;
+        }
+
+        .label-select {
+            display: block;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #94a3b8;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
+    <div class="login-container">
+        <h2>ConectaFisio360</h2>
+        <p>Entre na sua jornada clínica</p>
 
-<div class="login-container">
-    <h2>ConectaFisio360</h2>
-    <p>Entre na sua conta</p>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="E-mail profissional" required>
+            <input type="password" id="senha" placeholder="Senha" required>
+            
+            <div class="label-select">Tipo de conta (simulação)</div>
+            <select id="tipoConta">
+                <option value="premium">🔥 Premium – acesso total</option>
+                <option value="normal">📘 Normal – gratuito</option>
+            </select>
 
-    <form id="loginForm">
-        <input type="email" id="email" placeholder="Seu melhor e-mail" required>
-        <input type="password" id="senha" placeholder="Sua senha" required>
-        
-        <label style="display:block; margin-top:15px; font-size:12px;">Tipo de conta (Para teste):</label>
-        <select id="tipoConta">
-            <option value="premium">Premium (Acesso Total)</option>
-            <option value="normal">Normal (Grátis)</option>
-        </select>
+            <button type="submit">▶ Entrar na plataforma</button>
+        </form>
 
-        <button type="submit">Entrar na Plataforma</button>
-    </form>
+        <a href="cadastro.html">🆕 Ainda não tem conta? Cadastre-se</a>
+    </div>
 
-    <a href="cadastro.html">Ainda não tem conta? Cadastre-se</a>
-</div>
+    <!-- Carrega funções globais (XP, logout, etc) -->
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-<script>
-    document.getElementById('loginForm').onsubmit = function(e) {
-        e.preventDefault();
-        
-        // Cria o usuário na memória do navegador
-        const usuario = {
-            nome: "Leonardo", // No futuro pegaremos do cadastro
-            email: document.getElementById('email').value,
-            tipo: document.getElementById('tipoConta').value
-        };
-        
-        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-        window.location.href = "painel.html";
-    };
-</script>
+            // Cria usuário logado (modo simulação)
+            const usuario = {
+                nome: "Leonardo Teodoro",        // Pode ser alterado depois no perfil
+                email: document.getElementById('email').value,
+                tipo: document.getElementById('tipoConta').value,
+                plano: document.getElementById('tipoConta').value // compatibilidade
+            };
 
+            // Salva no localStorage
+            localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+
+            // Redireciona para o painel principal
+            window.location.href = 'painel.html';
+        });
+    </script>
 </body>
 </html>
