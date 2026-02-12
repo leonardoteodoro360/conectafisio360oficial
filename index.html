@@ -3,102 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel - ConectaFisio360</title>
+<title>ConectaFisio360 - Painel Premium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-body{
+*{
     margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color:white;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
 }
 
+body{
+    background: radial-gradient(circle at top left, #1e3a8a, #0f172a 60%);
+    color:white;
+    overflow-x:hidden;
+}
+
+/* HEADER */
 header{
-    padding:20px 40px;
-    background:#0f172a;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    padding:20px 50px;
+    backdrop-filter: blur(15px);
+    background: rgba(15,23,42,0.6);
+    border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
 header h1{
-    margin:0;
     font-size:22px;
+    font-weight:600;
+    background: linear-gradient(90deg,#3b82f6,#22d3ee);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
 nav a{
     color:#cbd5e1;
     text-decoration:none;
-    margin-left:20px;
+    margin-left:25px;
     font-size:14px;
+    transition:0.3s;
+    position:relative;
+}
+
+nav a::after{
+    content:"";
+    position:absolute;
+    width:0%;
+    height:2px;
+    left:0;
+    bottom:-5px;
+    background:#22d3ee;
+    transition:0.3s;
 }
 
 nav a:hover{
     color:white;
 }
 
+nav a:hover::after{
+    width:100%;
+}
+
+/* CONTAINER */
 .container{
-    padding:40px;
+    padding:60px 50px;
 }
 
+h2{
+    font-weight:600;
+    font-size:28px;
+}
+
+.sub{
+    color:#94a3b8;
+    margin-top:5px;
+}
+
+/* GRID */
 .grid{
+    margin-top:40px;
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap:25px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap:30px;
 }
 
+/* CARD PREMIUM */
 .card{
-    background:#1e293b;
-    padding:25px;
-    border-radius:12px;
-    transition:0.3s;
-    cursor:pointer;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border:1px solid rgba(255,255,255,0.1);
+    padding:30px;
+    border-radius:20px;
+    transition: all 0.4s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background: radial-gradient(circle, rgba(59,130,246,0.3), transparent 60%);
+    top:-50%;
+    left:-50%;
+    transition:0.6s;
+    opacity:0;
+}
+
+.card:hover::before{
+    opacity:1;
 }
 
 .card:hover{
-    transform:translateY(-5px);
-    background:#273549;
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:0 0 25px rgba(59,130,246,0.4);
 }
 
 .card h3{
-    margin-top:0;
+    margin-bottom:10px;
+    font-weight:600;
 }
 
-.button{
-    display:inline-block;
-    margin-top:15px;
-    padding:10px 15px;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    border-radius:6px;
+.card p{
+    color:#cbd5e1;
     font-size:14px;
 }
 
-.button:hover{
-    background:#1d4ed8;
+/* BOTÃO */
+.button{
+    display:inline-block;
+    margin-top:18px;
+    padding:10px 18px;
+    border-radius:8px;
+    background: linear-gradient(90deg,#2563eb,#22d3ee);
+    text-decoration:none;
+    color:white;
+    font-size:14px;
+    transition:0.3s;
 }
 
+.button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px #22d3ee;
+}
+
+/* PROGRESSO */
 .progress-bar{
+    margin-top:15px;
     width:100%;
-    height:8px;
-    background:#334155;
-    border-radius:5px;
-    margin-top:10px;
+    height:10px;
+    background:#1e293b;
+    border-radius:10px;
+    overflow:hidden;
 }
 
 .progress{
-    width:35%;
-    height:8px;
-    background:#22c55e;
-    border-radius:5px;
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg,#22c55e,#06b6d4);
+    border-radius:10px;
+    transition: width 2s ease;
 }
 
+/* BADGE NÍVEL */
+.level{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    background:rgba(34,197,94,0.2);
+    color:#22c55e;
+}
+
+/* FOOTER */
 footer{
     text-align:center;
-    padding:30px;
-    color:#94a3b8;
+    padding:40px;
+    color:#64748b;
+    font-size:13px;
+}
+
+/* RESPONSIVO */
+@media(max-width:768px){
+    header{
+        flex-direction:column;
+        gap:15px;
+    }
 }
 
 </style>
@@ -107,48 +204,49 @@ footer{
 <body>
 
 <header>
-    <h1>ConectaFisio360 - Painel</h1>
+    <h1>ConectaFisio360</h1>
 
     <nav>
         <a href="index.html">Home</a>
         <a href="arena.html">Arena</a>
         <a href="comunidade.html">Comunidade</a>
-        <a href="cadastro.html">Perfil</a>
+        <a href="perfil.html">Perfil</a>
     </nav>
 </header>
 
 <div class="container">
 
     <h2>Bem-vindo, Leonardo 👋</h2>
-    <p>Continue evoluindo na sua jornada acadêmica.</p>
-
-    <br>
+    <p class="sub">Sua jornada rumo ao domínio clínico começa aqui.</p>
 
     <div class="grid">
 
         <div class="card">
             <h3>📊 Seu Progresso</h3>
             <p>Você completou 35% da jornada.</p>
+
             <div class="progress-bar">
-                <div class="progress"></div>
+                <div class="progress" id="progress"></div>
             </div>
+
+            <span class="level">Nível Iniciante Clínico</span>
         </div>
 
         <div class="card">
             <h3>🔥 Arena Clínica</h3>
-            <p>Participe de desafios e simulações.</p>
+            <p>Simulações realistas e desafios práticos.</p>
             <a class="button" href="arena.html">Entrar</a>
         </div>
 
         <div class="card">
             <h3>👥 Comunidade</h3>
-            <p>Interaja com outros estudantes.</p>
+            <p>Networking com estudantes e profissionais.</p>
             <a class="button" href="comunidade.html">Acessar</a>
         </div>
 
         <div class="card">
-            <h3>📚 Cursos</h3>
-            <p>Acesse conteúdos exclusivos.</p>
+            <h3>📚 Cursos Premium</h3>
+            <p>Conteúdos exclusivos e certificados.</p>
             <a class="button" href="#">Em breve</a>
         </div>
 
@@ -157,8 +255,17 @@ footer{
 </div>
 
 <footer>
-© 2026 ConectaFisio360
+© 2026 ConectaFisio360 • Versão Premium
 </footer>
+
+<script>
+
+// Animação da barra de progresso
+window.onload = function(){
+    document.getElementById("progress").style.width = "35%";
+}
+
+</script>
 
 </body>
 </html>
