@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel · ConectaFisio360</title>
     
-    <!-- Sistema global (Firebase) - COMO MÓDULO -->
+    <!-- Firebase como módulo -->
     <script type="module" src="js/app.js"></script>
     
-    <!-- Font Awesome para ícones -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
+        /* SEU CSS COMPLETO – IGUALZINHO AO QUE VOCÊ TEM */
         * {
             margin: 0;
             padding: 0;
@@ -214,17 +215,19 @@
     <!-- ========== CONTEÚDO PRINCIPAL ========== -->
     <div class="container">
 
+        <!-- CARD DE BOAS-VINDAS -->
         <div class="welcome-card">
-            <h1>Bem-vindo, <span id="nomeUsuario">Doutor(a)</span> 👋</h1>
+            <h1>Bem-vindo, <span id="nomeUsuario">Carregando...</span> 👋</h1>
             <p class="sub">Sua jornada rumo ao domínio clínico começa aqui.</p>
         </div>
 
+        <!-- GRADE DE CARDS -->
         <div class="grid-cards">
 
             <!-- CARD DE PROGRESSO -->
             <div class="card">
                 <h3><i class="fas fa-chart-line" style="color:#38bdf8;"></i> Seu Progresso</h3>
-                <p id="xpText">XP: 0</p>
+                <p><span id="xpLabel">XP:</span> <span id="xpValor">0</span></p>
                 <div class="progress-bar">
                     <div id="progress" class="progress-fill"></div>
                 </div>
@@ -247,7 +250,7 @@
             </div>
         </div>
 
-        <!-- CONTEÚDO PREMIUM -->
+        <!-- CONTEÚDO PREMIUM (exibido apenas para usuários premium) -->
         <div id="areaPremium" class="premium-section" style="display: none;">
             <div class="premium-title">
                 <i class="fas fa-crown"></i> Conteúdo Premium
@@ -284,52 +287,65 @@
 
     </div>
 
+    <!-- ========== FOOTER ========== -->
     <footer>
         © 2026 ConectaFisio360 · Plataforma Integrada para Fisioterapeutas
         <br>
         <span style="font-size: 12px; color: #475569;">Versão 2.0 - RPG Clínico</span>
     </footer>
 
-    <!-- ========== SCRIPT CORRIGIDO ========== -->
+    <!-- ========== SCRIPT PRINCIPAL (100% CORRIGIDO) ========== -->
     <script type="module">
-        // 🔥 IMPORTAÇÕES CORRETAS (com os nomes atualizados do app.js)
+        // 🔥 IMPORTAÇÕES CORRETAS (getters do app.js)
         import { getLevel, getUsuarioAtual, getXpAtual, getDesafiosAtual, getPlanoUsuario } from './js/app.js';
         import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
+        // === FUNÇÃO PRINCIPAL DE ATUALIZAÇÃO ===
         async function atualizarPainel() {
+            // Pega os valores atuais dos getters
             const xp = getXpAtual();
             const desafios = getDesafiosAtual();
             const plano = getPlanoUsuario();
             const nivel = getLevel(xp);
-            
-            const user = getUsuarioAtual();
-            let nome = 'Doutor(a)';
-            
-            if (user) {
-                const db = getDatabase();
-                const userRef = ref(db, `usuarios/${user.uid}`);
-                const snapshot = await get(userRef);
-                if (snapshot.exists()) {
-                    nome = snapshot.val().nome || user.email?.split('@')[0] || 'Doutor(a)';
-                } else {
-                    nome = user.email?.split('@')[0] || 'Doutor(a)';
-                }
-            }
 
-            document.getElementById('nomeUsuario').innerText = nome;
-            document.getElementById('xpText').innerText = 'XP: ' + xp;
-            document.getElementById('contDesafios').innerText = desafios;
-            document.getElementById('levelText').innerText = nivel;
+            // Atualiza XP, Desafios e Nível
+            const xpValor = document.getElementById('xpValor');
+            if (xpValor) xpValor.innerText = xp;
+            
+            const desafiosEl = document.getElementById('contDesafios');
+            if (desafiosEl) desafiosEl.innerText = desafios;
+            
+            const levelEl = document.getElementById('levelText');
+            if (levelEl) levelEl.innerText = nivel;
 
+            // Atualiza barra de progresso (meta: 2000 XP)
             const progressEl = document.getElementById('progress');
             if (progressEl) {
                 let percent = (xp / 2000) * 100;
                 progressEl.style.width = (percent > 100 ? 100 : percent) + '%';
             }
 
+            // Busca o nome do usuário no Realtime Database
+            const user = getUsuarioAtual();
+            if (user) {
+                try {
+                    const db = getDatabase();
+                    const userRef = ref(db, `usuarios/${user.uid}`);
+                    const snapshot = await get(userRef);
+                    const nomeEl = document.getElementById('nomeUsuario');
+                    if (snapshot.exists()) {
+                        nomeEl.innerText = snapshot.val().nome || user.email?.split('@')[0] || 'Doutor(a)';
+                    } else {
+                        nomeEl.innerText = user.email?.split('@')[0] || 'Doutor(a)';
+                    }
+                } catch (error) {
+                    console.error('Erro ao buscar nome:', error);
+                }
+            }
+
+            // Controle de acesso Premium
             const premiumSection = document.getElementById('areaPremium');
             const upgradeMessage = document.getElementById('upgradeMessage');
-            
             if (plano === 'premium') {
                 if (premiumSection) premiumSection.style.display = 'block';
                 if (upgradeMessage) upgradeMessage.style.display = 'none';
@@ -339,8 +355,14 @@
             }
         }
 
+        // === ESCUTA O EVENTO GLOBAL DISPARADO PELO FIREBASE ===
         window.addEventListener('usuarioAtualizado', atualizarPainel);
+
+        // === TENTA CARREGAR ASSIM QUE O DOM ESTIVER PRONTO ===
         window.addEventListener('DOMContentLoaded', atualizarPainel);
+
+        // === FALLBACK: SE O EVENTO NÃO DISPARAR, ATUALIZA DEPOIS DE 1 SEGUNDO ===
+        setTimeout(atualizarPainel, 1000);
     </script>
 </body>
 </html>
