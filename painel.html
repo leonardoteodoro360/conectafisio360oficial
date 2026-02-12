@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel · ConectaFisio360</title>
     
-    <!-- Sistema global (XP, usuário, logout) -->
-    <script src="js/app.js"></script>
+    <!-- Sistema global (Firebase) - AGORA COMO MÓDULO -->
+    <script type="module" src="js/app.js"></script>
     
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -211,9 +211,9 @@
     <header>
         <div class="logo">ConectaFisio360</div>
         <nav>
-            <!-- Links corrigidos e funcionais -->
             <a href="painel.html"><i class="fas fa-home"></i> Home</a>
             <a href="modelos3d.html"><i class="fas fa-cube"></i> Modelos 3D</a>
+            <a href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
             <a href="javascript:void(0);" onclick="logout()" style="color: #ef4444;"><i class="fas fa-sign-out-alt"></i> Sair</a>
         </nav>
     </header>
@@ -286,7 +286,7 @@
             </div>
         </div>
 
-        <!-- MENSAGEM PARA USUÁRIO NÃO PREMIUM (exemplo) -->
+        <!-- MENSAGEM PARA USUÁRIO NÃO PREMIUM -->
         <div id="upgradeMessage" style="margin-top: 40px; background: #1e293b; border-radius: 16px; padding: 25px; border: 1px dashed #f59e0b; display: none;">
             <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
                 <div>
@@ -306,73 +306,81 @@
         <span style="font-size: 12px; color: #475569;">Versão 2.0 - RPG Clínico</span>
     </footer>
 
-    <!-- ========== SCRIPT ESPECÍFICO DO PAINEL ========== -->
-    <script>
-        // Aguarda o carregamento completo do DOM
-        document.addEventListener('DOMContentLoaded', function() {
+    <!-- ========== SCRIPT ESPECÍFICO DO PAINEL (AGORA COM FIREBASE) ========== -->
+    <script type="module">
+        // Importa as funções necessárias do Firebase
+        import { usuarioAtual, xpAtual, desafiosAtual, planoUsuario, getLevel } from './js/app.js';
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Função para atualizar todo o painel
+        async function atualizarPainel() {
+            // Dados do app.js (mantidos em memória)
+            let xp = xpAtual();
+            let desafios = desafiosAtual();
+            let plano = planoUsuario();
+            let nivel = getLevel(xp);
             
-            // 1. ATUALIZA A INTERFACE COM OS DADOS DO localStorage
-            function atualizarPainel() {
-                // Pega os dados salvos (do app.js ou fallback)
-                let xp = localStorage.getItem('xp') ? parseInt(localStorage.getItem('xp')) : 0;
-                let desafios = localStorage.getItem('desafios') ? parseInt(localStorage.getItem('desafios')) : 0;
-                let usuario = JSON.parse(localStorage.getItem('usuarioLogado')) || { nome: 'Doutor(a)', tipo: 'normal' };
-
-                // Atualiza elementos HTML
-                const nomeEl = document.getElementById('nomeUsuario');
-                if (nomeEl) nomeEl.innerText = usuario.nome || 'Doutor(a)';
-
-                const xpEl = document.getElementById('xpText');
-                if (xpEl) xpEl.innerText = 'XP: ' + xp;
-
-                const desafiosEl = document.getElementById('contDesafios');
-                if (desafiosEl) desafiosEl.innerText = desafios;
-
-                // Calcula nível
-                function getLevel(xp) {
-                    if (xp < 500) return 'Iniciante';
-                    if (xp < 1000) return 'Intermediário';
-                    if (xp < 1500) return 'Avançado';
-                    return 'Elite Clínico';
-                }
-
-                const levelEl = document.getElementById('levelText');
-                if (levelEl) levelEl.innerText = getLevel(xp);
-
-                // Atualiza barra de progresso (meta: 2000 XP)
-                const progressEl = document.getElementById('progress');
-                if (progressEl) {
-                    let percent = (xp / 2000) * 100;
-                    percent = percent > 100 ? 100 : percent;
-                    progressEl.style.width = percent + '%';
-                }
-            }
-
-            // 2. CONTROLE DE ACESSO PREMIUM
-            function verificarPremium() {
-                const usuario = JSON.parse(localStorage.getItem('usuarioLogado')) || { tipo: 'normal' };
-                const premiumSection = document.getElementById('areaPremium');
-                const upgradeMessage = document.getElementById('upgradeMessage');
-
-                if (usuario.tipo === 'premium' || usuario.plano === 'premium') {
-                    if (premiumSection) premiumSection.style.display = 'block';
-                    if (upgradeMessage) upgradeMessage.style.display = 'none';
+            // Busca o nome do usuário no Realtime Database (mais completo)
+            const user = usuarioAtual();
+            let nome = 'Doutor(a)';
+            
+            if (user) {
+                const db = getDatabase();
+                const userRef = ref(db, `usuarios/${user.uid}`);
+                const snapshot = await get(userRef);
+                if (snapshot.exists()) {
+                    nome = snapshot.val().nome || user.email?.split('@')[0] || 'Doutor(a)';
                 } else {
-                    if (premiumSection) premiumSection.style.display = 'none';
-                    if (upgradeMessage) upgradeMessage.style.display = 'block';
+                    nome = user.email?.split('@')[0] || 'Doutor(a)';
                 }
             }
 
-            // Executa as funções
+            // Atualiza elementos HTML
+            const nomeEl = document.getElementById('nomeUsuario');
+            if (nomeEl) nomeEl.innerText = nome;
+
+            const xpEl = document.getElementById('xpText');
+            if (xpEl) xpEl.innerText = 'XP: ' + xp;
+
+            const desafiosEl = document.getElementById('contDesafios');
+            if (desafiosEl) desafiosEl.innerText = desafios;
+
+            const levelEl = document.getElementById('levelText');
+            if (levelEl) levelEl.innerText = nivel;
+
+            // Barra de progresso (meta: 2000 XP)
+            const progressEl = document.getElementById('progress');
+            if (progressEl) {
+                let percent = (xp / 2000) * 100;
+                percent = percent > 100 ? 100 : percent;
+                progressEl.style.width = percent + '%';
+            }
+
+            // Controle de acesso premium
+            const premiumSection = document.getElementById('areaPremium');
+            const upgradeMessage = document.getElementById('upgradeMessage');
+            
+            if (plano === 'premium') {
+                if (premiumSection) premiumSection.style.display = 'block';
+                if (upgradeMessage) upgradeMessage.style.display = 'none';
+            } else {
+                if (premiumSection) premiumSection.style.display = 'none';
+                if (upgradeMessage) upgradeMessage.style.display = 'block';
+            }
+        }
+
+        // Escuta o evento disparado pelo app.js (qualquer alteração de XP, login, etc)
+        window.addEventListener('usuarioAtualizado', () => {
             atualizarPainel();
-            verificarPremium();
         });
 
-        // Função de logout (sobrescreve a do app.js se existir)
-        window.logout = function() {
-            localStorage.removeItem('usuarioLogado');
-            window.location.href = 'login.html';
-        };
+        // Carrega os dados assim que a página abrir
+        window.addEventListener('DOMContentLoaded', () => {
+            atualizarPainel();
+        });
+
+        // A função logout já existe no escopo global via app.js
+        // Não precisamos redeclarar
     </script>
 </body>
 </html>
