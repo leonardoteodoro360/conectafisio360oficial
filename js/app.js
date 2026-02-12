@@ -20,37 +20,25 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-// ========== VARIÁVEIS GLOBAIS (privadas do módulo) ==========
-let _usuarioAtual = null;
-let _xp = 0;
-let _desafios = 0;
-let _plano = 'normal';
-
-// ========== GETTERS EXPORTADOS ==========
-export function getUsuarioAtual() { return _usuarioAtual; }
-export function getXp() { return _xp; }
-export function getDesafios() { return _desafios; }
-export function getPlano() { return _plano; }
-
-// Também expõe no window para compatibilidade com chamadas onclick antigas
-window.getUsuarioAtual = getUsuarioAtual;
-window.getXp = getXp;
-window.getDesafios = getDesafios;
-window.getPlano = getPlano;
+// ========== VARIÁVEIS GLOBAIS ==========
+let usuarioAtual = null;
+let xp = 0;
+let desafios = 0;
+let plano = 'normal';
 
 // ========== OBSERVADOR DE ESTADO DO USUÁRIO ==========
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    _usuarioAtual = user;
+    usuarioAtual = user;
     localStorage.setItem('firebaseUser', JSON.stringify({ uid: user.uid, email: user.email }));
 
     const userRef = ref(db, `usuarios/${user.uid}`);
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
       const data = snapshot.val();
-      _xp = data.xp || 0;
-      _desafios = data.desafios || 0;
-      _plano = data.plano || 'normal';
+      xp = data.xp || 0;
+      desafios = data.desafios || 0;
+      plano = data.plano || 'normal';
     } else {
       await set(userRef, {
         email: user.email,
@@ -62,26 +50,14 @@ onAuthStateChanged(auth, async (user) => {
       });
     }
     window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
-      detail: { 
-        usuario: user, 
-        xp: _xp, 
-        desafios: _desafios, 
-        plano: _plano, 
-        nivel: getLevel(_xp) 
-      }
+      detail: { usuario: user, xp, desafios, plano, nivel: getLevel(xp) }
     }));
   } else {
-    _usuarioAtual = null;
+    usuarioAtual = null;
     localStorage.removeItem('firebaseUser');
-    _xp = 0; _desafios = 0; _plano = 'normal';
+    xp = 0; desafios = 0; plano = 'normal';
     window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
-      detail: { 
-        usuario: null, 
-        xp: _xp, 
-        desafios: _desafios, 
-        plano: _plano, 
-        nivel: getLevel(_xp) 
-      }
+      detail: { usuario: null, xp, desafios, plano, nivel: getLevel(xp) }
     }));
     const publicPages = ['index.html', 'login.html', 'cadastro.html'];
     const currentPage = window.location.pathname.split('/').pop();
@@ -99,6 +75,10 @@ export function getLevel(xp) {
   return "Elite Clínico";
 }
 window.getLevel = getLevel;
+
+// ========== GETTER DO USUÁRIO (NOME DIFERENTE PARA NÃO CONFLITAR) ==========
+export function getUsuarioAtual() { return usuarioAtual; }
+window.getUsuarioAtual = getUsuarioAtual;
 
 // ========== CADASTRAR ==========
 export async function cadastrar(email, senha, nome, planoSelecionado, especialidade = "Não informada") {
@@ -130,6 +110,7 @@ window.cadastrar = cadastrar;
 export async function logar(email, senha) {
   try {
     await signInWithEmailAndPassword(auth, email, senha);
+    // Redirecionamento feito pelo onAuthStateChanged
   } catch (error) {
     alert("Erro: " + error.message);
   }
@@ -145,29 +126,33 @@ window.logout = logout;
 
 // ========== ADICIONAR XP ==========
 export async function adicionarXP(pontos) {
-  if (!_usuarioAtual) return;
-  const userRef = ref(db, `usuarios/${_usuarioAtual.uid}`);
+  if (!usuarioAtual) return;
+  const userRef = ref(db, `usuarios/${usuarioAtual.uid}`);
   const snapshot = await get(userRef);
   if (snapshot.exists()) {
     const dados = snapshot.val();
     const novoXP = (dados.xp || 0) + pontos;
     const novosDesafios = (dados.desafios || 0) + 1;
     await update(userRef, { xp: novoXP, desafios: novosDesafios });
-    _xp = novoXP;
-    _desafios = novosDesafios;
+    xp = novoXP;
+    desafios = novosDesafios;
   } else {
     await set(userRef, { xp: pontos, desafios: 1 });
-    _xp = pontos;
-    _desafios = 1;
+    xp = pontos;
+    desafios = 1;
   }
   window.dispatchEvent(new CustomEvent('usuarioAtualizado', {
-    detail: { 
-      usuario: _usuarioAtual, 
-      xp: _xp, 
-      desafios: _desafios, 
-      plano: _plano, 
-      nivel: getLevel(_xp) 
-    }
+    detail: { usuario: usuarioAtual, xp, desafios, plano, nivel: getLevel(xp) }
   }));
 }
 window.adicionarXP = adicionarXP;
+
+// ========== GETTERS ==========
+export function getPlanoUsuario() { return plano; }
+window.getPlanoUsuario = getPlanoUsuario;
+
+export function getXpAtual() { return xp; }
+window.getXpAtual = getXpAtual;
+
+export function getDesafiosAtual() { return desafios; }
+window.getDesafiosAtual = getDesafiosAtual;
