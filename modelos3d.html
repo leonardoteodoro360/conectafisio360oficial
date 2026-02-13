@@ -4,177 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modelos 3D · ConectaFisio360</title>
-    
-    <!-- Carrega o Firebase como módulo -->
     <script type="module" src="js/app.js"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        body {
-            background: #0b1120;
-            color: white;
-            min-height: 100vh;
-        }
-
-        /* HEADER PADRÃO (igual ao painel) */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #334155;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: 700;
-            background: linear-gradient(90deg, #3b82f6, #22d3ee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        nav a {
-            color: #cbd5e1;
-            text-decoration: none;
-            margin-left: 25px;
-            font-size: 15px;
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: white;
-        }
-
-        .container {
-            padding: 60px 5%;
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .card {
-            background: #1e293b;
-            border-radius: 32px;
-            padding: 60px 40px;
-            border: 1px solid #334155;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .card i {
-            font-size: 70px;
-            color: #38bdf8;
-            margin-bottom: 25px;
-            background: #0f172a;
-            padding: 25px;
-            border-radius: 50%;
-            border: 2px solid #38bdf8;
-        }
-
-        .card h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .card p {
-            color: #94a3b8;
-            font-size: 18px;
-            margin: 20px 0 30px;
-            line-height: 1.6;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background: linear-gradient(90deg, #2563eb, #22d3ee);
-            color: white;
-            text-decoration: none;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 20px rgba(34,211,238,0.5);
-        }
-
-        .btn i {
-            font-size: 16px;
-            background: none;
-            padding: 0;
-            border: none;
-            margin-right: 8px;
-        }
-
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #64748b;
-            font-size: 14px;
-            margin-top: 60px;
-            border-top: 1px solid #1e293b;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #0b1120; color: white; min-height: 100vh; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(15,23,42,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #334155; }
+        .logo { font-size: 22px; font-weight: 700; background: linear-gradient(90deg,#3b82f6,#22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        nav a { color: #cbd5e1; text-decoration: none; margin-left: 25px; transition: 0.2s; }
+        nav a:hover { color: white; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 5%; }
+        h1 { font-size: 32px; margin-bottom: 10px; background: linear-gradient(90deg,#fff,#94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub { color: #94a3b8; margin-bottom: 30px; }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .card { background: #1e293b; border-radius: 20px; padding: 20px; border: 1px solid #334155; transition: 0.3s; text-align: center; }
+        .card:hover { border-color: #38bdf8; transform: translateY(-4px); }
+        .card i { font-size: 40px; color: #38bdf8; margin-bottom: 15px; }
+        .card h3 { margin-bottom: 10px; }
+        .card p { color: #94a3b8; margin-bottom: 20px; }
+        .btn { display: inline-block; padding: 8px 16px; background: #2563eb; color: white; text-decoration: none; border-radius: 30px; font-size: 13px; transition: 0.2s; }
+        .btn:hover { background: #1d4ed8; transform: scale(1.02); }
+        .btn-externo { background: #f59e0b; color: black; }
+        footer { text-align: center; padding: 40px; color: #64748b; margin-top: 60px; border-top: 1px solid #1e293b; }
     </style>
 </head>
 <body>
-
-    <!-- ========== HEADER PADRÃO ========== -->
     <header>
         <div class="logo">ConectaFisio360</div>
         <nav>
             <a href="painel.html"><i class="fas fa-home"></i> Home</a>
             <a href="modelos3d.html"><i class="fas fa-cube"></i> Modelos 3D</a>
+            <a href="cursos.html"><i class="fas fa-graduation-cap"></i> Cursos</a>
+            <a href="estudos.html"><i class="fas fa-flask"></i> Estudos</a>
             <a href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
-            <a href="javascript:void(0);" onclick="logout()" style="color: #ef4444;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            <a href="javascript:void(0);" onclick="logout()" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Sair</a>
         </nav>
     </header>
 
-    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
     <div class="container">
-        <div class="card">
-            <i class="fas fa-cube"></i>
-            <h2>Modelos Anatômicos 3D</h2>
-            <p>
-                Em breve você poderá explorar o corpo humano em realidade aumentada,<br>
-                com modelos interativos de ossos, músculos, órgãos e sistemas.
-            </p>
-            <a href="painel.html" class="btn">
-                <i class="fas fa-arrow-left"></i> Voltar ao painel
-            </a>
+        <h1>🦴 Modelos Anatômicos 3D</h1>
+        <p class="sub">Explore o corpo humano com modelos interativos. (Visualização externa por enquanto)</p>
+
+        <div class="grid-cards">
+            <div class="card">
+                <i class="fas fa-bone"></i>
+                <h3>Esqueleto Humano</h3>
+                <p>Visualize todos os ossos do corpo em 3D.</p>
+                <a href="https://sketchfab.com/3d-models/human-skeleton-2f5b5b5b5b5b" target="_blank" class="btn btn-externo">Abrir modelo</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-heart"></i>
+                <h3>Sistema Cardiovascular</h3>
+                <p>Coração e vasos sanguíneos em detalhe.</p>
+                <a href="https://sketchfab.com/3d-models/heart-anatomy-123456" target="_blank" class="btn btn-externo">Abrir modelo</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-brain"></i>
+                <h3>Neuroanatomia</h3>
+                <p>Cérebro, tronco e nervos cranianos.</p>
+                <a href="https://sketchfab.com/3d-models/brain-anatomy-abcdef" target="_blank" class="btn btn-externo">Abrir modelo</a>
+            </div>
         </div>
+
+        <p style="text-align: center; margin-top: 40px;">
+            <a href="painel.html" class="btn"><i class="fas fa-arrow-left"></i> Voltar ao painel</a>
+        </p>
     </div>
 
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        © 2026 ConectaFisio360 · Plataforma Integrada para Fisioterapeutas
-    </footer>
-
-    <!-- ========== VERIFICAÇÃO DE AUTENTICAÇÃO ========== -->
-    <script type="module">
-        import { usuarioAtual } from './js/app.js';
-
-        // Redireciona para login se não estiver autenticado
-        if (!usuarioAtual()) {
-            window.location.href = 'login.html';
-        }
-    </script>
+    <footer>© 2026 ConectaFisio360 · Plataforma Integrada</footer>
 </body>
 </html>
