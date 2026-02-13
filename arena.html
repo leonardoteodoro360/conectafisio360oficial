@@ -4,371 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArenaFisio · ConectaFisio360</title>
-    <!-- Firebase como módulo -->
     <script type="module" src="js/app.js"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        body {
-            background-color: #0b1120;
-            color: white;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 30px;
-            background: #0f172a;
-            border-bottom: 1px solid #334155;
-        }
-
-        header a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        header a:hover {
-            color: #38bdf8;
-        }
-
-        #game-container {
-            position: relative;
-            flex: 1;
-            background: #1e293b;
-            background-image: 
-                linear-gradient(#334155 1px, transparent 1px),
-                linear-gradient(90deg, #334155 1px, transparent 1px);
-            background-size: 50px 50px;
-            border-bottom: 4px solid #38bdf8;
-            overflow: hidden;
-        }
-
-        #player {
-            position: absolute;
-            width: 45px;
-            height: 45px;
-            background: #38bdf8;
-            border-radius: 12px;
-            border: 3px solid white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            transition: all 0.08s linear;
-            box-shadow: 0 0 15px rgba(56,189,248,0.7);
-            z-index: 10;
-        }
-
-        .patient {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background: #fb7185;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            box-shadow: 0 0 20px #fb7185;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px #fb7185; }
-            50% { box-shadow: 0 0 25px #fb7185; }
-            100% { box-shadow: 0 0 10px #fb7185; }
-        }
-
-        .interact-prompt {
-            position: absolute;
-            top: -40px;
-            left: -15px;
-            background: white;
-            color: #0f172a;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            white-space: nowrap;
-            display: none;
-            border: 2px solid #38bdf8;
-        }
-
-        #quiz-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #0f172a;
-            padding: 30px;
-            border-radius: 20px;
-            border: 2px solid #38bdf8;
-            width: 90%;
-            max-width: 450px;
-            display: none;
-            z-index: 200;
-            text-align: center;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
-        }
-
-        #quiz-modal h3 {
-            color: #38bdf8;
-            margin-bottom: 15px;
-            font-size: 22px;
-        }
-
-        #pergunta {
-            margin-bottom: 20px;
-            font-size: 16px;
-            color: #e2e8f0;
-        }
-
-        .btn-opcao {
-            width: 100%;
-            padding: 14px;
-            margin: 8px 0;
-            background: #1e293b;
-            color: white;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-opcao:hover {
-            background: #334155;
-            border-color: #38bdf8;
-        }
-
-        #feedback {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        .xp-hud {
-            position: absolute;
-            top: 80px;
-            right: 20px;
-            background: rgba(0,0,0,0.7);
-            padding: 12px 20px;
-            border-radius: 30px;
-            border: 1px solid #38bdf8;
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 50;
-        }
-
-        .xp-hud span {
-            color: #10b981;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            background: #0f172a;
-        }
-
-        .btn-move {
-            width: 65px;
-            height: 65px;
-            background: #1e293b;
-            border: none;
-            color: white;
-            border-radius: 16px;
-            font-size: 26px;
-            cursor: pointer;
-            border: 1px solid #334155;
-            transition: 0.1s;
-        }
-
-        .btn-move:active {
-            background: #38bdf8;
-            transform: scale(0.95);
-        }
-
-        #chat-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid #38bdf8;
-            border-radius: 12px;
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-
-        #chat-header {
-            background: #0f172a;
-            padding: 10px;
-            border-bottom: 1px solid #334155;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        #chat-header span i {
-            color: #38bdf8;
-            margin-right: 5px;
-        }
-
-        #chat-toggle {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        #chat-messages {
-            height: 250px;
-            overflow-y: auto;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            background: #1e293b;
-        }
-
-        .chat-message {
-            padding: 8px;
-            border-radius: 8px;
-            max-width: 80%;
-            word-wrap: break-word;
-            font-size: 13px;
-        }
-
-        .chat-message strong {
-            font-size: 11px;
-            color: #cbd5e1;
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        .my-message {
-            background: #2563eb;
-            align-self: flex-end;
-        }
-
-        .other-message {
-            background: #334155;
-            align-self: flex-start;
-        }
-
-        #chat-input-area {
-            display: flex;
-            padding: 10px;
-            background: #0f172a;
-            gap: 5px;
-        }
-
-        #chat-input {
-            flex: 1;
-            padding: 8px 12px;
-            border-radius: 20px;
-            border: 1px solid #334155;
-            background: #1e293b;
-            color: white;
-            outline: none;
-        }
-
-        #chat-input:focus {
-            border-color: #38bdf8;
-        }
-
-        #chat-send {
-            background: #2563eb;
-            border: none;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-
-        #chat-send:hover {
-            background: #1d4ed8;
-            transform: scale(1.05);
-        }
-
-        #chat-send i {
-            font-size: 14px;
-        }
-
-        .aviso-respeito {
-            font-size: 11px;
-            color: #94a3b8;
-            text-align: center;
-            padding: 4px;
-            background: #0f172a;
-            border-top: 1px solid #334155;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
+        body { background:#0b1120; color:white; overflow:hidden; height:100vh; display:flex; flex-direction:column; }
+        header { display:flex; justify-content:space-between; align-items:center; padding:16px 30px; background:#0f172a; border-bottom:1px solid #334155; }
+        #game-container { position:relative; flex:1; background:#1e293b; background-image:linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px); background-size:50px 50px; border-bottom:4px solid #38bdf8; overflow:hidden; }
+        #player { position:absolute; width:45px; height:45px; background:#38bdf8; border-radius:12px; border:3px solid white; display:flex; align-items:center; justify-content:center; font-size:24px; transition:all 0.08s linear; box-shadow:0 0 15px rgba(56,189,248,0.7); z-index:10; }
+        .patient { position:absolute; width:50px; height:50px; background:#fb7185; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:0 0 20px #fb7185; animation:pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow:0 0 10px #fb7185; } 50% { box-shadow:0 0 25px #fb7185; } 100% { box-shadow:0 0 10px #fb7185; } }
+        .interact-prompt { position:absolute; top:-40px; left:-15px; background:white; color:#0f172a; padding:6px 12px; border-radius:20px; font-size:12px; font-weight:bold; white-space:nowrap; display:none; border:2px solid #38bdf8; }
+        #quiz-modal { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#0f172a; padding:30px; border-radius:20px; border:2px solid #38bdf8; width:90%; max-width:450px; display:none; z-index:200; text-align:center; box-shadow:0 0 40px rgba(0,0,0,0.8); }
+        #quiz-modal h3 { color:#38bdf8; margin-bottom:15px; font-size:22px; }
+        #pergunta { margin-bottom:20px; font-size:16px; color:#e2e8f0; }
+        .btn-opcao { width:100%; padding:14px; margin:8px 0; background:#1e293b; color:white; border:1px solid #334155; border-radius:12px; font-size:15px; cursor:pointer; transition:0.2s; }
+        .btn-opcao:hover { background:#334155; border-color:#38bdf8; }
+        #feedback { margin-top:20px; font-weight:bold; }
+        .xp-hud { position:absolute; top:80px; right:20px; background:rgba(0,0,0,0.7); padding:12px 20px; border-radius:30px; border:1px solid #38bdf8; backdrop-filter:blur(5px); display:flex; align-items:center; gap:10px; z-index:50; }
+        .xp-hud span { color:#10b981; font-weight:bold; font-size:18px; }
+        .controls { display:flex; justify-content:center; gap:20px; padding:20px; background:#0f172a; }
+        .btn-move { width:65px; height:65px; background:#1e293b; border:none; color:white; border-radius:16px; font-size:26px; cursor:pointer; border:1px solid #334155; transition:0.1s; }
+        .btn-move:active { background:#38bdf8; transform:scale(0.95); }
+        #chat-container { position:fixed; bottom:20px; right:20px; width:300px; background:rgba(15,23,42,0.95); border:1px solid #38bdf8; border-radius:12px; backdrop-filter:blur(5px); z-index:1000; overflow:hidden; }
+        #chat-header { background:#0f172a; padding:10px; border-bottom:1px solid #334155; display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
+        #chat-header span i { color:#38bdf8; margin-right:5px; }
+        #chat-toggle { background:none; border:none; color:white; cursor:pointer; }
+        #chat-messages { height:250px; overflow-y:auto; padding:10px; display:flex; flex-direction:column; gap:5px; background:#1e293b; }
+        .chat-message { padding:8px; border-radius:8px; max-width:80%; word-wrap:break-word; font-size:13px; }
+        .chat-message strong { font-size:11px; color:#cbd5e1; display:block; margin-bottom:2px; }
+        .my-message { background:#2563eb; align-self:flex-end; }
+        .other-message { background:#334155; align-self:flex-start; }
+        #chat-input-area { display:flex; padding:10px; background:#0f172a; gap:5px; }
+        #chat-input { flex:1; padding:8px 12px; border-radius:20px; border:1px solid #334155; background:#1e293b; color:white; outline:none; }
+        #chat-input:focus { border-color:#38bdf8; }
+        #chat-send { background:#2563eb; border:none; border-radius:50%; width:36px; height:36px; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+        #chat-send:hover { background:#1d4ed8; }
+        .aviso-respeito { font-size:11px; color:#94a3b8; text-align:center; padding:4px; background:#0f172a; border-top:1px solid #334155; }
     </style>
 </head>
 <body>
-
     <header>
-        <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 24px;">🏥</span>
-            <strong style="font-size: 18px; background: linear-gradient(90deg,#3b82f6,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">ArenaFisio</strong>
-            <span style="background: #1e293b; padding: 4px 10px; border-radius: 30px; font-size: 12px; color: #94a3b8;">Modo RPG</span>
-        </div>
-        <a href="painel.html" style="color: #94a3b8; text-decoration: none; padding: 8px 16px; border-radius: 8px; background: #1e293b; transition:0.2s;">← Sair da Arena</a>
+        <div><strong>ArenaFisio</strong> - Modo RPG</div>
+        <a href="painel.html" style="color:#94a3b8; text-decoration:none;">← Sair da Arena</a>
     </header>
 
     <div id="game-container">
         <div id="player">👨‍⚕️</div>
-
-        <div id="patient1" class="patient" style="top:200px; left:500px;">
-            🤕
-            <div class="interact-prompt" id="prompt1">Pressione ESPAÇO</div>
-        </div>
-        <div id="patient2" class="patient" style="top:350px; left:200px;">
-            🦴
-            <div class="interact-prompt" id="prompt2">Pressione ESPAÇO</div>
-        </div>
-        <div id="patient3" class="patient" style="top:100px; left:700px;">
-            ❤️
-            <div class="interact-prompt" id="prompt3">Pressione ESPAÇO</div>
-        </div>
-
-        <div class="xp-hud">
-            <span>⭐ XP:</span>
-            <span id="xpDisplay">0</span>
-        </div>
+        <div id="patient1" class="patient" style="top:200px; left:500px;">🤕<div class="interact-prompt">Pressione ESPAÇO</div></div>
+        <div id="patient2" class="patient" style="top:350px; left:200px;">🦴<div class="interact-prompt">Pressione ESPAÇO</div></div>
+        <div id="patient3" class="patient" style="top:100px; left:700px;">❤️<div class="interact-prompt">Pressione ESPAÇO</div></div>
+        <div class="xp-hud"><span>⭐ XP:</span> <span id="xpDisplay">0</span></div>
     </div>
 
     <div class="controls">
         <button class="btn-move" onclick="move('up')">▲</button>
-        <div style="display: flex; gap: 20px;">
+        <div style="display:flex; gap:20px;">
             <button class="btn-move" onclick="move('left')">◀</button>
             <button class="btn-move" onclick="move('right')">▶</button>
         </div>
@@ -394,136 +85,119 @@
             <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
             <button id="chat-send"><i class="fas fa-paper-plane"></i></button>
         </div>
-        <div class="aviso-respeito">
-            🙏 Mantenha o respeito. Mensagens ofensivas serão removidas.
-        </div>
+        <div class="aviso-respeito">🙏 Mantenha o respeito. Mensagens ofensivas serão removidas.</div>
     </div>
 
     <script type="module">
-        // ===== IMPORTAÇÕES =====
         import { adicionarXP, getXpAtual, getUsuarioAtual } from './js/app.js';
         import { getDatabase, ref, push, onChildAdded, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // ===== VERIFICAÇÃO DE LOGIN (com timeout para aguardar o Firebase) =====
-        function redirecionarSeNaoLogado() {
+        let jogoInicializado = false;
+
+        function iniciarJogo() {
+            if (jogoInicializado) return;
             const user = getUsuarioAtual();
-            if (!user) {
-                // Aguarda um pequeno tempo para ver se o Firebase carrega
-                setTimeout(() => {
-                    if (!getUsuarioAtual()) {
-                        window.location.href = 'login.html';
-                    }
-                }, 500);
-                return false;
+            if (!user) return;
+
+            jogoInicializado = true;
+
+            let pX = 50, pY = 50;
+            const speed = 25;
+            const player = document.getElementById('player');
+            const patients = [
+                { id: 'patient1', x: 500, y: 200, active: true, question: 'Paciente com dor aguda no ombro após queda. Qual o primeiro passo?', correct: 'A', options: ['A) Avaliar amplitude de movimento', 'B) Aplicar gelo e liberar', 'C) Solicitar ressonância'] },
+                { id: 'patient2', x: 200, y: 350, active: true, question: 'Paciente pós-AVC com hemiplegia. Qual conduta indicada?', correct: 'B', options: ['A) Repouso absoluto', 'B) Mobilização precoce', 'C) Órtese de imobilização'] },
+                { id: 'patient3', x: 700, y: 100, active: true, question: 'Paciente com fratura de tíbia. O que NÃO fazer?', correct: 'C', options: ['A) Imobilizar', 'B) Crioterapia', 'C) Carga imediata'] }
+            ];
+            let currentPatient = null;
+
+            function atualizarXP_Arena() {
+                document.getElementById('xpDisplay').innerText = getXpAtual();
             }
-            return true;
-        }
 
-        // Se não estiver logado, interrompe a execução do script sem lançar erro no console
-        if (!redirecionarSeNaoLogado()) {
-            return; // interrompe o módulo silenciosamente
-        }
+            function updatePosition() {
+                player.style.left = pX + 'px';
+                player.style.top = pY + 'px';
+                checkAllCollisions();
+            }
 
-        // ===== CONFIGURAÇÃO DO JOGO =====
-        let pX = 50, pY = 50;
-        const speed = 25;
-        const player = document.getElementById('player');
-        const patients = [
-            { id: 'patient1', x: 500, y: 200, active: true, question: 'Paciente com dor aguda no ombro após queda. Qual o primeiro passo?', correct: 'A', options: ['A) Avaliar amplitude de movimento', 'B) Aplicar gelo e liberar', 'C) Solicitar ressonância'] },
-            { id: 'patient2', x: 200, y: 350, active: true, question: 'Paciente pós-AVC com hemiplegia. Qual conduta indicada?', correct: 'B', options: ['A) Repouso absoluto', 'B) Mobilização precoce', 'C) Órtese de imobilização'] },
-            { id: 'patient3', x: 700, y: 100, active: true, question: 'Paciente com fratura de tíbia. O que NÃO fazer?', correct: 'C', options: ['A) Imobilizar', 'B) Crioterapia', 'C) Carga imediata'] }
-        ];
-        let currentPatient = null;
+            window.move = function(dir) {
+                if (document.getElementById('quiz-modal').style.display === 'block') return;
+                if (dir === 'up') pY -= speed;
+                if (dir === 'down') pY += speed;
+                if (dir === 'left') pX -= speed;
+                if (dir === 'right') pX += speed;
 
-        function atualizarXP_Arena() {
-            document.getElementById('xpDisplay').innerText = getXpAtual();
-        }
+                pX = Math.max(0, Math.min(pX, window.innerWidth - 60));
+                pY = Math.max(0, Math.min(pY, document.getElementById('game-container').clientHeight - 60));
 
-        function updatePosition() {
-            player.style.left = pX + 'px';
-            player.style.top = pY + 'px';
-            checkAllCollisions();
-        }
+                updatePosition();
+            };
 
-        window.move = function(dir) {
-            if (document.getElementById('quiz-modal').style.display === 'block') return;
-            if (dir === 'up') pY -= speed;
-            if (dir === 'down') pY += speed;
-            if (dir === 'left') pX -= speed;
-            if (dir === 'right') pX += speed;
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowUp' || e.key === 'w') move('up');
+                if (e.key === 'ArrowDown' || e.key === 's') move('down');
+                if (e.key === 'ArrowLeft' || e.key === 'a') move('left');
+                if (e.key === 'ArrowRight' || e.key === 'd') move('right');
+                if (e.key === ' ') {
+                    e.preventDefault();
+                    for (let pat of patients) {
+                        const patientEl = document.getElementById(pat.id);
+                        const promptEl = patientEl.querySelector('.interact-prompt');
+                        if (promptEl.style.display === 'block') {
+                            abrirQuiz(pat);
+                            break;
+                        }
+                    }
+                }
+            });
 
-            // Limites da tela
-            pX = Math.max(0, Math.min(pX, window.innerWidth - 60));
-            pY = Math.max(0, Math.min(pY, document.getElementById('game-container').clientHeight - 60));
-
-            updatePosition();
-        };
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp' || e.key === 'w') move('up');
-            if (e.key === 'ArrowDown' || e.key === 's') move('down');
-            if (e.key === 'ArrowLeft' || e.key === 'a') move('left');
-            if (e.key === 'ArrowRight' || e.key === 'd') move('right');
-            if (e.key === ' ') {
-                e.preventDefault();
-                for (let pat of patients) {
+            function checkAllCollisions() {
+                patients.forEach(pat => {
                     const patientEl = document.getElementById(pat.id);
                     const promptEl = patientEl.querySelector('.interact-prompt');
-                    if (promptEl.style.display === 'block') {
-                        abrirQuiz(pat);
-                        break;
+                    const dist = Math.sqrt(Math.pow(pX - pat.x, 2) + Math.pow(pY - pat.y, 2));
+                    if (dist < 60 && pat.active) {
+                        promptEl.style.display = 'block';
+                    } else {
+                        promptEl.style.display = 'none';
                     }
-                }
+                });
             }
-        });
 
-        function checkAllCollisions() {
-            patients.forEach(pat => {
-                const patientEl = document.getElementById(pat.id);
-                const promptEl = patientEl.querySelector('.interact-prompt');
-                const dist = Math.sqrt(Math.pow(pX - pat.x, 2) + Math.pow(pY - pat.y, 2));
-                if (dist < 60 && pat.active) {
-                    promptEl.style.display = 'block';
+            window.abrirQuiz = function(patientData) {
+                currentPatient = patientData;
+                document.getElementById('pergunta').innerText = patientData.question;
+                const opcoes = document.querySelectorAll('.btn-opcao');
+                patientData.options.forEach((opt, index) => {
+                    opcoes[index].innerText = opt;
+                });
+                document.getElementById('feedback').innerHTML = '';
+                document.getElementById('quiz-modal').style.display = 'block';
+            };
+
+            window.responder = async function(opcao) {
+                if (!currentPatient) return;
+                const feedback = document.getElementById('feedback');
+                const isCorrect = (opcao === currentPatient.correct);
+
+                if (isCorrect) {
+                    feedback.innerHTML = '✅ Resposta correta! +100 XP';
+                    feedback.style.color = '#10b981';
+                    await adicionarXP(100);
+                    currentPatient.active = false;
+                    document.getElementById(currentPatient.id).style.opacity = '0.5';
+                    setTimeout(() => {
+                        document.getElementById('quiz-modal').style.display = 'none';
+                    }, 1500);
                 } else {
-                    promptEl.style.display = 'none';
+                    feedback.innerHTML = '❌ Resposta incorreta. Tente novamente!';
+                    feedback.style.color = '#ef4444';
                 }
-            });
-        }
+            };
 
-        window.abrirQuiz = function(patientData) {
-            currentPatient = patientData;
-            document.getElementById('pergunta').innerText = patientData.question;
-            const opcoes = document.querySelectorAll('.btn-opcao');
-            patientData.options.forEach((opt, index) => {
-                opcoes[index].innerText = opt;
-            });
-            document.getElementById('feedback').innerHTML = '';
-            document.getElementById('quiz-modal').style.display = 'block';
-        };
+            window.addEventListener('usuarioAtualizado', atualizarXP_Arena);
 
-        window.responder = async function(opcao) {
-            if (!currentPatient) return;
-            const feedback = document.getElementById('feedback');
-            const isCorrect = (opcao === currentPatient.correct);
-
-            if (isCorrect) {
-                feedback.innerHTML = '✅ Resposta correta! +100 XP';
-                feedback.style.color = '#10b981';
-                await adicionarXP(100);
-                currentPatient.active = false;
-                document.getElementById(currentPatient.id).style.opacity = '0.5';
-                setTimeout(() => {
-                    document.getElementById('quiz-modal').style.display = 'none';
-                }, 1500);
-            } else {
-                feedback.innerHTML = '❌ Resposta incorreta. Tente novamente!';
-                feedback.style.color = '#ef4444';
-            }
-        };
-
-        window.addEventListener('usuarioAtualizado', atualizarXP_Arena);
-
-        window.onload = function() {
             patients.forEach(pat => {
                 const el = document.getElementById(pat.id);
                 el.style.left = pat.x + 'px';
@@ -532,23 +206,20 @@
             pX = 50; pY = 50;
             updatePosition();
             atualizarXP_Arena();
-        };
+        }
 
-        // ===== CHAT =====
+        // Chat
         const db = getDatabase();
         const chatRef = ref(db, 'chat');
         const chatQuery = query(chatRef, limitToLast(50));
-
         const messagesDiv = document.getElementById('chat-messages');
         const chatInput = document.getElementById('chat-input');
         const chatSend = document.getElementById('chat-send');
         const chatToggle = document.getElementById('chat-toggle');
-        const chatHeader = document.getElementById('chat-header');
 
         function getUserDisplayName() {
             const user = getUsuarioAtual();
-            if (!user) return 'Anônimo';
-            return user.email ? user.email.split('@')[0] : 'Usuário';
+            return user ? (user.email ? user.email.split('@')[0] : 'Usuário') : 'Anônimo';
         }
 
         onChildAdded(chatQuery, (data) => {
@@ -568,21 +239,18 @@
 
         function enviarMensagem() {
             const texto = chatInput.value.trim();
-            if (texto === '') return;
-
+            if (!texto) return;
             const user = getUsuarioAtual();
             if (!user) {
                 alert('Você precisa estar logado para enviar mensagens.');
                 return;
             }
-
             push(chatRef, {
                 userId: user.uid,
                 userName: getUserDisplayName(),
                 text: texto,
                 timestamp: Date.now()
             });
-
             chatInput.value = '';
         }
 
@@ -609,6 +277,16 @@
             }
             chatMinimizado = !chatMinimizado;
         });
+
+        // Verificação de login e início do jogo
+        if (!getUsuarioAtual()) {
+            setTimeout(() => {
+                if (!getUsuarioAtual()) window.location.href = 'login.html';
+            }, 500);
+        } else {
+            iniciarJogo();
+        }
+        window.addEventListener('usuarioAtualizado', iniciarJogo);
     </script>
 </body>
 </html>
