@@ -7,7 +7,7 @@
     <script type="module" src="js/app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* (mesmo CSS que você já tem – mantenha o seu ou use este) */
+        /* (mesmo CSS da arena – mantenha o seu) */
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
         body { background:#0b1120; color:white; overflow:hidden; }
         header { display:flex; justify-content:space-between; align-items:center; padding:16px 30px; background:#0f172a; border-bottom:1px solid #334155; }
@@ -64,100 +64,117 @@
     <script type="module">
         import { adicionarXP, getXpAtual, getUsuarioAtual } from './js/app.js';
 
-        let pX = 50, pY = 50;
-        const speed = 25;
-        const player = document.getElementById('player');
-        const patients = [
-            { id:'patient1', x:500, y:200, active:true, question:'Paciente com dor aguda no ombro após queda. Qual o primeiro passo?', correct:'A', options:['A) Avaliar amplitude de movimento','B) Aplicar gelo e liberar','C) Solicitar ressonância'] },
-            { id:'patient2', x:200, y:350, active:true, question:'Paciente pós-AVC com hemiplegia. Qual conduta indicada?', correct:'B', options:['A) Repouso absoluto','B) Mobilização precoce','C) Órtese de imobilização'] },
-            { id:'patient3', x:700, y:100, active:true, question:'Paciente com fratura de tíbia. O que NÃO fazer?', correct:'C', options:['A) Imobilizar','B) Crioterapia','C) Carga imediata'] }
-        ];
-        let currentPatient = null;
-
-        if (!getUsuarioAtual()) window.location.href = 'login.html';
-
-        function atualizarXP_Arena() {
-            document.getElementById('xpDisplay').innerText = getXpAtual();
+        // Função para inicializar o jogo
+        function iniciarJogo() {
+            const user = getUsuarioAtual();
+            if (!user) {
+                // Se não estiver logado, redireciona após um pequeno delay
+                setTimeout(() => {
+                    if (!getUsuarioAtual()) window.location.href = 'login.html';
+                }, 500);
+                return false;
+            }
+            return true;
         }
 
-        function updatePosition() {
-            player.style.left = pX + 'px';
-            player.style.top = pY + 'px';
-            checkAllCollisions();
-        }
+        // Só inicia o jogo se estiver logado
+        if (!iniciarJogo()) {
+            // Se não estiver logado, a função já redireciona
+        } else {
+            // ========== CONFIGURAÇÃO DO JOGO ==========
+            let pX = 50, pY = 50;
+            const speed = 25;
+            const player = document.getElementById('player');
+            const patients = [
+                { id:'patient1', x:500, y:200, active:true, question:'Paciente com dor aguda no ombro após queda. Qual o primeiro passo?', correct:'A', options:['A) Avaliar amplitude de movimento','B) Aplicar gelo e liberar','C) Solicitar ressonância'] },
+                { id:'patient2', x:200, y:350, active:true, question:'Paciente pós-AVC com hemiplegia. Qual conduta indicada?', correct:'B', options:['A) Repouso absoluto','B) Mobilização precoce','C) Órtese de imobilização'] },
+                { id:'patient3', x:700, y:100, active:true, question:'Paciente com fratura de tíbia. O que NÃO fazer?', correct:'C', options:['A) Imobilizar','B) Crioterapia','C) Carga imediata'] }
+            ];
+            let currentPatient = null;
 
-        window.move = function(dir) {
-            if (document.getElementById('quiz-modal').style.display === 'block') return;
-            if (dir === 'up') pY -= speed;
-            if (dir === 'down') pY += speed;
-            if (dir === 'left') pX -= speed;
-            if (dir === 'right') pX += speed;
-            pX = Math.max(0, Math.min(pX, window.innerWidth - 60));
-            pY = Math.max(0, Math.min(pY, document.getElementById('game-container').clientHeight - 60));
-            updatePosition();
-        };
+            function atualizarXP_Arena() {
+                document.getElementById('xpDisplay').innerText = getXpAtual();
+            }
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp' || e.key === 'w') move('up');
-            if (e.key === 'ArrowDown' || e.key === 's') move('down');
-            if (e.key === 'ArrowLeft' || e.key === 'a') move('left');
-            if (e.key === 'ArrowRight' || e.key === 'd') move('right');
-            if (e.key === ' ') {
-                e.preventDefault();
-                for (let pat of patients) {
-                    if (document.getElementById(pat.id).querySelector('.interact-prompt').style.display === 'block') {
-                        abrirQuiz(pat);
-                        break;
+            function updatePosition() {
+                player.style.left = pX + 'px';
+                player.style.top = pY + 'px';
+                checkAllCollisions();
+            }
+
+            window.move = function(dir) {
+                if (document.getElementById('quiz-modal').style.display === 'block') return;
+                if (dir === 'up') pY -= speed;
+                if (dir === 'down') pY += speed;
+                if (dir === 'left') pX -= speed;
+                if (dir === 'right') pX += speed;
+                pX = Math.max(0, Math.min(pX, window.innerWidth - 60));
+                pY = Math.max(0, Math.min(pY, document.getElementById('game-container').clientHeight - 60));
+                updatePosition();
+            };
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowUp' || e.key === 'w') move('up');
+                if (e.key === 'ArrowDown' || e.key === 's') move('down');
+                if (e.key === 'ArrowLeft' || e.key === 'a') move('left');
+                if (e.key === 'ArrowRight' || e.key === 'd') move('right');
+                if (e.key === ' ') {
+                    e.preventDefault();
+                    for (let pat of patients) {
+                        if (document.getElementById(pat.id).querySelector('.interact-prompt').style.display === 'block') {
+                            abrirQuiz(pat);
+                            break;
+                        }
                     }
                 }
-            }
-        });
-
-        function checkAllCollisions() {
-            patients.forEach(pat => {
-                const promptEl = document.getElementById(pat.id).querySelector('.interact-prompt');
-                const dist = Math.sqrt(Math.pow(pX - pat.x, 2) + Math.pow(pY - pat.y, 2));
-                promptEl.style.display = (dist < 60 && pat.active) ? 'block' : 'none';
             });
+
+            function checkAllCollisions() {
+                patients.forEach(pat => {
+                    const promptEl = document.getElementById(pat.id).querySelector('.interact-prompt');
+                    const dist = Math.sqrt(Math.pow(pX - pat.x, 2) + Math.pow(pY - pat.y, 2));
+                    promptEl.style.display = (dist < 60 && pat.active) ? 'block' : 'none';
+                });
+            }
+
+            window.abrirQuiz = function(pat) {
+                currentPatient = pat;
+                document.getElementById('pergunta').innerText = pat.question;
+                document.getElementById('quiz-modal').querySelectorAll('.btn-opcao').forEach((btn, i) => {
+                    btn.innerText = pat.options[i];
+                });
+                document.getElementById('feedback').innerHTML = '';
+                document.getElementById('quiz-modal').style.display = 'block';
+            };
+
+            window.responder = async function(opcao) {
+                if (!currentPatient) return;
+                const isCorrect = (opcao === currentPatient.correct);
+                const feedback = document.getElementById('feedback');
+                if (isCorrect) {
+                    feedback.innerHTML = '✅ Resposta correta! +100 XP';
+                    feedback.style.color = '#10b981';
+                    await adicionarXP(100);
+                    currentPatient.active = false;
+                    document.getElementById(currentPatient.id).style.opacity = '0.5';
+                    setTimeout(() => document.getElementById('quiz-modal').style.display = 'none', 1500);
+                } else {
+                    feedback.innerHTML = '❌ Resposta incorreta. Tente novamente!';
+                    feedback.style.color = '#ef4444';
+                }
+            };
+
+            window.addEventListener('usuarioAtualizado', atualizarXP_Arena);
+            window.onload = () => {
+                patients.forEach(pat => {
+                    const el = document.getElementById(pat.id);
+                    el.style.left = pat.x + 'px';
+                    el.style.top = pat.y + 'px';
+                });
+                updatePosition();
+                atualizarXP_Arena();
+            };
         }
-
-        window.abrirQuiz = function(pat) {
-            currentPatient = pat;
-            document.getElementById('pergunta').innerText = pat.question;
-            document.getElementById('quiz-modal').querySelectorAll('.btn-opcao').forEach((btn, i) => {
-                btn.innerText = pat.options[i];
-            });
-            document.getElementById('feedback').innerHTML = '';
-            document.getElementById('quiz-modal').style.display = 'block';
-        };
-
-        window.responder = async function(opcao) {
-            if (!currentPatient) return;
-            const isCorrect = (opcao === currentPatient.correct);
-            const feedback = document.getElementById('feedback');
-            if (isCorrect) {
-                feedback.innerHTML = '✅ Resposta correta! +100 XP';
-                feedback.style.color = '#10b981';
-                await adicionarXP(100);
-                currentPatient.active = false;
-                document.getElementById(currentPatient.id).style.opacity = '0.5';
-                setTimeout(() => document.getElementById('quiz-modal').style.display = 'none', 1500);
-            } else {
-                feedback.innerHTML = '❌ Resposta incorreta. Tente novamente!';
-                feedback.style.color = '#ef4444';
-            }
-        };
-
-        window.addEventListener('usuarioAtualizado', atualizarXP_Arena);
-        window.onload = () => {
-            patients.forEach(pat => {
-                const el = document.getElementById(pat.id);
-                el.style.left = pat.x + 'px';
-                el.style.top = pat.y + 'px';
-            });
-            updatePosition();
-            atualizarXP_Arena();
-        };
     </script>
 </body>
 </html>
