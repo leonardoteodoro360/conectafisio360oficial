@@ -7,24 +7,18 @@
     <script type="module" src="js/app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: radial-gradient(circle at top left, #0f172a, #0b1120); color: white; min-height: 100vh; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(15,23,42,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #334155; }
-        .logo { font-size: 22px; font-weight: 700; background: linear-gradient(90deg,#3b82f6,#22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        nav a { color: #cbd5e1; text-decoration: none; margin-left: 25px; font-size: 15px; transition: 0.2s; }
-        nav a:hover { color: white; }
-        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        .perfil-card { background: #1e293b; border-radius: 24px; padding: 40px; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .avatar { width: 100px; height: 100px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: bold; color: white; margin: 0 auto 20px; border: 4px solid #38bdf8; }
-        .campo { margin-bottom: 20px; }
-        .campo label { display: block; color: #94a3b8; font-size: 14px; margin-bottom: 5px; }
-        .campo .valor { background: #0f172a; padding: 12px 16px; border-radius: 12px; border: 1px solid #334155; color: white; width: 100%; }
-        .editavel { background: #0f172a; padding: 12px 16px; border-radius: 12px; border: 1px solid #334155; color: white; width: 100%; }
-        .btn { padding: 12px 24px; background: #2563eb; border: none; border-radius: 30px; color: white; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; }
-        .btn:hover { background: #1d4ed8; transform: scale(1.02); }
-        .btn-editar { background: #f59e0b; color: black; }
-        .badge-plano { display: inline-block; padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: bold; background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b; margin-left: 10px; }
-        .edicao-botoes { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+        /* (mesmo CSS do seu perfil – mantenha o que você já tem) */
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+        body { background:#0b1120; color:white; min-height:100vh; }
+        header { display:flex; justify-content:space-between; align-items:center; padding:20px 5%; background:#0f172a; }
+        .logo { font-size:22px; font-weight:700; background:linear-gradient(90deg,#3b82f6,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        nav a { color:#cbd5e1; text-decoration:none; margin-left:25px; }
+        .container { max-width:800px; margin:50px auto; background:#1e293b; border-radius:20px; padding:40px; }
+        .avatar { width:120px; height:120px; background:#2563eb; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:50px; margin:0 auto 20px; border:4px solid #38bdf8; }
+        .stats-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-top:30px; }
+        .stat-box { background:#0f172a; padding:20px; border-radius:12px; text-align:center; }
+        .stat-val { font-size:24px; font-weight:bold; color:#38bdf8; }
+        .btn { padding:10px 20px; background:#2563eb; color:white; border-radius:30px; text-decoration:none; display:inline-block; margin-top:20px; }
     </style>
 </head>
 <body>
@@ -33,98 +27,65 @@
         <nav>
             <a href="painel.html"><i class="fas fa-home"></i> Home</a>
             <a href="modelos3d.html"><i class="fas fa-cube"></i> Modelos 3D</a>
+            <a href="cursos.html"><i class="fas fa-graduation-cap"></i> Cursos</a>
+            <a href="estudos.html"><i class="fas fa-flask"></i> Estudos</a>
             <a href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
             <a href="javascript:void(0);" onclick="logout()" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Sair</a>
         </nav>
     </header>
 
     <div class="container">
-        <div class="perfil-card">
-            <div class="avatar" id="avatar">L</div>
-            <h2 style="text-align: center; margin-bottom: 30px;" id="nomePerfil">Carregando...</h2>
+        <div class="avatar" id="avatar">L</div>
+        <h2 id="nomeUsuario" style="text-align:center;">Carregando...</h2>
+        <p style="text-align:center; color:#94a3b8;" id="emailUsuario">carregando...</p>
+        <p style="text-align:center; color:#94a3b8;" id="especialidadeUsuario">carregando...</p>
 
-            <div id="modoVisualizacao">
-                <div class="campo"><label><i class="fas fa-envelope"></i> E-mail</label><div class="valor" id="emailPerfil"></div></div>
-                <div class="campo"><label><i class="fas fa-stethoscope"></i> Especialidade</label><div class="valor" id="especialidadePerfil"></div></div>
-                <div class="campo"><label><i class="fas fa-crown"></i> Plano</label><div class="valor" id="planoPerfil"></div></div>
-                <div class="campo"><label><i class="fas fa-chart-line"></i> Estatísticas</label><div class="valor">XP: <span id="xpPerfil"></span> · Desafios: <span id="desafiosPerfil"></span><br>Nível: <span id="nivelPerfil"></span></div></div>
-                <div class="campo"><label><i class="fas fa-edit"></i> Bio</label><div class="valor" id="bioPerfil"></div></div>
-                <button class="btn btn-editar" onclick="habilitarEdicao()"><i class="fas fa-pencil-alt"></i> Editar Perfil</button>
-            </div>
+        <div class="stats-grid">
+            <div class="stat-box"><span class="stat-val" id="levelText">--</span>Nível</div>
+            <div class="stat-box"><span class="stat-val" id="contDesafios">0</span>Desafios</div>
+            <div class="stat-box"><span class="stat-val" id="xpText">0</span>XP</div>
+        </div>
 
-            <div id="modoEdicao" style="display: none;">
-                <div class="campo"><label>Nome</label><input type="text" id="editNome" class="editavel"></div>
-                <div class="campo"><label>Especialidade</label><select id="editEspecialidade" class="editavel"><option value="Fisioterapia Geral">Geral</option><option value="Ortopedia">Ortopedia</option><option value="Neurologia">Neurologia</option><option value="Respiratória">Respiratória</option><option value="Esportiva">Esportiva</option></select></div>
-                <div class="campo"><label>Bio</label><textarea id="editBio" class="editavel" rows="3"></textarea></div>
-                <div class="edicao-botoes"><button class="btn" onclick="salvarEdicao()"><i class="fas fa-save"></i> Salvar</button><button class="btn" style="background:#475569;" onclick="cancelarEdicao()">Cancelar</button></div>
-            </div>
+        <div style="text-align:center;">
+            <a href="painel.html" class="btn">Voltar ao painel</a>
         </div>
     </div>
 
     <script type="module">
-        import { getUsuarioAtual, getLevel, getXpAtual, getDesafiosAtual, getPlanoUsuario } from './js/app.js';
-        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        const user = getUsuarioAtual();
-        if (!user) window.location.href = 'login.html';
+        import { getLevel, getUsuarioAtual, getXpAtual, getDesafiosAtual, getPlanoUsuario } from './js/app.js';
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         async function carregarPerfil() {
+            const user = getUsuarioAtual();
+            if (!user) {
+                // Se não estiver logado, redireciona após um pequeno delay (para dar tempo do Firebase carregar)
+                setTimeout(() => {
+                    if (!getUsuarioAtual()) window.location.href = 'login.html';
+                }, 500);
+                return;
+            }
+
+            // Atualiza XP, desafios e nível
+            document.getElementById('xpText').innerText = getXpAtual();
+            document.getElementById('contDesafios').innerText = getDesafiosAtual();
+            document.getElementById('levelText').innerText = getLevel(getXpAtual());
+
+            // Busca dados completos do Realtime Database
             const db = getDatabase();
             const userRef = ref(db, `usuarios/${user.uid}`);
             const snapshot = await get(userRef);
             if (snapshot.exists()) {
                 const data = snapshot.val();
-                document.getElementById('nomePerfil').innerText = data.nome || 'Usuário';
+                document.getElementById('nomeUsuario').innerText = data.nome || 'Usuário';
                 document.getElementById('avatar').innerText = data.avatar || (data.nome ? data.nome.charAt(0).toUpperCase() : 'U');
-                document.getElementById('emailPerfil').innerText = data.email || user.email;
-                document.getElementById('especialidadePerfil').innerText = data.especialidade || 'Não informada';
-                document.getElementById('planoPerfil').innerHTML = `${data.plano === 'premium' ? '🔥 Premium' : '📘 Gratuito'} <span class="badge-plano">${data.plano === 'premium' ? 'VIP' : 'Básico'}</span>`;
-                document.getElementById('xpPerfil').innerText = getXpAtual();
-                document.getElementById('desafiosPerfil').innerText = getDesafiosAtual();
-                document.getElementById('nivelPerfil').innerText = getLevel(getXpAtual());
-                document.getElementById('bioPerfil').innerText = data.bio || 'Olá! Estou no ConectaFisio360 🩺';
+                document.getElementById('emailUsuario').innerHTML = `<i class="fas fa-envelope"></i> ${data.email || user.email}`;
+                document.getElementById('especialidadeUsuario').innerHTML = `<i class="fas fa-stethoscope"></i> ${data.especialidade || 'Não informada'}`;
             }
         }
 
-        window.habilitarEdicao = async function() {
-            const db = getDatabase();
-            const userRef = ref(db, `usuarios/${user.uid}`);
-            const snapshot = await get(userRef);
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                document.getElementById('editNome').value = data.nome || '';
-                document.getElementById('editEspecialidade').value = data.especialidade || 'Fisioterapia Geral';
-                document.getElementById('editBio').value = data.bio || '';
-            }
-            document.getElementById('modoVisualizacao').style.display = 'none';
-            document.getElementById('modoEdicao').style.display = 'block';
-        };
-
-        window.cancelarEdicao = function() {
-            document.getElementById('modoVisualizacao').style.display = 'block';
-            document.getElementById('modoEdicao').style.display = 'none';
-        };
-
-        window.salvarEdicao = async function() {
-            const novosDados = {
-                nome: document.getElementById('editNome').value,
-                especialidade: document.getElementById('editEspecialidade').value,
-                bio: document.getElementById('editBio').value,
-                avatar: document.getElementById('editNome').value.charAt(0).toUpperCase()
-            };
-            const db = getDatabase();
-            const userRef = ref(db, `usuarios/${user.uid}`);
-            await update(userRef, novosDados);
-            document.getElementById('nomePerfil').innerText = novosDados.nome;
-            document.getElementById('avatar').innerText = novosDados.avatar;
-            document.getElementById('especialidadePerfil').innerText = novosDados.especialidade;
-            document.getElementById('bioPerfil').innerText = novosDados.bio;
-            cancelarEdicao();
-            alert('✅ Perfil atualizado!');
-        };
-
-        window.addEventListener('usuarioAtualizado', carregarPerfil);
+        // Tenta carregar imediatamente, mas se falhar, escuta o evento
         carregarPerfil();
+        window.addEventListener('usuarioAtualizado', carregarPerfil);
     </script>
 </body>
 </html>
