@@ -31,11 +31,15 @@
     </style>
 </head>
 <body>
+    <!-- HEADER PADRÃO COM TODOS OS LINKS -->
     <header>
         <div class="logo">ConectaFisio360</div>
         <nav>
             <a href="painel.html"><i class="fas fa-home"></i> Home</a>
             <a href="modelos3d.html"><i class="fas fa-cube"></i> Modelos 3D</a>
+            <a href="cursos.html"><i class="fas fa-graduation-cap"></i> Cursos</a>
+            <a href="estudos.html"><i class="fas fa-flask"></i> Estudos</a>
+            <a href="loja.html"><i class="fas fa-store"></i> Loja</a>
             <a href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
             <a href="javascript:void(0);" onclick="logout()" style="color: #ef4444;"><i class="fas fa-sign-out-alt"></i> Sair</a>
         </nav>
@@ -47,7 +51,9 @@
         <p class="sub">Espaço para interação entre fisioterapeutas e professores.</p>
     </div>
 
-    <div class="container" id="conteudoComunidade"></div>
+    <div class="container" id="conteudoComunidade">
+        <!-- Conteúdo carregado via JS -->
+    </div>
 
     <footer>© 2026 ConectaFisio360</footer>
 
@@ -57,7 +63,14 @@
         const container = document.getElementById('conteudoComunidade');
 
         function renderizarComunidade() {
-            if (!getUsuarioAtual()) return window.location.href = 'login.html';
+            const user = getUsuarioAtual();
+            if (!user) {
+                // Se não estiver logado, redireciona após um pequeno delay
+                setTimeout(() => {
+                    if (!getUsuarioAtual()) window.location.href = 'login.html';
+                }, 500);
+                return;
+            }
 
             if (getPlanoUsuario() !== 'premium') {
                 container.innerHTML = `
@@ -70,15 +83,27 @@
                 `;
             } else {
                 container.innerHTML = `
-                    <div class="topic-card"><h3><i class="fas fa-comments"></i> Discussões Clínicas</h3><p>Debata casos complexos com outros profissionais.</p></div>
-                    <div class="topic-card"><h3><i class="fas fa-question-circle"></i> Dúvidas Acadêmicas</h3><p>Pergunte e receba respostas da comunidade.</p></div>
-                    <div class="topic-card"><h3><i class="fas fa-handshake"></i> Networking Profissional</h3><p>Conecte-se e encontre oportunidades.</p></div>
+                    <div class="topic-card">
+                        <h3><i class="fas fa-comments"></i> Discussões Clínicas</h3>
+                        <p>Debata casos complexos com outros profissionais.</p>
+                    </div>
+                    <div class="topic-card">
+                        <h3><i class="fas fa-question-circle"></i> Dúvidas Acadêmicas</h3>
+                        <p>Pergunte e receba respostas da comunidade.</p>
+                    </div>
+                    <div class="topic-card">
+                        <h3><i class="fas fa-handshake"></i> Networking Profissional</h3>
+                        <p>Conecte-se e encontre oportunidades.</p>
+                    </div>
                 `;
             }
         }
 
-        window.addEventListener('usuarioAtualizado', renderizarComunidade);
+        // Tenta renderizar imediatamente, mas se não houver usuário, aguarda o evento
         renderizarComunidade();
+
+        // Escuta o evento disparado quando o Firebase termina de carregar o usuário
+        window.addEventListener('usuarioAtualizado', renderizarComunidade);
     </script>
 </body>
 </html>
