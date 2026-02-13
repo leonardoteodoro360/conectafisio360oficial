@@ -4,184 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comunidade · ConectaFisio360</title>
-    
-    <!-- Carrega o Firebase como módulo -->
     <script type="module" src="js/app.js"></script>
-    
-    <!-- Font Awesome (ícones) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        body {
-            background: #0b1120;
-            color: white;
-            min-height: 100vh;
-        }
-
-        /* HEADER PADRÃO (igual ao painel) */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #334155;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: 700;
-            background: linear-gradient(90deg, #3b82f6, #22d3ee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        nav a {
-            color: #cbd5e1;
-            text-decoration: none;
-            margin-left: 25px;
-            font-size: 15px;
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: white;
-        }
-
-        /* CABEÇALHO DA COMUNIDADE */
-        .comunidade-header {
-            padding: 40px 5%;
-            background: #0f172a;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .btn-voltar {
-            color: #38bdf8;
-            text-decoration: none;
-            margin-bottom: 20px;
-            display: inline-block;
-            font-size: 15px;
-        }
-
-        .btn-voltar i {
-            margin-right: 5px;
-        }
-
-        h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #3b82f6, #22d3ee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .sub {
-            color: #94a3b8;
-            font-size: 16px;
-        }
-
-        .container {
-            padding: 40px 5%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* CARDS DE TÓPICOS */
-        .topic-card {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            border-left: 5px solid #38bdf8;
-            transition: 0.2s;
-            cursor: pointer;
-            border: 1px solid #334155;
-            border-left-width: 5px;
-        }
-
-        .topic-card:hover {
-            background: #2d3a4f;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(56,189,248,0.15);
-        }
-
-        .topic-card h3 {
-            margin: 0 0 10px 0;
-            color: #38bdf8;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .topic-card p {
-            color: #94a3b8;
-            margin: 0;
-        }
-
-        /* MENSAGEM DE ACESSO NEGADO */
-        .acesso-negado {
-            background: #1e293b;
-            border: 2px dashed #ef4444;
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .acesso-negado i {
-            font-size: 50px;
-            color: #ef4444;
-            margin-bottom: 20px;
-        }
-
-        .acesso-negado h2 {
-            color: #ef4444;
-            margin-bottom: 15px;
-        }
-
-        .acesso-negado p {
-            color: #94a3b8;
-            margin-bottom: 25px;
-        }
-
-        .btn-assinar {
-            display: inline-block;
-            padding: 12px 28px;
-            background: #f59e0b;
-            color: black;
-            font-weight: bold;
-            border-radius: 40px;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-        .btn-assinar:hover {
-            background: #d97706;
-            transform: scale(1.03);
-        }
-
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #64748b;
-            font-size: 14px;
-            margin-top: 60px;
-            border-top: 1px solid #1e293b;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #0b1120; color: white; min-height: 100vh; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: rgba(15,23,42,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #334155; }
+        .logo { font-size: 22px; font-weight: 700; background: linear-gradient(90deg,#3b82f6,#22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        nav a { color: #cbd5e1; text-decoration: none; margin-left: 25px; font-size: 15px; transition: 0.2s; }
+        nav a:hover { color: white; }
+        .comunidade-header { padding: 40px 5%; background: #0f172a; border-bottom: 1px solid #1e293b; }
+        .btn-voltar { color: #38bdf8; text-decoration: none; margin-bottom: 20px; display: inline-block; }
+        h1 { font-size: 32px; margin-bottom: 10px; background: linear-gradient(90deg,#3b82f6,#22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub { color: #94a3b8; font-size: 16px; }
+        .container { padding: 40px 5%; max-width: 900px; margin: 0 auto; }
+        .topic-card { background: #1e293b; padding: 25px; border-radius: 16px; margin-bottom: 20px; border-left: 5px solid #38bdf8; transition: 0.2s; cursor: pointer; border: 1px solid #334155; border-left-width: 5px; }
+        .topic-card:hover { background: #2d3a4f; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(56,189,248,0.15); }
+        .topic-card h3 { margin: 0 0 10px 0; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
+        .topic-card p { color: #94a3b8; margin: 0; }
+        .acesso-negado { background: #1e293b; border: 2px dashed #ef4444; border-radius: 20px; padding: 40px; text-align: center; margin: 40px 0; }
+        .acesso-negado i { font-size: 50px; color: #ef4444; margin-bottom: 20px; }
+        .acesso-negado h2 { color: #ef4444; margin-bottom: 15px; }
+        .btn-assinar { display: inline-block; padding: 12px 28px; background: #f59e0b; color: black; font-weight: bold; border-radius: 40px; text-decoration: none; transition: 0.2s; }
+        .btn-assinar:hover { background: #d97706; transform: scale(1.03); }
+        footer { text-align: center; padding: 40px 20px; color: #64748b; font-size: 14px; margin-top: 60px; border-top: 1px solid #1e293b; }
     </style>
 </head>
 <body>
-
-    <!-- ========== HEADER PADRÃO ========== -->
     <header>
         <div class="logo">ConectaFisio360</div>
         <nav>
@@ -192,84 +41,43 @@
         </nav>
     </header>
 
-    <!-- ========== CABEÇALHO DA COMUNIDADE ========== -->
     <div class="comunidade-header">
         <a href="painel.html" class="btn-voltar"><i class="fas fa-arrow-left"></i> Voltar ao Painel</a>
-        <h1><i class="fas fa-users" style="margin-right: 10px;"></i> Comunidade</h1>
+        <h1><i class="fas fa-users"></i> Comunidade</h1>
         <p class="sub">Espaço para interação entre fisioterapeutas e professores.</p>
     </div>
 
-    <!-- ========== CONTEÚDO PRINCIPAL ========== -->
-    <div class="container" id="conteudoComunidade">
-        <!-- O conteúdo será carregado via JavaScript conforme o plano do usuário -->
-    </div>
+    <div class="container" id="conteudoComunidade"></div>
 
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        © 2026 ConectaFisio360 · Plataforma Integrada para Fisioterapeutas
-    </footer>
+    <footer>© 2026 ConectaFisio360</footer>
 
-    <!-- ========== SCRIPT ESPECÍFICO DA COMUNIDADE ========== -->
     <script type="module">
-        // ===== IMPORTAÇÕES =====
-        import { usuarioAtual, planoUsuario } from './js/app.js';
+        import { getUsuarioAtual, getPlanoUsuario } from './js/app.js';
 
-        // ===== ELEMENTOS =====
         const container = document.getElementById('conteudoComunidade');
 
-        // ===== RENDERIZAR CONTEÚDO CONFORME O PLANO =====
         function renderizarComunidade() {
-            const user = usuarioAtual();
-            const plano = planoUsuario();
+            if (!getUsuarioAtual()) return window.location.href = 'login.html';
 
-            // Se não estiver logado, redireciona
-            if (!user) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            // Se NÃO for premium, mostra acesso negado
-            if (plano !== 'premium') {
+            if (getPlanoUsuario() !== 'premium') {
                 container.innerHTML = `
                     <div class="acesso-negado">
                         <i class="fas fa-lock"></i>
-                        <h2>Acesso exclusivo para assinantes Premium</h2>
-                        <p>Assine o plano Premium para participar da comunidade, trocar experiências e fazer networking com outros fisioterapeutas.</p>
+                        <h2>Acesso exclusivo Premium</h2>
+                        <p>Assine o plano Premium para participar da comunidade.</p>
                         <a href="#" class="btn-assinar"><i class="fas fa-crown"></i> Assinar Premium</a>
                     </div>
                 `;
-                return;
+            } else {
+                container.innerHTML = `
+                    <div class="topic-card"><h3><i class="fas fa-comments"></i> Discussões Clínicas</h3><p>Debata casos complexos com outros profissionais.</p></div>
+                    <div class="topic-card"><h3><i class="fas fa-question-circle"></i> Dúvidas Acadêmicas</h3><p>Pergunte e receba respostas da comunidade.</p></div>
+                    <div class="topic-card"><h3><i class="fas fa-handshake"></i> Networking Profissional</h3><p>Conecte-se e encontre oportunidades.</p></div>
+                `;
             }
-
-            // Se for PREMIUM, mostra os tópicos da comunidade
-            container.innerHTML = `
-                <div class="topic-card">
-                    <h3><i class="fas fa-comments"></i> Discussões Clínicas</h3>
-                    <p>Debata casos complexos com outros profissionais. Compartilhe sua experiência e aprenda com colegas.</p>
-                    <span style="color: #38bdf8; font-size: 13px; margin-top: 10px; display: block;">128 tópicos ativos</span>
-                </div>
-                <div class="topic-card">
-                    <h3><i class="fas fa-question-circle"></i> Dúvidas Acadêmicas</h3>
-                    <p>Precisa de ajuda com anatomia, fisiologia ou condutas? Pergunte aqui e receba respostas da comunidade.</p>
-                    <span style="color: #38bdf8; font-size: 13px; margin-top: 10px; display: block;">45 perguntas aguardando resposta</span>
-                </div>
-                <div class="topic-card">
-                    <h3><i class="fas fa-handshake"></i> Networking Profissional</h3>
-                    <p>Conecte-se, encontre oportunidades de trabalho, parcerias e mentoria.</p>
-                    <span style="color: #38bdf8; font-size: 13px; margin-top: 10px; display: block;">32 profissionais online</span>
-                </div>
-                <div style="margin-top: 30px; text-align: center; color: #94a3b8;">
-                    <i class="fas fa-smile"></i> Em breve você poderá criar tópicos e interagir em tempo real.
-                </div>
-            `;
         }
 
-        // ===== ESCUTA ATUALIZAÇÕES DO PLANO =====
-        window.addEventListener('usuarioAtualizado', () => {
-            renderizarComunidade();
-        });
-
-        // ===== CARREGA NA INICIALIZAÇÃO =====
+        window.addEventListener('usuarioAtualizado', renderizarComunidade);
         renderizarComunidade();
     </script>
 </body>
