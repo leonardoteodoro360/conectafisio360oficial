@@ -73,12 +73,18 @@
                 let html = '';
                 for (let id in estudos) {
                     const e = estudos[id];
+                    // Usando os campos exatos do seu Firebase: titulo, descricao, link, imagem
+                    const titulo = e.titulo || 'Sem título';
+                    const descricao = e.descricao || 'Sem descrição';
+                    const link = e.link || '#';
+                    const imagem = e.imagem || 'https://picsum.photos/300/150?random=' + Math.floor(Math.random()*1000);
+                    
                     html += `
                         <div class="card">
-                            <img src="${e.imagem || 'https://picsum.photos/300/150?random=' + Math.floor(Math.random()*1000)}" alt="${e.titulo}">
-                            <h3>${e.titulo}</h3>
-                            <p>${e.resumo}</p>
-                            <a href="${e.link}" target="_blank" class="btn">Ler artigo</a>
+                            <img src="${imagem}" alt="${titulo}">
+                            <h3>${titulo}</h3>
+                            <p>${descricao}</p>
+                            <a href="${link}" target="_blank" class="btn">Ler artigo</a>
                         </div>
                     `;
                 }
