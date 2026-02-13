@@ -25,7 +25,6 @@
             flex-direction: column;
         }
 
-        /* Cabeçalho */
         header {
             display: flex;
             justify-content: space-between;
@@ -46,7 +45,6 @@
             color: #38bdf8;
         }
 
-        /* Área do jogo */
         #game-container {
             position: relative;
             flex: 1;
@@ -110,7 +108,6 @@
             border: 2px solid #38bdf8;
         }
 
-        /* Modal do quiz */
         #quiz-modal {
             position: fixed;
             top: 50%;
@@ -163,7 +160,6 @@
             font-weight: bold;
         }
 
-        /* HUD de XP */
         .xp-hud {
             position: absolute;
             top: 80px;
@@ -185,7 +181,6 @@
             font-size: 18px;
         }
 
-        /* Controles de movimento */
         .controls {
             display: flex;
             justify-content: center;
@@ -212,7 +207,6 @@
             transform: scale(0.95);
         }
 
-        /* Chat flutuante */
         #chat-container {
             position: fixed;
             bottom: 20px;
@@ -353,7 +347,6 @@
     <div id="game-container">
         <div id="player">👨‍⚕️</div>
 
-        <!-- Pacientes -->
         <div id="patient1" class="patient" style="top:200px; left:500px;">
             🤕
             <div class="interact-prompt" id="prompt1">Pressione ESPAÇO</div>
@@ -367,14 +360,12 @@
             <div class="interact-prompt" id="prompt3">Pressione ESPAÇO</div>
         </div>
 
-        <!-- HUD de XP -->
         <div class="xp-hud">
             <span>⭐ XP:</span>
             <span id="xpDisplay">0</span>
         </div>
     </div>
 
-    <!-- Controles de movimento -->
     <div class="controls">
         <button class="btn-move" onclick="move('up')">▲</button>
         <div style="display: flex; gap: 20px;">
@@ -384,7 +375,6 @@
         <button class="btn-move" onclick="move('down')">▼</button>
     </div>
 
-    <!-- Modal do quiz -->
     <div id="quiz-modal">
         <h3>🩺 Caso Clínico</h3>
         <p id="pergunta">Paciente com lombalgia aguda. Qual conduta inicial?</p>
@@ -394,7 +384,6 @@
         <p id="feedback"></p>
     </div>
 
-    <!-- Chat da Arena -->
     <div id="chat-container">
         <div id="chat-header">
             <span><i class="fas fa-comments"></i> Chat da Arena</span>
@@ -419,6 +408,7 @@
         function redirecionarSeNaoLogado() {
             const user = getUsuarioAtual();
             if (!user) {
+                // Aguarda um pequeno tempo para ver se o Firebase carrega
                 setTimeout(() => {
                     if (!getUsuarioAtual()) {
                         window.location.href = 'login.html';
@@ -429,9 +419,9 @@
             return true;
         }
 
-        // Aguarda o estado do Firebase antes de prosseguir
+        // Se não estiver logado, interrompe a execução do script sem lançar erro no console
         if (!redirecionarSeNaoLogado()) {
-            throw new Error('Redirecionando...');
+            return; // interrompe o módulo silenciosamente
         }
 
         // ===== CONFIGURAÇÃO DO JOGO =====
@@ -547,25 +537,20 @@
         // ===== CHAT =====
         const db = getDatabase();
         const chatRef = ref(db, 'chat');
-        // Carregar apenas as últimas 50 mensagens para não sobrecarregar
         const chatQuery = query(chatRef, limitToLast(50));
 
         const messagesDiv = document.getElementById('chat-messages');
         const chatInput = document.getElementById('chat-input');
         const chatSend = document.getElementById('chat-send');
         const chatToggle = document.getElementById('chat-toggle');
-        const chatContainer = document.getElementById('chat-container');
         const chatHeader = document.getElementById('chat-header');
 
-        // Nome do usuário (a partir do email)
         function getUserDisplayName() {
             const user = getUsuarioAtual();
             if (!user) return 'Anônimo';
-            // Pega a parte antes do @ do email
             return user.email ? user.email.split('@')[0] : 'Usuário';
         }
 
-        // Escuta novas mensagens
         onChildAdded(chatQuery, (data) => {
             const msg = data.val();
             const user = getUsuarioAtual();
@@ -581,7 +566,6 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         });
 
-        // Enviar mensagem
         function enviarMensagem() {
             const texto = chatInput.value.trim();
             if (texto === '') return;
@@ -607,7 +591,6 @@
             if (e.key === 'Enter') enviarMensagem();
         });
 
-        // Minimizar/expandir chat
         let chatMinimizado = false;
         chatToggle.addEventListener('click', () => {
             const messages = document.getElementById('chat-messages');
