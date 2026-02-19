@@ -1,93 +1,142 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursos Gratuitos · ConectaFisio360</title>
-    <script type="module" src="js/app.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
-        body { background:#0b1120; color:white; min-height:100vh; }
-        header { display:flex; justify-content:space-between; align-items:center; padding:20px 5%; background:rgba(15,23,42,0.8); backdrop-filter:blur(10px); border-bottom:1px solid #334155; }
-        .logo { font-size:22px; font-weight:700; background:linear-gradient(90deg,#3b82f6,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        nav a { color:#cbd5e1; text-decoration:none; margin-left:25px; transition:0.2s; }
-        nav a:hover { color:white; }
-        .container { max-width:1200px; margin:40px auto; padding:0 5%; }
-        h1 { font-size:32px; margin-bottom:10px; background:linear-gradient(90deg,#fff,#94a3b8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .sub { color:#94a3b8; margin-bottom:30px; }
-        .grid-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:25px; }
-        .card { background:#1e293b; border-radius:20px; padding:20px; border:1px solid #334155; transition:0.3s; }
-        .card:hover { border-color:#38bdf8; transform:translateY(-4px); }
-        .card img { width:100%; height:150px; object-fit:cover; border-radius:12px; margin-bottom:15px; }
-        .card h3 { margin-bottom:10px; color:#38bdf8; }
-        .card p { color:#94a3b8; margin-bottom:15px; }
-        .btn { display:inline-block; padding:8px 16px; background:#2563eb; color:white; border-radius:30px; text-decoration:none; }
-        footer { text-align:center; padding:40px; color:#64748b; margin-top:60px; border-top:1px solid #1e293b; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cursos Gratuitos - ConectaFisio360</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background:linear-gradient(135deg,#0f172a,#0b1120);
+    color:white;
+}
+
+header{
+    padding:20px 40px;
+    font-size:22px;
+    font-weight:600;
+    color:#38bdf8;
+}
+
+.container{
+    padding:40px;
+}
+
+h1{
+    margin-bottom:10px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+    margin-top:40px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:20px;
+    padding:20px;
+    transition:0.3s;
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card img{
+    width:100%;
+    border-radius:15px;
+    height:160px;
+    object-fit:cover;
+}
+
+.card h3{
+    margin:15px 0 10px 0;
+    color:#38bdf8;
+}
+
+.card p{
+    font-size:14px;
+    color:#cbd5e1;
+}
+
+.card a{
+    display:inline-block;
+    margin-top:15px;
+    padding:10px 18px;
+    background:#2563eb;
+    color:white;
+    border-radius:10px;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.card a:hover{
+    background:#1d4ed8;
+}
+</style>
 </head>
 <body>
-    <header>
-        <div class="logo">ConectaFisio360</div>
-        <nav>
-            <a href="painel.html"><i class="fas fa-home"></i> Home</a>
-            <a href="modelos3d.html"><i class="fas fa-cube"></i> Modelos 3D</a>
-            <a href="cursos.html"><i class="fas fa-graduation-cap"></i> Cursos</a>
-            <a href="estudos.html"><i class="fas fa-flask"></i> Estudos</a>
-            <a href="loja.html"><i class="fas fa-store"></i> Loja</a>
-            <a href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
-            <a href="javascript:void(0);" onclick="logout()" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Sair</a>
-        </nav>
-    </header>
 
-    <div class="container">
-        <h1>📚 Cursos Gratuitos</h1>
-        <p class="sub">Aprenda com aulas práticas e materiais de apoio.</p>
-        <div class="grid-cards" id="cursos-container">
-            <p style="text-align:center; width:100%;">Carregando cursos...</p>
-        </div>
+<header>ConectaFisio360</header>
+
+<div class="container">
+    <h1>📚 Cursos Gratuitos</h1>
+    <p>Aprenda com aulas práticas e materiais de apoio.</p>
+
+    <div class="cards" id="cursosContainer">
+        <!-- Cursos serão carregados aqui -->
     </div>
+</div>
 
-    <footer>© 2026 ConectaFisio360</footer>
+<!-- Firebase SDK -->
+<script type="module">
 
-    <script type="module">
-        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        import { getUsuarioAtual } from './js/app.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // Redireciona se não estiver logado (com timeout)
-        if (!getUsuarioAtual()) {
-            setTimeout(() => {
-                if (!getUsuarioAtual()) window.location.href = 'login.html';
-            }, 500);
-        }
+const firebaseConfig = {
+    apiKey: "SUA_API_KEY",
+    authDomain: "conectafisio-web.firebaseapp.com",
+    databaseURL: "https://conectafisio-web-default-rtdb.firebaseio.com",
+    projectId: "conectafisio-web",
+    storageBucket: "conectafisio-web.appspot.com",
+    messagingSenderId: "SEU_ID",
+    appId: "SEU_APP_ID"
+};
 
-        const db = getDatabase();
-        const cursosRef = ref(db, 'cursos');
-        const container = document.getElementById('cursos-container');
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
-        async function carregarCursos() {
-            const snapshot = await get(cursosRef);
-            if (snapshot.exists()) {
-                const cursos = snapshot.val();
-                let html = '';
-                for (let id in cursos) {
-                    const c = cursos[id];
-                    html += `
-                        <div class="card">
-                            <img src="${c.imagem || 'https://via.placeholder.com/300x150?text=Curso'}" alt="${c.titulo}">
-                            <h3>${c.titulo}</h3>
-                            <p>${c.descricao}</p>
-                            <a href="${c.link}" target="_blank" class="btn">Assistir</a>
-                        </div>
-                    `;
-                }
-                container.innerHTML = html;
-            } else {
-                container.innerHTML = '<p style="text-align:center; width:100%;">Nenhum curso disponível no momento.</p>';
-            }
-        }
+const cursosRef = ref(database, "cursos");
+const container = document.getElementById("cursosContainer");
 
-        carregarCursos();
-    </script>
+onValue(cursosRef, (snapshot) => {
+    container.innerHTML = "";
+    const dados = snapshot.val();
+
+    for (let id in dados) {
+        const curso = dados[id];
+
+        container.innerHTML += `
+            <div class="card">
+                <img src="${curso.imagem}" alt="${curso.titulo}">
+                <h3>${curso.titulo}</h3>
+                <p>${curso.descricao}</p>
+                <a href="${curso.link}" target="_blank">Assistir</a>
+            </div>
+        `;
+    }
+});
+
+</script>
+
 </body>
 </html>
+
