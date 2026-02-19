@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso - ConectaFisio360</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background:linear-gradient(135deg,#0f172a,#0b1120);
+    color:white;
+}
+
+.container{
+    padding:40px;
+    max-width:1000px;
+    margin:auto;
+}
+
+h1{
+    color:#38bdf8;
+}
+
+iframe{
+    width:100%;
+    height:500px;
+    border-radius:15px;
+    margin-top:20px;
+    border:0;
+}
+
+.voltar{
+    display:inline-block;
+    margin-bottom:20px;
+    color:#38bdf8;
+    text-decoration:none;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <a href="cursos.html" class="voltar">← Voltar</a>
+
+    <h1 id="titulo">Carregando...</h1>
+    <p id="descricao"></p>
+
+    <div id="player"></div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBceFT9nmk1XfVbYZEcZ3yUY1pstUblD3E",
+  authDomain: "conectafisio-web.firebaseapp.com",
+  databaseURL: "https://conectafisio-web-default-rtdb.firebaseio.com",
+  projectId: "conectafisio-web",
+  storageBucket: "conectafisio-web.firebasestorage.app",
+  messagingSenderId: "816967061116",
+  appId: "1:816967061116:web:0c716703027427827fc3f9"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// pega ID da URL
+const params = new URLSearchParams(window.location.search);
+const cursoId = params.get("id");
+
+if(!cursoId){
+    document.getElementById("titulo").innerText = "Curso não encontrado";
+} else {
+
+    const cursoRef = ref(database, "cursos/" + cursoId);
+
+    get(cursoRef).then((snapshot)=>{
+        if(snapshot.exists()){
+            const curso = snapshot.val();
+
+            document.getElementById("titulo").innerText = curso.titulo;
+            document.getElementById("descricao").innerText = curso.descricao;
+
+            // Se o campo "link" for um link do YouTube, você pode embutir assim.
+            // Ajuste conforme o formato do seu link no Firebase.
+            document.getElementById("player").innerHTML = `
+                <iframe src="${curso.link}" allowfullscreen></iframe>
+            `;
+        } else {
+            document.getElementById("titulo").innerText = "Curso não encontrado";
+        }
+    }).catch((err)=>{
+        document.getElementById("titulo").innerText = "Erro ao carregar";
+        console.error(err);
+    });
+
+}
+
+</script>
+
+</body>
+</html>
