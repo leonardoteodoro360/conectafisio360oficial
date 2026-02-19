@@ -128,12 +128,13 @@ onValue(cursosRef, (snapshot) => {
     for (let id in dados) {
         const curso = dados[id];
 
+        // OBS: id aqui é a chave do Realtime Database (ex: "curso1", "curso2")
         container.innerHTML += `
             <div class="card">
                 <img src="${curso.imagem}" alt="${curso.titulo}">
                 <h3>${curso.titulo}</h3>
                 <p>${curso.descricao}</p>
-                <a href="${curso.link}" target="_blank">Assistir</a>
+                <a href="curso.html?id=${id}" target="_self">Assistir</a>
             </div>
         `;
     }
@@ -143,4 +144,3 @@ onValue(cursosRef, (snapshot) => {
 
 </body>
 </html>
-
