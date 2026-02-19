@@ -4,32 +4,70 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Curso - ConectaFisio360</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body{ margin:0; font-family:'Poppins',sans-serif; background:linear-gradient(135deg,#0f172a,#0b1120); color:white; }
-.container{ padding:40px; max-width:1000px; margin:auto; }
-h1{ color:#38bdf8; }
-iframe{ width:100%; height:500px; border-radius:15px; margin-top:20px; border:0; }
-.voltar{ display:inline-block; margin-bottom:20px; color:#38bdf8; text-decoration:none; }
-.notice{ margin-top:20px; padding:18px; background:#111827; border-radius:10px; color:#cbd5e1; }
-.btn{ display:inline-block; margin-top:12px; padding:10px 16px; background:#2563eb; color:#fff; border-radius:8px; text-decoration:none; }
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background:linear-gradient(135deg,#0f172a,#0b1120);
+    color:white;
+}
+
+header{
+    display:flex;
+    justify-content:space-between;
+    padding:20px 40px;
+    background:#0b1120;
+}
+
+header a{
+    color:#38bdf8;
+    text-decoration:none;
+    margin-right:20px;
+}
+
+.container{
+    padding:40px;
+    max-width:900px;
+    margin:auto;
+}
+
+iframe{
+    width:100%;
+    height:500px;
+    border-radius:15px;
+    margin-top:20px;
+    border:0;
+}
+
+.bloqueado{
+    margin-top:30px;
+    padding:20px;
+    background:#1e293b;
+    border-radius:15px;
+}
 </style>
 </head>
 <body>
 
-<div class="container">
-    <a href="cursos.html" class="voltar">← Voltar aos cursos</a>
-    <a href="index.html" class="voltar" style="margin-left:20px;">🏠 Home</a>
+<header>
+    <div>ConectaFisio360</div>
+    <div>
+        <a href="cursos.html">📚 Voltar</a>
+        <a href="index.html">🏠 Home</a>
+    </div>
+</header>
 
+<div class="container">
     <h1 id="titulo">Carregando...</h1>
     <p id="descricao"></p>
-
-    <div id="player"></div>
-
-    <div id="mensagem" class="notice" style="display:none;"></div>
+    <div id="conteudo"></div>
 </div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
@@ -46,41 +84,43 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+const userRole = localStorage.getItem('simulacao_plano') || 'normal';
+
 const params = new URLSearchParams(window.location.search);
 const cursoId = params.get("id");
-const userRole = localStorage.getItem('conectaRole') || 'normal';
+
+const titulo = document.getElementById("titulo");
+const descricao = document.getElementById("descricao");
+const conteudo = document.getElementById("conteudo");
 
 if(!cursoId){
-    document.getElementById("titulo").innerText = "Curso não encontrado";
-} else {
+    titulo.innerText = "Curso não encontrado";
+}else{
     const cursoRef = ref(database, "cursos/" + cursoId);
     get(cursoRef).then((snapshot)=>{
         if(snapshot.exists()){
             const curso = snapshot.val();
-            document.getElementById("titulo").innerText = curso.titulo;
-            document.getElementById("descricao").innerText = curso.descricao;
+            titulo.innerText = curso.titulo;
+            descricao.innerText = curso.descricao;
 
-            const tipo = curso.tipo || 'gratis';
-
-            if(tipo === 'premium' && userRole !== 'premium'){
-                // bloqueado
-                document.getElementById("player").innerHTML = "";
-                const msg = document.getElementById("mensagem");
-                msg.style.display = 'block';
-                msg.innerHTML = `Este é um conteúdo <strong>Premium</strong>. Você tem a conta <strong>${userRole}</strong>.<br><br>
-                                 Para liberar, faça upgrade: <a class="btn" href="checkout.html">Fazer upgrade</a>`;
-            } else {
-                // libera o player
-                document.getElementById("player").innerHTML = `<iframe src="${curso.link}" allowfullscreen></iframe>`;
+            if(curso.tipo === "premium" && userRole !== "premium"){
+                conteudo.innerHTML = `
+                    <div class="bloqueado">
+                        🔒 Este curso é Premium.<br><br>
+                        Faça upgrade para acessar.
+                    </div>
+                `;
+            }else{
+                conteudo.innerHTML = `
+                    <iframe src="${curso.link}" allowfullscreen></iframe>
+                `;
             }
-        } else {
-            document.getElementById("titulo").innerText = "Curso não encontrado";
+        }else{
+            titulo.innerText = "Curso não encontrado";
         }
-    }).catch((err)=>{
-        document.getElementById("titulo").innerText = "Erro ao carregar";
-        console.error(err);
     });
 }
+
 </script>
 
 </body>
