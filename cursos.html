@@ -91,24 +91,23 @@ h1{
     <p>Aprenda com aulas práticas e materiais de apoio.</p>
 
     <div class="cards" id="cursosContainer">
-        <!-- Cursos serão carregados aqui -->
+        <p>Carregando cursos...</p>
     </div>
 </div>
 
-<!-- Firebase SDK -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
-    authDomain: "conectafisio-web.firebaseapp.com",
-    databaseURL: "https://conectafisio-web-default-rtdb.firebaseio.com",
-    projectId: "conectafisio-web",
-    storageBucket: "conectafisio-web.appspot.com",
-    messagingSenderId: "SEU_ID",
-    appId: "SEU_APP_ID"
+  apiKey: "AIzaSyBceFT9nmk1XfVbYZEcZ3yUY1pstUblD3E",
+  authDomain: "conectafisio-web.firebaseapp.com",
+  databaseURL: "https://conectafisio-web-default-rtdb.firebaseio.com",
+  projectId: "conectafisio-web",
+  storageBucket: "conectafisio-web.firebasestorage.app",
+  messagingSenderId: "816967061116",
+  appId: "1:816967061116:web:0c716703027427827fc3f9"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -120,6 +119,11 @@ const container = document.getElementById("cursosContainer");
 onValue(cursosRef, (snapshot) => {
     container.innerHTML = "";
     const dados = snapshot.val();
+
+    if (!dados) {
+        container.innerHTML = "<p>Nenhum curso encontrado.</p>";
+        return;
+    }
 
     for (let id in dados) {
         const curso = dados[id];
