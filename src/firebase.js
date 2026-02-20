@@ -14,13 +14,15 @@ import {
   update
 } from "firebase/database";
 
+// As variáveis de ambiente devem ser definidas no arquivo .env (não comitar)
+// e também configuradas na Vercel (Environment Variables)
 const firebaseConfig = {
-  apiKey: "AIzaSyBceFT9nmk1XfVbYZEcZ3yUY1pstUblD3E",
-  authDomain: "conectafisio-web.firebaseapp.com",
-  projectId: "conectafisio-web",
-  storageBucket: "conectafisio-web.firebasestorage.app",
-  messagingSenderId: "816967061116",
-  appId: "1:816967061116:web:0c716703027427827fc3f9",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
