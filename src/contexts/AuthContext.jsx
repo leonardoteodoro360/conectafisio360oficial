@@ -14,13 +14,11 @@ export default function AuthProvider({ children }) {
     const unsub = onAuthStateChanged(auth, async (u) => {
       setUser(u);
       if (u) {
-        // Busca os dados do usuário no Realtime Database (caminho: usuarios/uid)
         const userRef = ref(db, `usuarios/${u.uid}`);
         const snapshot = await get(userRef);
         if (snapshot.exists()) {
           setProfile(snapshot.val());
         } else {
-          // Se não existir perfil, define um padrão
           setProfile({ plano: "free", xp: 0, desafios: 0 });
         }
       } else {
