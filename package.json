@@ -1,21 +1,20 @@
 {
   "name": "conectafisio360",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --port 4173"
   },
   "dependencies": {
-    "firebase": "^10.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.1",
-    "@stripe/stripe-js": "^1.60.0",
-    "axios": "^1.4.0"
+    "firebase": "^9.23.0"
   },
   "devDependencies": {
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.0.0"
   }
 }
