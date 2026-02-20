@@ -1,6 +1,8 @@
 // src/App.jsx
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Cursos from "./pages/Cursos";
@@ -9,20 +11,37 @@ import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-export default function App(){
+export default function App() {
+  const { user, loading } = useAuth();
+
+  if (loading) return <div style={{padding:20}}>Carregando...</div>;
+
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Navigate to="/cursos" replace />} />
+        {/* ROTA PRINCIPAL INTELIGENTE */}
+        <Route
+          path="/"
+          element={
+            user ? <Navigate to="/dashboard" replace /> 
+                 : <Navigate to="/login" replace />
+          }
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cursos" element={<Cursos />} />
         <Route path="/curso/:id" element={<Curso />} />
-        <Route path="/dashboard" element={
-          <ProtectedRoute><Dashboard /></ProtectedRoute>
-        } />
-        {/* rotas de checkout/webhook success/cancel serão adicionadas conforme Stripe */}
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );
