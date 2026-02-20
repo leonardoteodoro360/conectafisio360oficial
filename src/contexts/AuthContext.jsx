@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { ref, get } from 'firebase/database';
-import { auth, db } from '../firebase';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { ref, get } from "firebase/database";
+import { auth, db } from "../firebase";
 
 const AuthContext = createContext();
 
@@ -14,18 +14,27 @@ export default function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
+        // Busca os dados do usuário no Realtime Database no caminho "usuarios/{uid}"
         const userRef = ref(db, `usuarios/${currentUser.uid}`);
         const snapshot = await get(userRef);
         if (snapshot.exists()) {
           setProfile(snapshot.val());
         } else {
-          setProfile({ nome: '', email: currentUser.email, plano: 'free', xp: 0, desafios: 0 });
+          // Se não existir perfil, define um padrão (pode ocorrer se o cadastro não tiver criado)
+          setProfile({
+            nome: currentUser.displayName || "",
+            email: currentUser.email,
+            plano: "free",
+            xp: 0,
+            desafios: 0
+          });
         }
       } else {
         setProfile(null);
       }
       setLoading(false);
     });
+
     return unsubscribe;
   }, []);
 
