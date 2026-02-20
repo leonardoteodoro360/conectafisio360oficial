@@ -28,6 +28,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getDatabase(app);
 
+// Funções prontas para uso no seu App
 export const cadastrar = async (email, senha, nome, plano) => {
   const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
   const user = userCredential.user;
