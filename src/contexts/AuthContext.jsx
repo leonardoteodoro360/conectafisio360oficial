@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { ref, get } from "firebase/database";
 import { auth, db } from "../firebase";
 
 const AuthContext = createContext();
@@ -14,12 +14,14 @@ export default function AuthProvider({ children }) {
     const unsub = onAuthStateChanged(auth, async (u) => {
       setUser(u);
       if (u) {
-        const ref = doc(db, "users", u.uid);
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          setProfile(snap.data());
+        // Busca os dados do usuário no Realtime Database (caminho: usuarios/uid)
+        const userRef = ref(db, `usuarios/${u.uid}`);
+        const snapshot = await get(userRef);
+        if (snapshot.exists()) {
+          setProfile(snapshot.val());
         } else {
-          setProfile({ plano: "free" });
+          // Se não existir perfil, define um padrão
+          setProfile({ plano: "free", xp: 0, desafios: 0 });
         }
       } else {
         setProfile(null);
